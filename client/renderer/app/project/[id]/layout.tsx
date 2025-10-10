@@ -1,6 +1,14 @@
 "use client";
 import { PropsWithChildren, use, useEffect, useState } from "react";
-import { Paper, Stack, Tab, Tabs } from "@mui/material";
+import {
+  Paper,
+  Stack,
+  Tab,
+  Tabs,
+  useMediaQuery,
+  useTheme,
+  Box,
+} from "@mui/material";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { useCCP4i2Window } from "../../../app-context";
 import { useApi } from "../../../api";
@@ -24,7 +32,14 @@ export interface ProjectLayoutProps extends PropsWithChildren {
 export default function ProjectLayout(props: ProjectLayoutProps) {
   const { setProjectId, setJobPanelSize } = useCCP4i2Window();
   const api = useApi();
-  const [tabValue, setTabValue] = useState(0);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md")); // Mobile: < 900px
+
+  // For desktop left panel tabs
+  const [leftTabValue, setLeftTabValue] = useState(0);
+  // For mobile main tabs (left panel + right panel)
+  const [mobileTabValue, setMobileTabValue] = useState(0);
+
   const { id } = use(props.params);
   const { project } = useProject(parseInt(id));
 
@@ -37,8 +52,15 @@ export default function ProjectLayout(props: ProjectLayoutProps) {
     asyncFunc();
   }, [project, setProjectId]);
 
-  const handleTabChange = (event: React.SyntheticEvent, value: number) => {
-    setTabValue(value);
+  const handleLeftTabChange = (event: React.SyntheticEvent, value: number) => {
+    setLeftTabValue(value);
+  };
+
+  const handleMobileTabChange = (
+    event: React.SyntheticEvent,
+    value: number
+  ) => {
+    setMobileTabValue(value);
   };
 
   return (
@@ -59,61 +81,96 @@ export default function ProjectLayout(props: ProjectLayoutProps) {
                       }}
                     >
                       <MenuBar />
-                      <PanelGroup direction="horizontal">
-                        <Panel defaultSize={30} minSize={20}>
-                          <Paper
-                            sx={{
-                              overflowY: "auto",
-                              height: "calc(100vh - 10rem)",
-                            }}
-                          >
+
+                      {isMobile ? (
+                        // Mobile: Tabbed interface
+                        <Box sx={{ height: "calc(100vh - 10rem)" }}>
+                          <Paper sx={{ height: "100%" }}>
                             <Tabs
-                              value={tabValue}
-                              onChange={handleTabChange}
+                              value={mobileTabValue}
+                              onChange={handleMobileTabChange}
                               variant="fullWidth"
                             >
-                              <Tab value={0} label="Job list" />
-                              {/*<Tab value={1} label="Job grid" />*/}
-                              <Tab value={2} label="Project directory" />
+                              <Tab value={0} label="Jobs" />
+                              <Tab value={1} label="Directory" />
+                              <Tab value={2} label="Content" />
                             </Tabs>
-                            {tabValue == 0 && project && (
-                              <ClassicJobList projectId={project.id} />
-                            )}
-                            {/*tabValue == 1 && <JobsGrid projectId={id} size={{ xs: 12 }} />*/}
-                            {tabValue == 2 && project && (
-                              <CCP4i2DirectoryViewer projectId={project.id} />
-                            )}
+                            <Box
+                              sx={{
+                                height: "calc(100% - 48px)",
+                                overflow: "auto",
+                              }}
+                            >
+                              {mobileTabValue === 0 && project && (
+                                <ClassicJobList projectId={project.id} />
+                              )}
+                              {mobileTabValue === 1 && project && (
+                                <CCP4i2DirectoryViewer projectId={project.id} />
+                              )}
+                              {mobileTabValue === 2 && (
+                                <Box sx={{ height: "100%" }}>
+                                  {props.children}
+                                </Box>
+                              )}
+                            </Box>
                           </Paper>
-                        </Panel>
-                        <PanelResizeHandle
-                          style={{
-                            width: 10,
-                            backgroundColor: "transparent",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            cursor: "col-resize",
-                          }}
-                        >
-                          <div
+                        </Box>
+                      ) : (
+                        // Desktop: Side-by-side panels
+                        <PanelGroup direction="horizontal">
+                          <Panel defaultSize={30} minSize={20}>
+                            <Paper
+                              sx={{
+                                overflowY: "auto",
+                                height: "calc(100vh - 10rem)",
+                              }}
+                            >
+                              <Tabs
+                                value={leftTabValue}
+                                onChange={handleLeftTabChange}
+                                variant="fullWidth"
+                              >
+                                <Tab value={0} label="Job list" />
+                                <Tab value={1} label="Project directory" />
+                              </Tabs>
+                              {leftTabValue === 0 && project && (
+                                <ClassicJobList projectId={project.id} />
+                              )}
+                              {leftTabValue === 1 && project && (
+                                <CCP4i2DirectoryViewer projectId={project.id} />
+                              )}
+                            </Paper>
+                          </Panel>
+                          <PanelResizeHandle
                             style={{
-                              width: 4,
-                              height: "50%",
-                              backgroundColor: "gray",
-                              borderRadius: 2,
+                              width: 10,
+                              backgroundColor: "transparent",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              cursor: "col-resize",
                             }}
-                          />
-                        </PanelResizeHandle>
-                        <Panel
-                          defaultSize={70}
-                          minSize={20}
-                          onResize={(size) =>
-                            setJobPanelSize && setJobPanelSize(size)
-                          }
-                        >
-                          {props.children}
-                        </Panel>
-                      </PanelGroup>
+                          >
+                            <div
+                              style={{
+                                width: 4,
+                                height: "50%",
+                                backgroundColor: "gray",
+                                borderRadius: 2,
+                              }}
+                            />
+                          </PanelResizeHandle>
+                          <Panel
+                            defaultSize={70}
+                            minSize={20}
+                            onResize={(size) =>
+                              setJobPanelSize && setJobPanelSize(size)
+                            }
+                          >
+                            {props.children}
+                          </Panel>
+                        </PanelGroup>
+                      )}
                     </Stack>
                   </ParameterChangeIntentProvider>
                 </FileMenuProvider>
