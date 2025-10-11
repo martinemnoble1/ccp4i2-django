@@ -131,4 +131,6 @@ if __name__ == "__main__":
     import pprint
 
     result = build_lookup_from_dir(root_directory)
-    pprint.pprint(result)
+    pprint.pprint(
+        [result["prosmart_refmac"] if "prosmart_refmac" in result else "nope"]
+    )
