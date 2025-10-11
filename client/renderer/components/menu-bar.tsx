@@ -1,4 +1,13 @@
-import { AppBar, Typography, IconButton, Menu, MenuItem, useMediaQuery, useTheme, Box } from "@mui/material";
+import {
+  AppBar,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  useMediaQuery,
+  useTheme,
+  Box,
+} from "@mui/material";
 import { MoreHoriz } from "@mui/icons-material";
 import EditMenu from "./edit-menu";
 import FileMenu from "./file-menu";
@@ -23,12 +32,12 @@ export default function MenuBar() {
   const { data: job } = api.get<Job>(`jobs/${jobId}`);
   const router = useRouter();
   const theme = useTheme();
-  
+
   // Responsive breakpoints - we'll use different strategies at different sizes
-  const isXSmall = useMediaQuery(theme.breakpoints.down('sm')); // < 600px
-  const isSmall = useMediaQuery(theme.breakpoints.down('md'));  // < 900px
-  const isMedium = useMediaQuery(theme.breakpoints.down('lg')); // < 1200px
-  
+  const isXSmall = useMediaQuery(theme.breakpoints.down("sm")); // < 600px
+  const isSmall = useMediaQuery(theme.breakpoints.down("md")); // < 900px
+  const isMedium = useMediaQuery(theme.breakpoints.down("lg")); // < 1200px
+
   // More menu state
   const [moreAnchorEl, setMoreAnchorEl] = useState<null | HTMLElement>(null);
   const isMoreMenuOpen = Boolean(moreAnchorEl);
@@ -46,26 +55,26 @@ export default function MenuBar() {
     if (isXSmall) {
       // Extra small: Only File menu visible, rest in overflow
       return {
-        visible: ['file'],
-        overflow: ['edit', 'view', 'util', 'help', 'tags']
+        visible: ["file"],
+        overflow: ["edit", "view", "util", "help", "tags"],
       };
     } else if (isSmall) {
       // Small: File, Edit, and View visible
       return {
-        visible: ['file', 'edit', 'view'],
-        overflow: ['util', 'help', 'tags']
+        visible: ["file", "edit", "view"],
+        overflow: ["util", "help", "tags"],
       };
     } else if (isMedium) {
       // Medium: All menus visible, but tags might be hidden
       return {
-        visible: ['file', 'edit', 'view', 'util', 'help'],
-        overflow: ['tags']
+        visible: ["file", "edit", "view", "util", "help"],
+        overflow: ["tags"],
       };
     } else {
       // Large: Everything visible
       return {
-        visible: ['file', 'edit', 'view', 'util', 'help', 'tags'],
-        overflow: []
+        visible: ["file", "edit", "view", "util", "help", "tags"],
+        overflow: [],
       };
     }
   };
@@ -92,13 +101,15 @@ export default function MenuBar() {
     <AppBar position="static">
       <HistoryToolbar>
         {/* Always visible menus based on screen size */}
-        {visible.includes('file') && <FileMenu />}
-        {visible.includes('edit') && <EditMenu />}
-        {visible.includes('view') && <ViewMenu />}
-        {visible.includes('util') && <UtilMenu />}
-        {visible.includes('help') && <HelpMenu />}
-        {visible.includes('tags') && project && <TagsOfProject projectId={project.id} />}
-        
+        {visible.includes("file") && <FileMenu />}
+        {visible.includes("edit") && <EditMenu />}
+        {visible.includes("view") && <ViewMenu />}
+        {visible.includes("util") && <UtilMenu />}
+        {visible.includes("help") && <HelpMenu />}
+        {visible.includes("tags") && project && (
+          <TagsOfProject projectId={project.id} />
+        )}
+
         {/* Overflow menu for hidden items */}
         {overflow.length > 0 && (
           <>
@@ -113,30 +124,30 @@ export default function MenuBar() {
               anchorEl={moreAnchorEl}
               open={isMoreMenuOpen}
               onClose={handleMoreMenuClose}
-              transformOrigin={{ horizontal: 'left', vertical: 'top' }}
-              anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+              transformOrigin={{ horizontal: "left", vertical: "top" }}
+              anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
             >
-              {overflow.includes('edit') && (
+              {overflow.includes("edit") && (
                 <Box sx={{ px: 2, py: 1 }}>
                   <EditMenu />
                 </Box>
               )}
-              {overflow.includes('view') && (
+              {overflow.includes("view") && (
                 <Box sx={{ px: 2, py: 1 }}>
                   <ViewMenu />
                 </Box>
               )}
-              {overflow.includes('util') && (
+              {overflow.includes("util") && (
                 <Box sx={{ px: 2, py: 1 }}>
                   <UtilMenu />
                 </Box>
               )}
-              {overflow.includes('help') && (
+              {overflow.includes("help") && (
                 <Box sx={{ px: 2, py: 1 }}>
                   <HelpMenu />
                 </Box>
               )}
-              {overflow.includes('tags') && project && (
+              {overflow.includes("tags") && project && (
                 <Box sx={{ px: 2, py: 1 }}>
                   <TagsOfProject projectId={project.id} />
                 </Box>
@@ -144,20 +155,22 @@ export default function MenuBar() {
             </Menu>
           </>
         )}
-        
+
         <Typography sx={{ flexGrow: 1 }} />
-        
+
         {/* Project/Job info - always visible but might be truncated on mobile */}
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center',
-          minWidth: 0, // Allow shrinking
-          maxWidth: isXSmall ? '200px' : 'none' // Limit width on mobile
-        }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            minWidth: 0, // Allow shrinking
+            maxWidth: isXSmall ? "200px" : "none", // Limit width on mobile
+          }}
+        >
           {job?.number && (
-            <EditableTypography 
-              variant={isXSmall ? "body1" : "h5"} 
-              text={`Job ${job.number}: `} 
+            <EditableTypography
+              variant={isXSmall ? "body1" : "h5"}
+              text={`Job ${job.number}: `}
             />
           )}
           {project && (
@@ -165,9 +178,11 @@ export default function MenuBar() {
               variant={isXSmall ? "body1" : "h5"}
               text={project.name}
               onDelay={(name) =>
-                api.patch(`projects/${project.id}`, { name: name }).then((_) => {
-                  mutateProject();
-                })
+                api
+                  .patch(`projects/${project.id}`, { name: name })
+                  .then((_) => {
+                    mutateProject();
+                  })
               }
             />
           )}
