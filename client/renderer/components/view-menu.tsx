@@ -2,6 +2,7 @@
 import { useState, useRef } from "react";
 import {
   Button,
+  IconButton,
   ListItemIcon,
   ListItemText,
   Menu,
@@ -11,8 +12,20 @@ import {
 import { YoutubeSearchedFor, ZoomIn, ZoomOut } from "@mui/icons-material";
 import { ThemeToggle } from "./theme-toggle";
 import { DevModeToggle } from "./dev-mode-toggle";
+import { useCCP4i2Window } from "../app-context";
+import { useApi } from "../api";
+import { Job, Project } from "../types/models";
+import { useRouter } from "next/dist/client/components/navigation";
+import LanIcon from "@mui/icons-material/Lan";
 
 export default function ViewMenu() {
+  const { projectId, jobId } = useCCP4i2Window();
+  const api = useApi();
+  const { data: project, mutate: mutateProject } = api.get<Project>(
+    `projects/${projectId}`
+  );
+  const router = useRouter();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const themeToggleRef = useRef<HTMLButtonElement>(null);
   const open = Boolean(anchorEl);
@@ -91,6 +104,19 @@ export default function ViewMenu() {
         <MenuItem>
           <DevModeToggle />
         </MenuItem>
+        {project && (
+          <MenuItem>
+            <IconButton
+              color="info"
+              aria-label="View network"
+              onClick={() => router.push(`/project/${projectId}/network`)}
+              sx={{ ml: 1 }}
+            >
+              <LanIcon />
+            </IconButton>
+            <ListItemText>Project Network</ListItemText>
+          </MenuItem>
+        )}
       </Menu>
     </>
   );

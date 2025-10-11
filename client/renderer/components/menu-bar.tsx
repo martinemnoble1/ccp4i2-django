@@ -1,11 +1,11 @@
-import { AppBar, Typography, IconButton } from "@mui/material";
-import LanIcon from "@mui/icons-material/Lan";
+import { AppBar, Typography, IconButton, Menu, MenuItem, useMediaQuery, useTheme, Box } from "@mui/material";
+import { MoreHoriz } from "@mui/icons-material";
 import EditMenu from "./edit-menu";
 import FileMenu from "./file-menu";
 import HelpMenu from "./help-menu";
 import UtilMenu from "./util-menu";
 import ViewMenu from "./view-menu";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useCCP4i2Window } from "../app-context";
 import { useApi } from "../api";
 import { Job, Project } from "../types/models";
@@ -22,6 +22,56 @@ export default function MenuBar() {
   );
   const { data: job } = api.get<Job>(`jobs/${jobId}`);
   const router = useRouter();
+  const theme = useTheme();
+  
+  // Responsive breakpoints - we'll use different strategies at different sizes
+  const isXSmall = useMediaQuery(theme.breakpoints.down('sm')); // < 600px
+  const isSmall = useMediaQuery(theme.breakpoints.down('md'));  // < 900px
+  const isMedium = useMediaQuery(theme.breakpoints.down('lg')); // < 1200px
+  
+  // More menu state
+  const [moreAnchorEl, setMoreAnchorEl] = useState<null | HTMLElement>(null);
+  const isMoreMenuOpen = Boolean(moreAnchorEl);
+
+  const handleMoreMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleMoreMenuClose = () => {
+    setMoreAnchorEl(null);
+  };
+
+  // Determine which menu items to show based on screen size
+  const getVisibleMenus = () => {
+    if (isXSmall) {
+      // Extra small: Only File menu visible, rest in overflow
+      return {
+        visible: ['file'],
+        overflow: ['edit', 'view', 'util', 'help', 'tags']
+      };
+    } else if (isSmall) {
+      // Small: File, Edit, and View visible
+      return {
+        visible: ['file', 'edit', 'view'],
+        overflow: ['util', 'help', 'tags']
+      };
+    } else if (isMedium) {
+      // Medium: All menus visible, but tags might be hidden
+      return {
+        visible: ['file', 'edit', 'view', 'util', 'help'],
+        overflow: ['tags']
+      };
+    } else {
+      // Large: Everything visible
+      return {
+        visible: ['file', 'edit', 'view', 'util', 'help', 'tags'],
+        overflow: []
+      };
+    }
+  };
+
+  const { visible, overflow } = getVisibleMenus();
+
   useEffect(() => {
     // Send a message to the main process to get the config
     if (window.electronAPI) {
@@ -41,37 +91,87 @@ export default function MenuBar() {
   return (
     <AppBar position="static">
       <HistoryToolbar>
-        <FileMenu />
-        <EditMenu />
-        <ViewMenu />
-        <UtilMenu />
-        <HelpMenu />
-        {project && <TagsOfProject projectId={project.id} />}
-        {project && (
-          <IconButton
-            color="info"
-            aria-label="View network"
-            onClick={() => router.push(`/project/${projectId}/network`)}
-            sx={{ ml: 1 }}
-          >
-            <LanIcon />
-          </IconButton>
+        {/* Always visible menus based on screen size */}
+        {visible.includes('file') && <FileMenu />}
+        {visible.includes('edit') && <EditMenu />}
+        {visible.includes('view') && <ViewMenu />}
+        {visible.includes('util') && <UtilMenu />}
+        {visible.includes('help') && <HelpMenu />}
+        {visible.includes('tags') && project && <TagsOfProject projectId={project.id} />}
+        
+        {/* Overflow menu for hidden items */}
+        {overflow.length > 0 && (
+          <>
+            <IconButton
+              onClick={handleMoreMenuOpen}
+              color="inherit"
+              aria-label="More menu options"
+            >
+              <MoreHoriz />
+            </IconButton>
+            <Menu
+              anchorEl={moreAnchorEl}
+              open={isMoreMenuOpen}
+              onClose={handleMoreMenuClose}
+              transformOrigin={{ horizontal: 'left', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+            >
+              {overflow.includes('edit') && (
+                <Box sx={{ px: 2, py: 1 }}>
+                  <EditMenu />
+                </Box>
+              )}
+              {overflow.includes('view') && (
+                <Box sx={{ px: 2, py: 1 }}>
+                  <ViewMenu />
+                </Box>
+              )}
+              {overflow.includes('util') && (
+                <Box sx={{ px: 2, py: 1 }}>
+                  <UtilMenu />
+                </Box>
+              )}
+              {overflow.includes('help') && (
+                <Box sx={{ px: 2, py: 1 }}>
+                  <HelpMenu />
+                </Box>
+              )}
+              {overflow.includes('tags') && project && (
+                <Box sx={{ px: 2, py: 1 }}>
+                  <TagsOfProject projectId={project.id} />
+                </Box>
+              )}
+            </Menu>
+          </>
         )}
+        
         <Typography sx={{ flexGrow: 1 }} />
-        {job?.number && (
-          <EditableTypography variant="h5" text={`Job ${job.number}: `} />
-        )}
-        {project && (
-          <EditableTypography
-            variant="h5"
-            text={project.name}
-            onDelay={(name) =>
-              api.patch(`projects/${project.id}`, { name: name }).then((_) => {
-                mutateProject();
-              })
-            }
-          />
-        )}
+        
+        {/* Project/Job info - always visible but might be truncated on mobile */}
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center',
+          minWidth: 0, // Allow shrinking
+          maxWidth: isXSmall ? '200px' : 'none' // Limit width on mobile
+        }}>
+          {job?.number && (
+            <EditableTypography 
+              variant={isXSmall ? "body1" : "h5"} 
+              text={`Job ${job.number}: `} 
+            />
+          )}
+          {project && (
+            <EditableTypography
+              variant={isXSmall ? "body1" : "h5"}
+              text={project.name}
+              onDelay={(name) =>
+                api.patch(`projects/${project.id}`, { name: name }).then((_) => {
+                  mutateProject();
+                })
+              }
+            />
+          )}
+        </Box>
       </HistoryToolbar>
     </AppBar>
   );
