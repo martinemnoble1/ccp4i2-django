@@ -332,7 +332,7 @@ class CData(HierarchicalObject):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "project": attribute(AttributeType.PROJECT_ID, tooltip="Project identifier"),
         "baseName": attribute(AttributeType.FILEPATH, tooltip="Base filename"),
         "relPath": attribute(AttributeType.FILEPATH, tooltip="Relative path to file"),
@@ -347,6 +347,21 @@ class CData(HierarchicalObject):
     },
     mime_type="application/octet-stream",
     gui_label="Data File",
+    qualifiers={
+            "allowUndefined": True,
+            "mustExist": False,
+            "fromPreviousJob": False,
+            "jobCombo": True,
+            "mimeTypeName": "",
+            "mimeTypeDescription": "",
+            "fileLabel": None,
+            "fileExtensions": [],
+            "fileContentClassName": None,
+            "isDirectory": False,
+            "saveToDb": True,
+            "requiredSubType": None,
+            "requiredContentFlag": None,
+        }
 )
 class CDataFile(CData):
     """Base class for file-related CData classes.

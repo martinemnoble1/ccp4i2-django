@@ -14,6 +14,10 @@ from .class_metadata import cdata_class, attribute, AttributeType
         )
     },
     gui_label="CAsuContent",
+    error_codes={
+        "101": "Failed reading file - is it correct file type?",
+        "102": "Failed reading file - it is not AU contents file",
+    },
 )
 class CAsuContent(CDataFileContent):
     """Generated CAsuContent class from CData metadata."""
@@ -111,6 +115,9 @@ class CAtomRefmacSelectionOccupancy(CData):
 @cdata_class(
     attributes={"text": attribute(AttributeType.STRING, tooltip="text attribute")},
     gui_label="CAtomSelection",
+    qualifiers={
+        "pdbFileKey": "",
+    },
 )
 class CAtomSelection(CData):
     """Generated CAtomSelection class from CData metadata."""
@@ -174,6 +181,10 @@ class CBlastItem(CData):
         "desc_level": attribute(AttributeType.INT, tooltip="desc_level attribute"),
     },
     gui_label="CChemComp",
+    error_codes={
+        "201": "Error reading monomer id and name",
+        "202": "Error writing monomer id and name",
+    },
 )
 class CChemComp(CData):
     """Component of CDictDataFile contents"""
@@ -232,6 +243,10 @@ class CDictDataFile(CDataFile):
         ),
     },
     gui_label="CEnsemble",
+    qualifiers={
+        "guiLabel": "Ensemble",
+        "allowUndefined": False,
+    },
 )
 class CEnsemble(CData):
     """An ensemble of models. Typically, this would be a set of related
@@ -263,6 +278,10 @@ class CEnsembleList(CList):
         )
     },
     gui_label="CHhpredData",
+    error_codes={
+        "201": "Failed to read HHPred file",
+        "202": "Failed to load iotbx software to read HHPred file",
+    },
 )
 class CHhpredData(CDataFileContent):
     """Generated CHhpredData class from CData metadata."""
@@ -382,6 +401,14 @@ class CPdbDataFileList(CList):
         ),
     },
     gui_label="CPdbEnsembleItem",
+    qualifiers={
+        "guiLabel": "Structure in ensemble",
+        "toolTip": "Homologous model and its similarity to the target structure",
+        "allowUndefined": False,
+    },
+    error_codes={
+        "101": "No sequence identity or structure RMS to target set",
+    },
 )
 class CPdbEnsembleItem(CData):
     """Generated CPdbEnsembleItem class from CData metadata."""
@@ -409,6 +436,9 @@ class CPdbEnsembleItem(CData):
         ),
     },
     gui_label="CResidueRange",
+    qualifiers={
+        "pdbFileKey": None,
+    },
 )
 class CResidueRange(CData):
     """A residue range selection"""

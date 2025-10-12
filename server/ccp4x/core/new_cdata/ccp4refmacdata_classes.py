@@ -45,12 +45,15 @@ class CRefmacRigidGroupList(CList):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "chain_id": attribute(AttributeType.STRING, tooltip="chain_id attribute"),
         "residue_1": attribute(AttributeType.STRING, tooltip="residue_1 attribute"),
         "residue_2": attribute(AttributeType.STRING, tooltip="residue_2 attribute"),
     },
     gui_label="CRefmacRigidGroupSegment",
+    error_codes={
+            "101": "No sequence identity or structure RMS to target set",
+        }
 )
 class CRefmacRigidGroupSegment(CData):
     """Generated CRefmacRigidGroupSegment class from CData metadata."""

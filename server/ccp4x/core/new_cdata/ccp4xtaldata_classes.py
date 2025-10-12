@@ -41,7 +41,7 @@ class CAsuComponentList(CList):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "a": attribute(
             AttributeType.CUSTOM,
             custom_class="CCellLength",
@@ -74,6 +74,10 @@ class CAsuComponentList(CList):
         ),
     },
     gui_label="CCell",
+    qualifiers={
+            "toolTip": "Cell lengths and angles",
+            "helpFile": "crystal_data#cell",
+        }
 )
 class CCell(CData):
     """A unit cell"""
@@ -124,7 +128,7 @@ class CColumnGroup(CData):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "columnName": attribute(AttributeType.STRING, tooltip="columnName attribute"),
         "defaultList": attribute(AttributeType.STRING, tooltip="defaultList attribute"),
         "columnType": attribute(AttributeType.STRING, tooltip="columnType attribute"),
@@ -134,6 +138,10 @@ class CColumnGroup(CData):
         ),
     },
     gui_label="CColumnGroupItem",
+    error_codes={
+            "1": "Attempting to change immutable object",
+            "2": "Attempting to access unknown attribute",
+        }
 )
 class CColumnGroupItem(CData):
     """Definition of set of columns that form a 'group'"""
@@ -274,7 +282,7 @@ class CImosflmXmlDataFile(CDataFile):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "file": attribute(
             AttributeType.CUSTOM,
             custom_class="CUnmergedDataFile",
@@ -297,6 +305,10 @@ class CImosflmXmlDataFile(CDataFile):
         ),
     },
     gui_label="CImportUnmerged",
+    qualifiers={
+            "toolTip": "Imported data file, cell parameters and crystal/dataset identifiers",
+            "helpFile": "import_merged#file_formats",
+        }
 )
 class CImportUnmerged(CData):
     """Generated CImportUnmerged class from CData metadata."""
@@ -321,12 +333,16 @@ class CMapDataFile(CDataFile):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "fileName": attribute(AttributeType.STRING, tooltip="fileName attribute"),
         "columnTag": attribute(AttributeType.STRING, tooltip="columnTag attribute"),
         "columnNames": attribute(AttributeType.STRING, tooltip="columnNames attribute"),
     },
     gui_label="CMergeMiniMtz",
+    error_codes={
+            "201": "Selected file is not a suitable 'mini' MTZ containing experimental data object",
+            "202": "Output column name list does not have correct number of names",
+        }
 )
 class CMergeMiniMtz(CData):
     """Generated CMergeMiniMtz class from CData metadata."""
@@ -460,11 +476,16 @@ class CProgramColumnGroup(CData):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "columnGroup": attribute(AttributeType.STRING, tooltip="columnGroup attribute"),
         "datasetName": attribute(AttributeType.STRING, tooltip="datasetName attribute"),
     },
     gui_label="CProgramColumnGroup0",
+    qualifiers={
+            "mustExist": False,
+            "mtzFileKey": "",
+            "groupTypes": [],
+        }
 )
 class CProgramColumnGroup0(CData):
     """Generated CProgramColumnGroup0 class from CData metadata."""
@@ -477,12 +498,17 @@ class CRefmacKeywordFile(CDataFile):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "h": attribute(AttributeType.STRING, default="h", tooltip="h attribute"),
         "k": attribute(AttributeType.STRING, default="k", tooltip="k attribute"),
         "l": attribute(AttributeType.STRING, default="l", tooltip="l attribute"),
     },
     gui_label="CReindexOperator",
+    error_codes={
+            "201": "Operator has bad syntax (needs three comma-separated fields)",
+            "202": "Operator contains invalid characters",
+            "203": "Operator is not set",
+        }
 )
 class CReindexOperator(CData):
     """Generated CReindexOperator class from CData metadata."""
@@ -495,11 +521,14 @@ class CReindexOperator(CData):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "low": attribute(AttributeType.FLOAT, tooltip="low attribute"),
         "high": attribute(AttributeType.FLOAT, tooltip="high attribute"),
     },
     gui_label="CResolutionRange",
+    error_codes={
+            "201": "High/low resolution wrong way round?",
+        }
 )
 class CResolutionRange(CData):
     """Generated CResolutionRange class from CData metadata."""
@@ -512,7 +541,7 @@ class CResolutionRange(CData):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "runNumber": attribute(AttributeType.INT, tooltip="runNumber attribute"),
         "batchRange0": attribute(AttributeType.INT, tooltip="batchRange0 attribute"),
         "batchRange1": attribute(AttributeType.INT, tooltip="batchRange1 attribute"),
@@ -520,6 +549,13 @@ class CResolutionRange(CData):
         "fileNumber": attribute(AttributeType.INT, tooltip="fileNumber attribute"),
     },
     gui_label="CRunBatchRange",
+    qualifiers={
+            "toolTip": "Specify range of reflections to treat as one run",
+        },
+    error_codes={
+            "101": "End of batch range less than start",
+            "102": "All items must be set",
+        }
 )
 class CRunBatchRange(CData):
     """Generated CRunBatchRange class from CData metadata."""
@@ -556,7 +592,7 @@ class CSpaceGroup(CString):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "spaceGroup": attribute(
             AttributeType.CUSTOM,
             custom_class="CSpaceGroup",
@@ -567,6 +603,19 @@ class CSpaceGroup(CString):
         ),
     },
     gui_label="CSpaceGroupCell",
+    qualifiers={
+            "toolTip": "Space group and cell length and angles",
+            "helpFile": "crystal_data#cell_space_group",
+        },
+    error_codes={
+            "101": "Cell lengths should NOT be identical",
+            "102": "Cell angles should NOT be identical",
+            "103": "Cell angle should be 90",
+            "104": "Cell angle should NOT be 90",
+            "105": "Cell lengths should be identical",
+            "106": "Cell angle should be 120",
+            "107": "Cell angle should be identical",
+        }
 )
 class CSpaceGroupCell(CData):
     """Cell space group and parameters"""
@@ -654,12 +703,15 @@ class CWavelength(CFloat):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "imageFile": attribute(AttributeType.STRING, tooltip="imageFile attribute"),
         "imageStart": attribute(AttributeType.INT, tooltip="imageStart attribute"),
         "imageEnd": attribute(AttributeType.INT, tooltip="imageEnd attribute"),
     },
     gui_label="CXia2ImageSelection",
+    qualifiers={
+            "toolTip": "select an image file and an optional range of files to define a dataset",
+        }
 )
 class CXia2ImageSelection(CData):
     """Generated CXia2ImageSelection class from CData metadata."""

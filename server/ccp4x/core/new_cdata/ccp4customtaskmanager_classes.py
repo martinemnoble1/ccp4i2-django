@@ -30,6 +30,11 @@ class CCustomTaskDefinition(CContainer):
     """Generated CCustomTaskDefinition class from CData metadata."""
     pass
 
+@cdata_class(
+    qualifiers={
+        "enumerators": ['unknown', 'input', 'output', 'control parameter', 'log'],
+    }
+)
 class CCustomTaskFileFunction(CString):
     """Generated CCustomTaskFileFunction class from CData metadata."""
     pass

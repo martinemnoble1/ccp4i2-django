@@ -71,7 +71,7 @@ class CFilePath(CString):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "function": attribute(
             AttributeType.CUSTOM,
             custom_class="CFileFunction",
@@ -114,6 +114,13 @@ class CFilePath(CString):
         "OS": attribute(AttributeType.STRING, tooltip="OS attribute"),
     },
     gui_label="CI2XmlHeader",
+    error_codes={
+            "101": "Attempting to read header from non-existant Xml file",
+            "102": "Error loading file to read header",
+            "103": "Error finding <ccp4i2_header> in file",
+            "104": "Error interpreting header from file",
+            "105": "File does not have <ccp4i2> root node",
+        }
 )
 class CI2XmlHeader(CData):
     """Container for header info from XML file"""

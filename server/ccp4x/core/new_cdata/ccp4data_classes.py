@@ -5,6 +5,12 @@ from .base_classes import CData, CInt, CList, CString
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
+@cdata_class(
+    qualifiers={
+        "default": "NotImplemented",
+        "charWidth": 10,
+    }
+)
 class CBaseData(CData):
     """Base class for simple classes"""
 
@@ -17,6 +23,12 @@ class CCollection(CData):
     pass
 
 
+@cdata_class(
+    qualifiers={
+        "enumerators": ['CPdbDataFile', 'CSeqDataFile', 'CObsDataFile', 'CPhsDataFile', 'CMapCoeffsDataFile', 'CFreeRDataFile', 'CMtzDataFile', 'CDictDataFile', 'CDataFile', 'CInt', 'CFloat', 'CString', 'CRefmacKeywordFile'],
+        "menuText": [],
+    }
+)
 class CI2DataType(CString):
     """Generated CI2DataType class from CData metadata."""
 
@@ -42,6 +54,15 @@ class COneWord(CString):
     pass
 
 
+@cdata_class(
+    qualifiers={
+        "default": "NotImplemented",
+        "listMinLength": 0,
+        "listMaxLength": 250,
+        "listCompare": "NotImplemented",
+        "nameRoot": "NotImplemented",
+    }
+)
 class COutputFileList(CList):
     """A list with all items of one CData sub-class"""
 
@@ -59,6 +80,15 @@ class CPatchSelection(CData):
     """Generated CPatchSelection class from CData metadata."""
 
 
+@cdata_class(
+    qualifiers={
+        "compare": "NotImplemented",
+    },
+    error_codes={
+        "101": "End of range less than start",
+        "102": "End of range greater than start",
+    }
+)
 class CRange(CData):
     """Base class for CIntRange and CFloatRange"""
 

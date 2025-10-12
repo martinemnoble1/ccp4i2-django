@@ -59,12 +59,17 @@ class CTransformation(CData):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "x": attribute(AttributeType.FLOAT, tooltip="x attribute"),
         "y": attribute(AttributeType.FLOAT, tooltip="y attribute"),
         "z": attribute(AttributeType.FLOAT, tooltip="z attribute"),
     },
     gui_label="CXyz",
+    error_codes={
+            "201": "Attempting arithmetic with inappropriate data type",
+            "202": "Attempting arithmetic in unset data object",
+            "203": "Attempting arithmetic with unset data object as argument",
+        }
 )
 class CXyz(CData):
     """Generated CXyz class from CData metadata."""

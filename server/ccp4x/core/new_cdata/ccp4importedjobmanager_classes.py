@@ -24,6 +24,11 @@ class CImportedJobData(CData):
         # TODO: Implement validation logic based on qualifiers
         return errors
 
+@cdata_class(
+    qualifiers={
+        "listMinLength": 1,
+    }
+)
 class CImportedJobDataList(CList):
     """Generated CImportedJobDataList class from CData metadata."""
     pass

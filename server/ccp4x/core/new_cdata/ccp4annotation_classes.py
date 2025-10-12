@@ -6,7 +6,7 @@ from .class_metadata import cdata_class, attribute, AttributeType
 
 
 @cdata_class(
-    attributes={
+attributes={
         "text": attribute(AttributeType.STRING, tooltip="text attribute"),
         "time": attribute(
             AttributeType.CUSTOM,
@@ -22,6 +22,10 @@ from .class_metadata import cdata_class, attribute, AttributeType
         ),
     },
     gui_label="CAnnotation",
+    qualifiers={
+            "label": "Annotation",
+            "toolTip": "Enter your comments",
+        }
 )
 class CAnnotation(CData):
     """Annotation text with user id and time"""
@@ -46,7 +50,7 @@ class CAuthor(CString):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "pmid": attribute(AttributeType.INT, tooltip="pmid attribute"),
         "title": attribute(AttributeType.STRING, tooltip="title attribute"),
         "authorList": attribute(
@@ -57,13 +61,16 @@ class CAuthor(CString):
         "selected": attribute(AttributeType.BOOLEAN, tooltip="selected attribute"),
     },
     gui_label="CBibReference",
+    error_codes={
+            "101": "Failed to load Medline data",
+        }
 )
 class CBibReference(CData):
     """Bibliographic reference"""
 
 
 @cdata_class(
-    attributes={
+attributes={
         "taskName": attribute(AttributeType.STRING, tooltip="taskName attribute"),
         "version": attribute(AttributeType.STRING, tooltip="version attribute"),
         "title": attribute(AttributeType.STRING, tooltip="title attribute"),
@@ -72,6 +79,11 @@ class CBibReference(CData):
         ),
     },
     gui_label="CBibReferenceGroup",
+    error_codes={
+            "100": "Failed attempting to load MedLine file - file not found",
+            "101": "Failed attempting to find references file",
+            "102": "Error copying file",
+        }
 )
 class CBibReferenceGroup(CData):
     """Set of bibliographic references for a task"""
@@ -144,10 +156,14 @@ class CHostName(CString):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "tag": attribute(AttributeType.STRING, tooltip="tag attribute"),
     },
     gui_label="CMetaDataTag",
+    qualifiers={
+            "enumeratorsFunction": None,
+            "addEnumeratorFunction": None,
+        }
 )
 class CMetaDataTag(CData):
     """This class will extend list of enumerators if new value for string is entered"""
@@ -212,7 +228,7 @@ class CTime(CInt):
 
 
 @cdata_class(
-    attributes={
+attributes={
         "platformNode": attribute(
             AttributeType.STRING, tooltip="platformNode attribute"
         ),
@@ -221,6 +237,10 @@ class CTime(CInt):
         ),
     },
     gui_label="CUserAddress",
+    qualifiers={
+            "label": "User id and current machine",
+            "toolTip": "User id as me@myplace.ac.uk and machine name",
+        }
 )
 class CUserAddress(CData):
     """User id and platform node"""
