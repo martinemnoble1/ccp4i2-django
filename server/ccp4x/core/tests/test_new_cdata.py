@@ -485,7 +485,6 @@ class TestCDataIntegrity:
         """Test casting numerical parameter to python type."""
         ctrl = parsed_task.controlParameters
 
-        # Test modifying a parameter
         assert ctrl.NCYCLES * 10 == 100
         assert type(ctrl.NCYCLES * CInt(100)) == CInt
 
@@ -505,3 +504,14 @@ class TestCDataIntegrity:
         assert ctrl.NCYCLES.value == 25
         inp = parsed_task.inputData
         assert inp.XYZIN.baseName == "model_from_refinement_mmcif_format_1.cif"
+
+    def test_dict_set_parameter(self, parsed_task):
+        """Test casting numerical parameter to python type."""
+
+        inp = parsed_task.find_by_path("inputData")
+        inp.XYZIN = {"baseName": "new_model.cif"}
+        assert parsed_task.find_by_path("inputData.XYZIN").baseName == "new_model.cif"
+        assert (
+            parsed_task.find_by_path("inputData.XYZIN").dbFileId
+            == "7278fed0208146c88336b6da8cbb275f"
+        )
