@@ -1,15 +1,22 @@
 """Generated classes from CCP4ImportedJobManager.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CData, CDataFile, CContainer
+from .base_classes import CData
+from .class_metadata import cdata_class, attribute, AttributeType
 
+
+@cdata_class(
+    attributes={
+        "name": attribute(AttributeType.CUSTOM, custom_class="COneWord", tooltip="name attribute"),
+        "dataType": attribute(AttributeType.CUSTOM, custom_class="CI2DataType", default="CPdbDataFile", tooltip="dataType attribute"),
+        "label": attribute(AttributeType.STRING, tooltip="label attribute"),
+        "fileName": attribute(AttributeType.CUSTOM, custom_class="CDataFile", tooltip="fileName attribute"),
+    },
+    gui_label="CImportedJobData",
+)
 class CImportedJobData(CData):
     """Generated CImportedJobData class from CData metadata."""
 
-    name: Any = None
-    dataType: Any = "CPdbDataFile"
-    label: Any = None
-    fileName: Any = None
 
     def validate(self) -> List[str]:
         """Validate instance data according to class qualifiers."""

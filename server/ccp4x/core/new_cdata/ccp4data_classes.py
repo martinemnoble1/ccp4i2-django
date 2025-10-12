@@ -1,7 +1,8 @@
 """Generated classes from CCP4Data.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CData, CDataFile, CContainer
+from .base_classes import CData
+from .class_metadata import cdata_class, attribute, AttributeType
 
 class CBaseData(CData):
     """Base class for simple classes"""
@@ -31,11 +32,17 @@ class COutputFileList(CData):
     """A list with all items of one CData sub-class"""
     pass
 
+
+@cdata_class(
+    attributes={
+        "taskName": attribute(AttributeType.STRING, tooltip="taskName attribute"),
+        "patch": attribute(AttributeType.STRING, tooltip="patch attribute"),
+    },
+    gui_label="CPatchSelection",
+)
 class CPatchSelection(CData):
     """Generated CPatchSelection class from CData metadata."""
 
-    taskName: str = None
-    patch: str = None
 
 class CRange(CData):
     """Base class for CIntRange and CFloatRange"""

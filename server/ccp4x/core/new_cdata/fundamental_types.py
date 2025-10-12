@@ -1,16 +1,24 @@
 """Fundamental CCP4i2 data types that form the base of the type system."""
 
 from typing import List, Any, Optional, Union
-from .base_classes import CData
+from .base_classes import CData, CString, ValueState
 
 
 class CInt(CData):
     """Integer value type."""
 
-    def __init__(self, value: int = 0, parent=None, name=None, **kwargs):
+    def __init__(self, value: int = None, parent=None, name=None, **kwargs):
         super().__init__(parent=parent, name=name, **kwargs)
-        # Set the value after initialization to properly track set state
-        self.value = value
+
+        # Handle value setting with proper state tracking
+        if value is None:
+            # Default initialization - set value but mark as NOT_SET
+            super().__setattr__("value", 0)
+            if hasattr(self, "_value_states"):
+                self._value_states["value"] = ValueState.NOT_SET
+        else:
+            # Explicit value provided - mark as EXPLICITLY_SET
+            self.value = value
 
     def __str__(self):
         return str(self.value)
@@ -23,6 +31,19 @@ class CInt(CData):
         self.value = value
         return self
 
+    def isSet(self, field_name: str = None) -> bool:
+        """Check if the value has been set.
+
+        Args:
+            field_name: Optional field name. If not provided, checks if 'value' is set.
+
+        Returns:
+            True if the value (or specified field) has been set, False otherwise.
+        """
+        if field_name is None:
+            field_name = "value"
+        return super().isSet(field_name)
+
     def _is_value_type(self) -> bool:
         return True
 
@@ -30,10 +51,18 @@ class CInt(CData):
 class CFloat(CData):
     """Float value type."""
 
-    def __init__(self, value: float = 0.0, parent=None, name=None, **kwargs):
+    def __init__(self, value: float = None, parent=None, name=None, **kwargs):
         super().__init__(parent=parent, name=name, **kwargs)
-        # Set the value after initialization to properly track set state
-        self.value = value
+
+        # Handle value setting with proper state tracking
+        if value is None:
+            # Default initialization - set value but mark as NOT_SET
+            super().__setattr__("value", 0.0)
+            if hasattr(self, "_value_states"):
+                self._value_states["value"] = ValueState.NOT_SET
+        else:
+            # Explicit value provided - mark as EXPLICITLY_SET
+            self.value = value
 
     def __str__(self):
         return str(self.value)
@@ -46,6 +75,19 @@ class CFloat(CData):
         self.value = value
         return self
 
+    def isSet(self, field_name: str = None) -> bool:
+        """Check if the value has been set.
+
+        Args:
+            field_name: Optional field name. If not provided, checks if 'value' is set.
+
+        Returns:
+            True if the value (or specified field) has been set, False otherwise.
+        """
+        if field_name is None:
+            field_name = "value"
+        return super().isSet(field_name)
+
     def _is_value_type(self) -> bool:
         return True
 
@@ -53,10 +95,18 @@ class CFloat(CData):
 class CBoolean(CData):
     """Boolean value type."""
 
-    def __init__(self, value: bool = False, parent=None, name=None, **kwargs):
+    def __init__(self, value: bool = None, parent=None, name=None, **kwargs):
         super().__init__(parent=parent, name=name, **kwargs)
-        # Set the value after initialization to properly track set state
-        self.value = value
+
+        # Handle value setting with proper state tracking
+        if value is None:
+            # Default initialization - set value but mark as NOT_SET
+            super().__setattr__("value", False)
+            if hasattr(self, "_value_states"):
+                self._value_states["value"] = ValueState.NOT_SET
+        else:
+            # Explicit value provided - mark as EXPLICITLY_SET
+            self.value = value
 
     def __str__(self):
         return str(self.value)
@@ -68,6 +118,19 @@ class CBoolean(CData):
         """Set the value directly using .set() method."""
         self.value = value
         return self
+
+    def isSet(self, field_name: str = None) -> bool:
+        """Check if the value has been set.
+
+        Args:
+            field_name: Optional field name. If not provided, checks if 'value' is set.
+
+        Returns:
+            True if the value (or specified field) has been set, False otherwise.
+        """
+        if field_name is None:
+            field_name = "value"
+        return super().isSet(field_name)
 
     def _is_value_type(self) -> bool:
         return True
@@ -120,8 +183,7 @@ class CFloatRange(CRange):
         return errors
 
 
-# Import CString from base_classes
-from .base_classes import CString
+# CString is imported at the top of the file
 
 # Type aliases for commonly used types
 CCellLength = CFloat

@@ -2,9 +2,14 @@
 
 import sys
 import os
-from typing import List, Any, Optional, Union
+from typing import Any, Dict
 from enum import Enum, auto
-from .metadata_system import MetadataRegistry, ClassMetadata, FieldMetadata
+from .metadata_system import MetadataRegistry
+from .class_metadata import cdata_class, attribute, AttributeType
+
+# Import HierarchicalObject from the core system
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
+from ..base_object.hierarchy_system import HierarchicalObject
 
 
 class ValueState(Enum):
@@ -15,17 +20,12 @@ class ValueState(Enum):
     EXPLICITLY_SET = auto()  # Value has been explicitly assigned
 
 
-# Import HierarchicalObject from the core system
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
-from ..base_object.hierarchy_system import HierarchicalObject
-
-
 class CData(HierarchicalObject):
     """Base class for all CCP4i2 data objects with hierarchical relationships."""
 
-    def __init__(self, parent=None, name=None, **kwargs):
+    def __init__(self, parent=None, objectName=None, **kwargs):
         # Initialize hierarchical object first
-        super().__init__(parent=parent, name=name)
+        super().__init__(parent=parent, objectName=objectName)
 
         # Initialize set state tracking
         self._value_states: Dict[str, ValueState] = {}
@@ -37,22 +37,38 @@ class CData(HierarchicalObject):
         # Load default values from qualifiers if available
         self._load_default_values()
 
+        # NEW: Apply metadata-driven attribute creation
+        self._apply_metadata_attributes()
+
         # Apply provided attributes with hierarchy handling
         for key, value in kwargs.items():
             setattr(self, key, value)
+
+    def _apply_metadata_attributes(self):
+        """Apply metadata-driven attribute creation if metadata is available."""
+        try:
+            from .class_metadata import apply_metadata_to_instance
+
+            apply_metadata_to_instance(self)
+        except ImportError:
+            # Metadata system not available, skip
+            pass
+        except Exception:
+            # Any other error, skip silently to avoid breaking existing code
+            pass
 
     def _setup_hierarchy_for_value(self, key: str, value: Any):
         """Set up hierarchical relationships for attribute values."""
         if isinstance(value, CData):
             # Set this object as parent and the attribute name as the child's name
             value.set_parent(self)
-            value.name = key
+            value.objectName = key
         elif isinstance(value, list):
             # Handle list of CData objects
             for i, item in enumerate(value):
                 if isinstance(item, CData):
                     item.set_parent(self)
-                    item.name = f"{key}[{i}]"
+                    item.objectName = f"{key}[{i}]"
 
     def _is_value_type(self) -> bool:
         """Check if this is a simple value type (like CString, CInt, etc.)."""
@@ -315,11 +331,41 @@ class CData(HierarchicalObject):
         return get_error_message(error_code)
 
 
+@cdata_class(
+    attributes={
+        "project": attribute(AttributeType.PROJECT_ID, tooltip="Project identifier"),
+        "baseName": attribute(AttributeType.FILEPATH, tooltip="Base filename"),
+        "relPath": attribute(AttributeType.FILEPATH, tooltip="Relative path to file"),
+        "annotation": attribute(
+            AttributeType.STRING, default="", tooltip="File annotation"
+        ),
+        "dbFileId": attribute(AttributeType.UUID, tooltip="Database file identifier"),
+        "subType": attribute(AttributeType.INT, default=None, tooltip="File subtype"),
+        "contentFlag": attribute(
+            AttributeType.INT, default=None, min_value=0, tooltip="Content flag"
+        ),
+    },
+    mime_type="application/octet-stream",
+    gui_label="Data File",
+)
 class CDataFile(CData):
-    """Base class for file-related CData classes."""
+    """Base class for file-related CData classes.
+
+    Attributes are automatically created from embedded metadata:
+    - project: CProjectId - Project identifier
+    - baseName: CFilePath - Base filename
+    - relPath: CFilePath - Relative path to file
+    - annotation: CString - File annotation
+    - dbFileId: CUUID - Database file identifier
+    - subType: CInt - File subtype (optional)
+    - contentFlag: CInt - Content flag (min=0, optional)
+    """
 
     def __init__(self, file_path: str = None, parent=None, name=None, **kwargs):
+        # Initialize base class (which will auto-create attributes from metadata)
         super().__init__(parent=parent, name=name, **kwargs)
+
+        # Legacy compatibility
         self.file_path = file_path
 
     def load_from_file(self, file_path: str):
@@ -375,7 +421,32 @@ class CString(CData):
     def set(self, value: str):
         """Set the value directly using .set() method."""
         self.value = value
+        # Mark as explicitly set in parent if we have one
+        if self.parent and hasattr(self.parent, "_value_states") and self.name:
+            self.parent._value_states[self.name] = ValueState.EXPLICITLY_SET
         return self
+
+    def isSet(self, field_name: str = None) -> bool:
+        """Check if this string value has been set.
+
+        Args:
+            field_name: Optional field name (for compatibility with parent's isSet interface)
+                       If None, uses this object's name in its parent
+
+        Returns:
+            True if value has been explicitly set, False otherwise
+        """
+        if self.parent and hasattr(self.parent, "_value_states"):
+            # Use provided field_name or fall back to this object's name
+            check_name = field_name if field_name is not None else self.name
+            if check_name:
+                return (
+                    self.parent._value_states.get(check_name, ValueState.NOT_SET)
+                    == ValueState.EXPLICITLY_SET
+                )
+
+        # Fallback: check if we have a non-empty value (basic heuristic)
+        return bool(self.value) if self.value != "" else False
 
     def _is_value_type(self) -> bool:
         return True
