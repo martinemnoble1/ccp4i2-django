@@ -66,7 +66,8 @@ class CRefmacRigidGroupList(CList):
     error_codes={
             "101": "No sequence identity or structure RMS to target set",
         },
-    gui_label="CRefmacRigidGroupSegment"
+    gui_label="CRefmacRigidGroupSegment",
+    contents_order=["chain_id", "residue_1", "residue_2"]
 )
 class CRefmacRigidGroupSegment(CData):
     """Generated CRefmacRigidGroupSegment class from CData metadata."""

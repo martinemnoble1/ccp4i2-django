@@ -20,9 +20,7 @@ class ValueState(Enum):
     EXPLICITLY_SET = auto()  # Value has been explicitly assigned
 
 
-@cdata_class(
-    gui_label="CData"
-)
+@cdata_class(gui_label="CData")
 class CData(HierarchicalObject):
     """Base class for all CCP4i2 data objects with hierarchical relationships."""
 
@@ -336,30 +334,98 @@ class CData(HierarchicalObject):
 
 @cdata_class(
     attributes={
-            "project": attribute(AttributeType.STRING, tooltip="project attribute"),
-            "baseName": attribute(AttributeType.STRING, tooltip="baseName attribute"),
-            "relPath": attribute(AttributeType.STRING, tooltip="relPath attribute"),
-            "annotation": attribute(AttributeType.STRING, tooltip="annotation attribute"),
-            "dbFileId": attribute(AttributeType.STRING, tooltip="dbFileId attribute"),
-            "subType": attribute(AttributeType.INT, tooltip="subType attribute"),
-            "contentFlag": attribute(AttributeType.INT, tooltip="contentFlag attribute"),
-        },
+        "project": attribute(AttributeType.STRING, tooltip="project attribute"),
+        "baseName": attribute(AttributeType.STRING, tooltip="baseName attribute"),
+        "relPath": attribute(AttributeType.STRING, tooltip="relPath attribute"),
+        "annotation": attribute(AttributeType.STRING, tooltip="annotation attribute"),
+        "dbFileId": attribute(AttributeType.STRING, tooltip="dbFileId attribute"),
+        "subType": attribute(AttributeType.INT, tooltip="subType attribute"),
+        "contentFlag": attribute(AttributeType.INT, tooltip="contentFlag attribute"),
+    },
     qualifiers={
-            "allowUndefined": True,
-            "mustExist": False,
-            "fromPreviousJob": False,
-            "jobCombo": True,
-            "mimeTypeName": "",
-            "mimeTypeDescription": "",
-            "fileLabel": None,
-            "fileExtensions": [],
-            "fileContentClassName": None,
-            "isDirectory": False,
-            "saveToDb": True,
-            "requiredSubType": None,
-            "requiredContentFlag": None,
+        "allowUndefined": True,
+        "mustExist": False,
+        "fromPreviousJob": False,
+        "jobCombo": True,
+        "mimeTypeName": "",
+        "mimeTypeDescription": "",
+        "fileLabel": None,
+        "fileExtensions": [],
+        "fileContentClassName": None,
+        "isDirectory": False,
+        "saveToDb": True,
+        "requiredSubType": None,
+        "requiredContentFlag": None,
+    },
+    gui_label="CDataFile",
+    qualifiers_order=[
+        "fileExtensions",
+        "mimeTypeName",
+        "mimeTypeDescription",
+        "fileLabel",
+        "allowUndefined",
+        "mustExist",
+        "fromPreviousJob",
+        "jobCombo",
+        "fileContentClassName",
+        "isDirectory",
+        "saveToDb",
+        "requiredSubType",
+        "requiredContentFlag",
+    ],
+    qualifiers_definition={
+        "allowUndefined": {
+            "type": "bool",
+            "description": "Flag if data file can be undefined at run time",
         },
-    gui_label="CDataFile"
+        "mustExist": {
+            "type": "bool",
+            "description": "Flag if data file must exist at run time",
+        },
+        "fromPreviousJob": {
+            "type": "bool",
+            "description": "Flag if input data file can be inferred from preceeding jobs",
+        },
+        "jobCombo": {
+            "type": "bool",
+            "description": "Flag if data widget should be a combo box ",
+        },
+        "mimeTypeName": {"type": "str", "description": ""},
+        "mimeTypeDescription": {"type": "str", "description": ""},
+        "fileLabel": {"type": "str", "description": "Label for file"},
+        "fileExtensions": {
+            "type": "list",
+            "listItemType": "str",
+            "description": "A list of strings containing allowed file extensions (no dot)",
+        },
+        "fileContentClassName": {
+            "type": "str",
+            "editable": False,
+            "description": "A string containing the name of a class which will hold the file contents",
+        },
+        "isDirectory": {
+            "type": "bool",
+            "description": "Flag if the data is a directory",
+        },
+        "ifInfo": {
+            "type": "bool",
+            "description": "Flag if gui widget should have info icon",
+        },
+        "saveToDb": {
+            "type": "bool",
+            "description": "Save the name of this file in the database",
+        },
+        "requiredSubType": {
+            "type": "list",
+            "listItemType": "int",
+            "description": "A list of allowed sub types",
+        },
+        "requiredContentFlag": {
+            "type": "list",
+            "listItemType": "int",
+            "description": "A list of allowed content flags",
+        },
+    },
 )
 class CDataFile(CData):
     """Base class for file-related CData classes.
@@ -394,9 +460,7 @@ class CDataFile(CData):
         # TODO: Implement file saving logic
 
 
-@cdata_class(
-    gui_label="CContainer"
-)
+@cdata_class(gui_label="CContainer")
 class CContainer(CData):
     """Base class for container CData classes."""
 

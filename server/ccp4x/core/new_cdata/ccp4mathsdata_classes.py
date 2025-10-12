@@ -21,7 +21,8 @@ class CAngle(CFloat):
             "beta": attribute(AttributeType.STRING, tooltip="beta attribute"),
             "gamma": attribute(AttributeType.STRING, tooltip="gamma attribute"),
         },
-    gui_label="CEulerRotation"
+    gui_label="CEulerRotation",
+    contents_order=["alpha", "beta", "gamma"]
 )
 class CEulerRotation(CData):
     """Generated CEulerRotation class from CData metadata."""
@@ -44,7 +45,8 @@ class CMatrix33(CData):
             "translation": attribute(AttributeType.STRING, tooltip="translation attribute"),
             "rotation": attribute(AttributeType.STRING, tooltip="rotation attribute"),
         },
-    gui_label="CTransformation"
+    gui_label="CTransformation",
+    contents_order=["translation", "rotation"]
 )
 class CTransformation(CData):
     """Generated CTransformation class from CData metadata."""

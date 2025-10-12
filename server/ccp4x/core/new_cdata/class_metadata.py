@@ -57,6 +57,9 @@ class ClassMetadata:
     file_extensions: Optional[List[str]] = None
     mime_type: Optional[str] = None
     gui_label: Optional[str] = None
+    contents_order: Optional[List[str]] = None
+    qualifiers_order: Optional[List[str]] = None
+    qualifiers_definition: Optional[Dict[str, Any]] = None
 
 
 # Global registry of class metadata
@@ -88,6 +91,9 @@ def cdata_class(
     file_extensions: Optional[List[str]] = None,
     mime_type: Optional[str] = None,
     gui_label: Optional[str] = None,
+    contents_order: Optional[List[str]] = None,
+    qualifiers_order: Optional[List[str]] = None,
+    qualifiers_definition: Optional[Dict[str, Any]] = None,
 ):
     """Class decorator to add metadata to CData classes.
 
@@ -98,6 +104,9 @@ def cdata_class(
         file_extensions: List of supported file extensions
         mime_type: MIME type for file classes
         gui_label: Label for GUI display
+        contents_order: List specifying display order of attributes in UI
+        qualifiers_order: List specifying display order of qualifiers
+        qualifiers_definition: Dictionary of qualifier type definitions
 
     Example:
         @cdata_class(
@@ -124,6 +133,9 @@ def cdata_class(
             file_extensions=file_extensions,
             mime_type=mime_type,
             gui_label=gui_label,
+            contents_order=contents_order,
+            qualifiers_order=qualifiers_order,
+            qualifiers_definition=qualifiers_definition,
         )
 
         # Store in global registry

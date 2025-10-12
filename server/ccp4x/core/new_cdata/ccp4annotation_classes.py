@@ -54,6 +54,7 @@ class CAuthor(CString):
         "101": "Failed to load Medline data",
     },
     gui_label="CBibReference",
+    contents_order=["pmid", "title", "authorList", "source", "url", "selected"],
 )
 class CBibReference(CData):
     """Bibliographic reference"""
@@ -72,6 +73,7 @@ class CBibReference(CData):
         "102": "Error copying file",
     },
     gui_label="CBibReferenceGroup",
+    contents_order=["taskName", "version", "title", "references"],
 )
 class CBibReferenceGroup(CData):
     """Set of bibliographic references for a task"""
@@ -87,6 +89,7 @@ class CBibReferenceGroup(CData):
         "dayRange": attribute(AttributeType.INT, tooltip="dayRange attribute"),
     },
     gui_label="CDateRange",
+    contents_order=["year", "month", "day", "yearRange", "monthRange", "dayRange"],
 )
 class CDateRange(CData):
     """A date range - may be on a scale of years,months or days"""
@@ -138,6 +141,8 @@ class CHostName(CString):
         "addEnumeratorFunction": None,
     },
     gui_label="CMetaDataTag",
+    contents_order=["tag"],
+    qualifiers_order=["enumeratorsFunction", "addEnumeratorFunction"],
 )
 class CMetaDataTag(CData):
     """This class will extend list of enumerators if new value for string is entered"""
@@ -178,6 +183,19 @@ class CMetaDataTagList(CList):
         "maxTries": attribute(AttributeType.INT, tooltip="maxTries attribute"),
     },
     gui_label="CServerGroup",
+    contents_order=[
+        "name",
+        "mechanism",
+        "serverList",
+        "userExtensible",
+        "ccp4Dir",
+        "tempDir",
+        "sge_root",
+        "keyFilename",
+        "validate",
+        "customCodeFile",
+        "queueOptionsFile",
+    ],
 )
 class CServerGroup(CData):
     """Generated CServerGroup class from CData metadata."""
@@ -197,6 +215,13 @@ class CServerGroup(CData):
         "format": "%H:%M %d/%b/%y",
     },
     gui_label="CTime",
+    qualifiers_order=["format"],
+    qualifiers_definition={
+        "format": {
+            "type": "str",
+            "description": "Argument to Python time.strftime to display time in human readable format",
+        },
+    },
 )
 class CTime(CInt):
     """The time. Uses Python time module"""
@@ -204,8 +229,28 @@ class CTime(CInt):
     pass
 
 
+@cdata_class(
+    attributes={
+        "platformNode": attribute(
+            AttributeType.STRING, tooltip="platformNode attribute"
+        ),
+        "userId": attribute(AttributeType.STRING, tooltip="userId attribute"),
+    },
+    qualifiers={
+        "label": "User id and current machine",
+        "toolTip": "User id as me@myplace.ac.uk and machine name",
+    },
+    gui_label="CUserAddress",
+    contents_order=["platformNode", "userId"],
+)
 class CUserAddress(CData):
     """User id and platform node"""
+
+    def validate(self) -> List[str]:
+        """Validate instance data according to class qualifiers."""
+        errors = []
+        # TODO: Implement validation logic based on qualifiers
+        return errors
 
 
 class CUserId(CString):

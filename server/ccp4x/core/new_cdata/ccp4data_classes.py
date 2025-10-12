@@ -9,7 +9,11 @@ from .class_metadata import cdata_class, attribute, AttributeType
     qualifiers={
         "default": "NotImplemented",
         "charWidth": 10,
-    }
+    },
+    qualifiers_order=["charWidth"],
+    qualifiers_definition={
+        "charWidth": {"type": "int"},
+    },
 )
 class CBaseData(CData):
     """Base class for simple classes"""
@@ -17,9 +21,7 @@ class CBaseData(CData):
     pass
 
 
-@cdata_class(
-    gui_label="CCollection"
-)
+@cdata_class(gui_label="CCollection")
 class CCollection(CData):
     """Generated CCollection class from CData metadata."""
 
@@ -28,7 +30,21 @@ class CCollection(CData):
 
 @cdata_class(
     qualifiers={
-        "enumerators": ['CPdbDataFile', 'CSeqDataFile', 'CObsDataFile', 'CPhsDataFile', 'CMapCoeffsDataFile', 'CFreeRDataFile', 'CMtzDataFile', 'CDictDataFile', 'CDataFile', 'CInt', 'CFloat', 'CString', 'CRefmacKeywordFile'],
+        "enumerators": [
+            "CPdbDataFile",
+            "CSeqDataFile",
+            "CObsDataFile",
+            "CPhsDataFile",
+            "CMapCoeffsDataFile",
+            "CFreeRDataFile",
+            "CMtzDataFile",
+            "CDictDataFile",
+            "CDataFile",
+            "CInt",
+            "CFloat",
+            "CString",
+            "CRefmacKeywordFile",
+        ],
         "menuText": [],
     }
 )
@@ -38,18 +54,14 @@ class CI2DataType(CString):
     pass
 
 
-@cdata_class(
-    gui_label="CJobStatus"
-)
+@cdata_class(gui_label="CJobStatus")
 class CJobStatus(CInt):
     """Generated CJobStatus class from CData metadata."""
 
     pass
 
 
-@cdata_class(
-    gui_label="CJobTitle"
-)
+@cdata_class(gui_label="CJobTitle")
 class CJobTitle(CString):
     """Generated CJobTitle class from CData metadata."""
 
@@ -65,13 +77,33 @@ class COneWord(CString):
 
 @cdata_class(
     qualifiers={
-            "default": "NotImplemented",
-            "listMinLength": 0,
-            "listMaxLength": 250,
-            "listCompare": "NotImplemented",
-            "nameRoot": "NotImplemented",
+        "default": "NotImplemented",
+        "listMinLength": 0,
+        "listMaxLength": 250,
+        "listCompare": "NotImplemented",
+        "nameRoot": "NotImplemented",
+    },
+    gui_label="COutputFileList",
+    qualifiers_order=["listMinLength", "listMaxLength", "listCompare", "nameRoot"],
+    qualifiers_definition={
+        "default": {"type": "list"},
+        "listMaxLength": {
+            "type": "int",
+            "description": "Inclusive maximum length of list",
         },
-    gui_label="COutputFileList"
+        "listMinLength": {
+            "type": "int",
+            "description": "Inclusive minimum length of list",
+        },
+        "listCompare": {
+            "type": "int",
+            "description": "If has value 1/-1 consecutive items in list must be greater/less than preceeding item. The list item class must have a __cmp__() method.",
+        },
+        "nameRoot": {
+            "type": "str",
+            "description": "Name hint for the base name of output files",
+        },
+    },
 )
 class COutputFileList(CList):
     """A list with all items of one CData sub-class"""
@@ -85,6 +117,7 @@ class COutputFileList(CList):
         "patch": attribute(AttributeType.STRING, tooltip="patch attribute"),
     },
     gui_label="CPatchSelection",
+    contents_order=["taskName", "patch"],
 )
 class CPatchSelection(CData):
     """Generated CPatchSelection class from CData metadata."""
@@ -92,13 +125,21 @@ class CPatchSelection(CData):
 
 @cdata_class(
     qualifiers={
-            "compare": "NotImplemented",
-        },
+        "compare": "NotImplemented",
+    },
     error_codes={
-            "101": "End of range less than start",
-            "102": "End of range greater than start",
+        "101": "End of range less than start",
+        "102": "End of range greater than start",
+    },
+    gui_label="CRange",
+    contents_order=["start", "end"],
+    qualifiers_order=["compare"],
+    qualifiers_definition={
+        "compare": {
+            "type": "int",
+            "description": "If value is  1/-1 the end value must be greater/less than start.",
         },
-    gui_label="CRange"
+    },
 )
 class CRange(CData):
     """Base class for CIntRange and CFloatRange"""
@@ -118,9 +159,7 @@ class CRangeSelection(CString):
     pass
 
 
-@cdata_class(
-    gui_label="CUUID"
-)
+@cdata_class(gui_label="CUUID")
 class CUUID(CString):
     """Generated CUUID class from CData metadata."""
 
