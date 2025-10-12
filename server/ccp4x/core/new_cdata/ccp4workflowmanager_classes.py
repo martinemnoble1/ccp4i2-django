@@ -1,7 +1,8 @@
 """Generated classes from CCP4WorkflowManager.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CContainer, CData, CList
+from .base_classes import CContainer, CData
+from .fundamental_types import CList
 from .class_metadata import cdata_class, attribute, AttributeType
 
 

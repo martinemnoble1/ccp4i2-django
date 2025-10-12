@@ -1,8 +1,10 @@
 """Generated classes from CCP4XtalData.py"""
 
 from typing import List, Optional
-from .base_classes import CData, CDataFile, CDataFileContent, CFloat, CList, CString
+from .base_classes import CData, CDataFile, CString
+from .fundamental_types import CFloat, CList
 from .class_metadata import cdata_class, attribute, AttributeType
+from .ccp4file_classes import CDataFileContent
 
 
 @cdata_class(gui_label="CAltSpaceGroupList")
@@ -111,7 +113,7 @@ class CCellLength(CFloat):
         "contentFlag": attribute(AttributeType.INT, tooltip="contentFlag attribute"),
         "dataset": attribute(AttributeType.STRING, tooltip="dataset attribute"),
         "columnList": attribute(AttributeType.STRING, tooltip="columnList attribute"),
-        "selected": attribute(AttributeType.BOOL, tooltip="selected attribute"),
+        "selected": attribute(AttributeType.BOOLEAN, tooltip="selected attribute"),
     },
     gui_label="CColumnGroup",
 )
@@ -208,7 +210,7 @@ class CCrystalName(CString):
 
 @cdata_class(
     attributes={
-        "selected": attribute(AttributeType.BOOL, tooltip="selected attribute"),
+        "selected": attribute(AttributeType.BOOLEAN, tooltip="selected attribute"),
         "obsDataFile": attribute(AttributeType.STRING, tooltip="obsDataFile attribute"),
         "crystalName": attribute(AttributeType.STRING, tooltip="crystalName attribute"),
         "datasetName": attribute(AttributeType.STRING, tooltip="datasetName attribute"),
@@ -523,7 +525,7 @@ class CMtzColumnGroup(CData):
         "datasetCells": attribute(
             AttributeType.STRING, tooltip="datasetCells attribute"
         ),
-        "merged": attribute(AttributeType.BOOL, tooltip="merged attribute"),
+        "merged": attribute(AttributeType.BOOLEAN, tooltip="merged attribute"),
     },
     gui_label="CMtzData",
 )
@@ -875,9 +877,9 @@ class CSpaceGroupCell(CData):
         "batchs": attribute(AttributeType.STRING, tooltip="batchs attribute"),
         "lowRes": attribute(AttributeType.FLOAT, tooltip="lowRes attribute"),
         "highRes": attribute(AttributeType.FLOAT, tooltip="highRes attribute"),
-        "knowncell": attribute(AttributeType.BOOL, tooltip="knowncell attribute"),
+        "knowncell": attribute(AttributeType.BOOLEAN, tooltip="knowncell attribute"),
         "knownwavelength": attribute(
-            AttributeType.BOOL, tooltip="knownwavelength attribute"
+            AttributeType.BOOLEAN, tooltip="knownwavelength attribute"
         ),
         "numberLattices": attribute(
             AttributeType.INT, tooltip="numberLattices attribute"

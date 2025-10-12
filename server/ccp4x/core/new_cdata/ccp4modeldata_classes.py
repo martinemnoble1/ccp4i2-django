@@ -1,8 +1,10 @@
 """Generated classes from CCP4ModelData.py"""
 
 from typing import List, Optional
-from .base_classes import CData, CDataFile, CDataFileContent, CList, CString
+from .base_classes import CData, CDataFile, CString
+from .fundamental_types import CList
 from .class_metadata import cdata_class, attribute, AttributeType
+from .ccp4file_classes import CDataFileContent
 
 
 @cdata_class(
@@ -26,7 +28,7 @@ class CAsuContent(CDataFileContent):
         "polymerType": attribute(AttributeType.STRING, tooltip="polymerType attribute"),
         "name": attribute(AttributeType.STRING, tooltip="name attribute"),
         "description": attribute(AttributeType.STRING, tooltip="description attribute"),
-        "source": attribute(AttributeType.FILE, tooltip="source attribute"),
+        "source": attribute(AttributeType.FILEPATH, tooltip="source attribute"),
     },
     gui_label="CAsuContentSeq",
 )
@@ -241,7 +243,7 @@ class CDictDataFile(CDataFile):
     attributes={
         "label": attribute(AttributeType.STRING, tooltip="label attribute"),
         "number": attribute(AttributeType.INT, tooltip="number attribute"),
-        "use": attribute(AttributeType.BOOL, tooltip="use attribute"),
+        "use": attribute(AttributeType.BOOLEAN, tooltip="use attribute"),
         "pdbItemList": attribute(AttributeType.STRING, tooltip="pdbItemList attribute"),
     },
     qualifiers={

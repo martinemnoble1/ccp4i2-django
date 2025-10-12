@@ -1,7 +1,8 @@
 """Generated classes from CCP4File.py"""
 
 from typing import List, Optional
-from .base_classes import CData, CDataFile, CDataFileContent, CList, CString
+from .base_classes import CData, CDataFile, CString
+from .fundamental_types import CList
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
@@ -28,7 +29,7 @@ class CDataReflFile(CDataFile):
 @cdata_class(
     attributes={
         "exeName": attribute(AttributeType.STRING, tooltip="exeName attribute"),
-        "exePath": attribute(AttributeType.FILE, tooltip="exePath attribute"),
+        "exePath": attribute(AttributeType.FILEPATH, tooltip="exePath attribute"),
     },
     gui_label="CExePath",
     contents_order=["exeName", "exePath"],
@@ -288,7 +289,7 @@ class CSceneDataFile(CDataFile):
 @cdata_class(
     attributes={
         "name": attribute(AttributeType.STRING, tooltip="name attribute"),
-        "path": attribute(AttributeType.FILE, tooltip="path attribute"),
+        "path": attribute(AttributeType.FILEPATH, tooltip="path attribute"),
     },
     gui_label="CSearchPath",
 )

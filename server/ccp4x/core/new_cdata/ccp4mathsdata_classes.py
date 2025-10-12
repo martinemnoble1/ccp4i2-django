@@ -1,7 +1,8 @@
 """Generated classes from CCP4MathsData.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CData, CFloat
+from .base_classes import CData
+from .fundamental_types import CFloat
 from .class_metadata import cdata_class, attribute, AttributeType
 
 

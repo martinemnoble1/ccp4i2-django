@@ -1,7 +1,8 @@
 """Generated classes from CCP4ImportedJobManager.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CContainer, CData, CList
+from .base_classes import CContainer, CData
+from .fundamental_types import CList
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
@@ -10,7 +11,7 @@ from .class_metadata import cdata_class, attribute, AttributeType
             "name": attribute(AttributeType.STRING, tooltip="name attribute"),
             "dataType": attribute(AttributeType.STRING, tooltip="dataType attribute"),
             "label": attribute(AttributeType.STRING, tooltip="label attribute"),
-            "fileName": attribute(AttributeType.FILE, tooltip="fileName attribute"),
+            "fileName": attribute(AttributeType.FILEPATH, tooltip="fileName attribute"),
         },
     gui_label="CImportedJobData"
 )

@@ -1,7 +1,8 @@
 """Generated classes from CCP4Annotation.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CData, CInt, CList, CString
+from .base_classes import CData, CString
+from .fundamental_types import CInt, CList
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
@@ -48,7 +49,7 @@ class CAuthor(CString):
         "authorList": attribute(AttributeType.STRING, tooltip="authorList attribute"),
         "source": attribute(AttributeType.STRING, tooltip="source attribute"),
         "url": attribute(AttributeType.STRING, tooltip="url attribute"),
-        "selected": attribute(AttributeType.BOOL, tooltip="selected attribute"),
+        "selected": attribute(AttributeType.BOOLEAN, tooltip="selected attribute"),
     },
     error_codes={
         "101": "Failed to load Medline data",
@@ -166,13 +167,13 @@ class CMetaDataTagList(CList):
         "mechanism": attribute(AttributeType.STRING, tooltip="mechanism attribute"),
         "serverList": attribute(AttributeType.STRING, tooltip="serverList attribute"),
         "userExtensible": attribute(
-            AttributeType.BOOL, tooltip="userExtensible attribute"
+            AttributeType.BOOLEAN, tooltip="userExtensible attribute"
         ),
         "customCodeFile": attribute(
-            AttributeType.FILE, tooltip="customCodeFile attribute"
+            AttributeType.FILEPATH, tooltip="customCodeFile attribute"
         ),
         "queueOptionsFile": attribute(
-            AttributeType.FILE, tooltip="queueOptionsFile attribute"
+            AttributeType.FILEPATH, tooltip="queueOptionsFile attribute"
         ),
         "ccp4Dir": attribute(AttributeType.STRING, tooltip="ccp4Dir attribute"),
         "tempDir": attribute(AttributeType.STRING, tooltip="tempDir attribute"),

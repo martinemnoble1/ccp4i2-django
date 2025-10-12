@@ -1,7 +1,8 @@
 """Generated classes from CCP4RefmacData.py"""
 
 from typing import List, Optional
-from .base_classes import CData, CDataFile, CList
+from .base_classes import CData, CDataFile
+from .fundamental_types import CList
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
