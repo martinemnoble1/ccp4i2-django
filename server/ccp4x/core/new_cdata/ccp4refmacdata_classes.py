@@ -1,7 +1,7 @@
 """Generated classes from CCP4RefmacData.py"""
 
 from typing import List, Optional
-from .base_classes import CData, CDataFile, CContainer
+from .base_classes import CData, CDataFile, CList
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
@@ -11,7 +11,7 @@ class CRefmacAnomalousAtom(CData):
     # CONTENTS: <Unparseable: {'atomType': {'class': CCP4Data.CString, 'qualifiers': {'charWidth': 5, 'toolTip': 'Element name as in PDB file'}}, 'Fp': {'class': CCP4Data.CFloat, 'qualifiers': {'toolTip': "Form factor f' for element at given wavelength"}}, 'Fpp': {'class': CCP4Data.CFloat, 'qualifiers': {'toolTip': "Form factor f'' for element at given wavelength"}}}>
 
 
-class CRefmacRestraintsDataFile(CData):
+class CRefmacRestraintsDataFile(CDataFile):
     """Generated CRefmacRestraintsDataFile class from CData metadata."""
 
     pass
@@ -38,7 +38,7 @@ class CRefmacRigidGroupItem(CData):
         return errors
 
 
-class CRefmacRigidGroupList(CData):
+class CRefmacRigidGroupList(CList):
     """Generated CRefmacRigidGroupList class from CData metadata."""
 
     pass

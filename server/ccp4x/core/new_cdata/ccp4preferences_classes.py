@@ -1,8 +1,8 @@
 """Generated classes from CCP4Preferences.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CData, CDataFile, CContainer
+from .base_classes import CContainer
 
-class CPreferences(CData):
+class CPreferences(CContainer):
     """Generated CPreferences class from CData metadata."""
     pass

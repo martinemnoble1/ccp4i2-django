@@ -1,7 +1,7 @@
 """Generated classes from CCP4ModelData.py"""
 
 from typing import List, Optional
-from .base_classes import CData, CDataFile, CContainer
+from .base_classes import CData, CDataFile, CDataFileContent, CList, CString
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
@@ -15,7 +15,7 @@ from .class_metadata import cdata_class, attribute, AttributeType
     },
     gui_label="CAsuContent",
 )
-class CAsuContent(CData):
+class CAsuContent(CDataFileContent):
     """Generated CAsuContent class from CData metadata."""
 
 
@@ -71,7 +71,7 @@ class CAsuContentSeq(CData):
         return errors
 
 
-class CAsuContentSeqList(CData):
+class CAsuContentSeqList(CList):
     """Generated CAsuContentSeqList class from CData metadata."""
 
     pass
@@ -115,7 +115,7 @@ class CAtomRefmacSelectionGroups(CData):
     pass
 
 
-class CAtomRefmacSelectionList(CData):
+class CAtomRefmacSelectionList(CList):
     """Generated CAtomRefmacSelectionList class from CData metadata."""
 
     pass
@@ -183,11 +183,11 @@ class CAtomSelection(CData):
     },
     gui_label="CBlastData",
 )
-class CBlastData(CData):
+class CBlastData(CDataFileContent):
     """Generated CBlastData class from CData metadata."""
 
 
-class CBlastDataFile(CData):
+class CBlastDataFile(CDataFile):
     """Generated CBlastDataFile class from CData metadata."""
 
     pass
@@ -279,7 +279,26 @@ class CDictData(CData):
     """Generated CDictData class from CData metadata."""
 
 
-class CDictDataFile(CData):
+@cdata_class(
+    qualifiers={
+        "fileLabel": "dictionary",
+        "mimeTypeName": "application/refmac-dictionary",
+        "mimeTypeDescription": "Geometry file",
+        "guiLabel": "Geometry dictionary",
+        "toolTip": "Idealised geometry of ligands for refinement",
+        "fileExtensions": ["cif"],
+        "fileContentClassName": "CDictData",
+        "helpFile": "model_data#ligand_geometry",
+    },
+    error_codes={
+        "201": "Error attempting to merge geometry files - no libcheck script",
+        "202": "Error attempting to merge geometry files - failed creating working directory",
+        "203": "Error attempting to merge geometry files - setting libcheck parameters",
+        "204": "Error attempting to merge geometry files - running libcheck",
+        "205": "Error attempting to merge geometry files - failed to run libcheck",
+    },
+)
+class CDictDataFile(CDataFile):
     """A refmac dictionary file"""
 
     pass
@@ -328,7 +347,7 @@ class CEnsemble(CData):
         return errors
 
 
-class CEnsembleList(CData):
+class CEnsembleList(CList):
     """Generated CEnsembleList class from CData metadata."""
 
     pass
@@ -344,11 +363,11 @@ class CEnsembleList(CData):
     },
     gui_label="CHhpredData",
 )
-class CHhpredData(CData):
+class CHhpredData(CDataFileContent):
     """Generated CHhpredData class from CData metadata."""
 
 
-class CHhpredDataFile(CData):
+class CHhpredDataFile(CDataFile):
     """Generated CHhpredDataFile class from CData metadata."""
 
     pass
@@ -366,13 +385,13 @@ class CHhpredItem(CData):
     """Generated CHhpredItem class from CData metadata."""
 
 
-class CMDLMolDataFile(CData):
+class CMDLMolDataFile(CDataFile):
     """A molecule definition file (MDL)"""
 
     pass
 
 
-class CMol2DataFile(CData):
+class CMol2DataFile(CDataFile):
     """A molecule definition file (MOL2)"""
 
     pass
@@ -415,31 +434,31 @@ class CMonomer(CData):
         return errors
 
 
-class COccRefmacSelectionList(CData):
+class COccRefmacSelectionList(CList):
     """Generated COccRefmacSelectionList class from CData metadata."""
 
     pass
 
 
-class COccRelationRefmacList(CData):
+class COccRelationRefmacList(CList):
     """Generated COccRelationRefmacList class from CData metadata."""
 
     pass
 
 
-class CPdbData(CData):
+class CPdbData(CDataFileContent):
     """Contents of a PDB file - a subset with functionality for GUI"""
 
     pass
 
 
-class CPdbDataFile(CData):
+class CPdbDataFile(CDataFile):
     """Generated CPdbDataFile class from CData metadata."""
 
     pass
 
 
-class CPdbDataFileList(CData):
+class CPdbDataFileList(CList):
     """Generated CPdbDataFileList class from CData metadata."""
 
     pass
@@ -537,25 +556,25 @@ class CResidueRange(CData):
         return errors
 
 
-class CResidueRangeList(CData):
+class CResidueRangeList(CList):
     """A list of residue range selections"""
 
     pass
 
 
-class CSeqAlignDataFile(CData):
+class CSeqAlignDataFile(CDataFile):
     """A (multiple) sequence alignment file"""
 
     pass
 
 
-class CSeqDataFile(CData):
+class CSeqDataFile(CDataFile):
     """A sequence file"""
 
     pass
 
 
-class CSeqDataFileList(CData):
+class CSeqDataFileList(CList):
     """Generated CSeqDataFileList class from CData metadata."""
 
     pass
@@ -650,13 +669,13 @@ class CSequenceMeta(CData):
     pass
 
 
-class CSequenceString(CData):
+class CSequenceString(CString):
     """Generated CSequenceString class from CData metadata."""
 
     pass
 
 
-class CTLSDataFile(CData):
+class CTLSDataFile(CDataFile):
     """A refmac TLS file"""
 
     pass

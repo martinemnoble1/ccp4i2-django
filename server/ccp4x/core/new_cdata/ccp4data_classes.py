@@ -1,35 +1,50 @@
 """Generated classes from CCP4Data.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CData
+from .base_classes import CData, CInt, CList, CString
 from .class_metadata import cdata_class, attribute, AttributeType
+
 
 class CBaseData(CData):
     """Base class for simple classes"""
+
     pass
+
 
 class CCollection(CData):
     """Generated CCollection class from CData metadata."""
+
     pass
 
-class CI2DataType(CData):
+
+class CI2DataType(CString):
     """Generated CI2DataType class from CData metadata."""
+
     pass
 
-class CJobStatus(CData):
+
+class CJobStatus(CInt):
     """Generated CJobStatus class from CData metadata."""
+
     pass
 
-class CJobTitle(CData):
+
+class CJobTitle(CString):
     """Generated CJobTitle class from CData metadata."""
+
     pass
 
-class COneWord(CData):
+
+@cdata_class(error_codes={"201": "Word contains white space item"})
+class COneWord(CString):
     """A single word string - no white space"""
+
     pass
 
-class COutputFileList(CData):
+
+class COutputFileList(CList):
     """A list with all items of one CData sub-class"""
+
     pass
 
 
@@ -46,12 +61,17 @@ class CPatchSelection(CData):
 
 class CRange(CData):
     """Base class for CIntRange and CFloatRange"""
+
     pass
 
-class CRangeSelection(CData):
+
+class CRangeSelection(CString):
     """Generated CRangeSelection class from CData metadata."""
+
     pass
 
-class CUUID(CData):
+
+class CUUID(CString):
     """Generated CUUID class from CData metadata."""
+
     pass

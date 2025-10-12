@@ -1,7 +1,7 @@
 """Generated classes from CCP4File.py"""
 
 from typing import List, Optional
-from .base_classes import CData, CDataFile, CContainer
+from .base_classes import CData, CDataFile, CDataFileContent, CList, CString
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
@@ -11,7 +11,7 @@ class CDataFileContent(CData):
     pass
 
 
-class CDataReflFile(CData):
+class CDataReflFile(CDataFile):
     """Reflection file from DIALS"""
 
     pass
@@ -36,7 +36,7 @@ class CExePath(CData):
         return errors
 
 
-class CExePathList(CData):
+class CExePathList(CList):
     """Generated CExePathList class from CData metadata."""
 
     pass
@@ -52,19 +52,19 @@ class CExportedFile(CData):
     """Generated CExportedFile class from CData metadata."""
 
 
-class CExportedFileList(CData):
+class CExportedFileList(CList):
     """Generated CExportedFileList class from CData metadata."""
 
     pass
 
 
-class CFileFunction(CData):
+class CFileFunction(CString):
     """List of recognised XML file functions"""
 
     pass
 
 
-class CFilePath(CData):
+class CFilePath(CString):
     """A file path"""
 
     pass
@@ -166,7 +166,7 @@ class CI2XmlHeader(CData):
         return errors
 
 
-class CMmcifData(CData):
+class CMmcifData(CDataFileContent):
     """Generic mmCIF data.
     This is intended to be a base class for other classes
     specific to coordinates, reflections or geometry data."""
@@ -174,7 +174,7 @@ class CMmcifData(CData):
     pass
 
 
-class CMmcifDataFile(CData):
+class CMmcifDataFile(CDataFile):
     """A generic mmCIF format file.
     This is intended to be a base class for other classes
     specific to coordinates, reflections or geometry data."""
@@ -182,25 +182,25 @@ class CMmcifDataFile(CData):
     pass
 
 
-class CPDFDataFile(CData):
+class CPDFDataFile(CDataFile):
     """An PDF format file"""
 
     pass
 
 
-class CPostscriptDataFile(CData):
+class CPostscriptDataFile(CDataFile):
     """A postscript format file"""
 
     pass
 
 
-class CProjectName(CData):
+class CProjectName(CString):
     """The name of a CCP4i project or directory alias"""
 
     pass
 
 
-class CSceneDataFile(CData):
+class CSceneDataFile(CDataFile):
     """An xml format file for defining scene in CCP4mg."""
 
     pass
@@ -219,37 +219,37 @@ class CSearchPath(CData):
     """Generated CSearchPath class from CData metadata."""
 
 
-class CSearchPathList(CData):
+class CSearchPathList(CList):
     """Generated CSearchPathList class from CData metadata."""
 
     pass
 
 
-class CTextDataFile(CData):
+class CTextDataFile(CDataFile):
     """A text data file"""
 
     pass
 
 
-class CVersion(CData):
+class CVersion(CString):
     """A (string) version number of the form n.m.i"""
 
     pass
 
 
-class CXmgrDataFile(CData):
+class CXmgrDataFile(CDataFile):
     """An xmgr format file. This is the input format for xmgrace, as output by scala or aimless"""
 
     pass
 
 
-class CXmlDataFile(CData):
+class CXmlDataFile(CDataFile):
     """A reference to an XML file"""
 
     pass
 
 
-class CYmlFile(CData):
+class CYmlFile(CDataFile):
     """A yml data file"""
 
     pass

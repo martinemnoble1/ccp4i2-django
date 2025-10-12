@@ -1,11 +1,11 @@
 """Generated classes from CCP4XtalData.py"""
 
 from typing import List, Optional
-from .base_classes import CData, CDataFile, CContainer
+from .base_classes import CData, CDataFile, CDataFileContent, CFloat, CList, CString
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
-class CAltSpaceGroupList(CData):
+class CAltSpaceGroupList(CList):
     """Generated CAltSpaceGroupList class from CData metadata."""
 
     pass
@@ -34,7 +34,7 @@ class CAsuComponent(CData):
         return errors
 
 
-class CAsuComponentList(CData):
+class CAsuComponentList(CList):
     """Generated CAsuComponentList class from CData metadata."""
 
     pass
@@ -85,13 +85,13 @@ class CCell(CData):
         return errors
 
 
-class CCellAngle(CData):
+class CCellAngle(CFloat):
     """A cell angle"""
 
     pass
 
 
-class CCellLength(CData):
+class CCellLength(CFloat):
     """A cell length"""
 
     pass
@@ -139,25 +139,25 @@ class CColumnGroupItem(CData):
     """Definition of set of columns that form a 'group'"""
 
 
-class CColumnGroupList(CData):
+class CColumnGroupList(CList):
     """Generated CColumnGroupList class from CData metadata."""
 
     pass
 
 
-class CColumnType(CData):
+class CColumnType(CString):
     """A list of recognised MTZ column types"""
 
     pass
 
 
-class CColumnTypeList(CData):
+class CColumnTypeList(CList):
     """A list of acceptable MTZ column types"""
 
     pass
 
 
-class CCrystalName(CData):
+class CCrystalName(CString):
     """Generated CCrystalName class from CData metadata."""
 
     pass
@@ -202,31 +202,31 @@ class CDataset(CData):
         return errors
 
 
-class CDatasetList(CData):
+class CDatasetList(CList):
     """Generated CDatasetList class from CData metadata."""
 
     pass
 
 
-class CDatasetName(CData):
+class CDatasetName(CString):
     """Generated CDatasetName class from CData metadata."""
 
     pass
 
 
-class CDialsJsonFile(CData):
+class CDialsJsonFile(CDataFile):
     """Generated CDialsJsonFile class from CData metadata."""
 
     pass
 
 
-class CDialsPickleFile(CData):
+class CDialsPickleFile(CDataFile):
     """Generated CDialsPickleFile class from CData metadata."""
 
     pass
 
 
-class CExperimentalDataType(CData):
+class CExperimentalDataType(CString):
     """Experimental data type e.g. native or peak"""
 
     pass
@@ -249,25 +249,25 @@ class CFormFactor(CData):
     """The for factor (Fp and Fpp) for a giving element and wavelength"""
 
 
-class CGenericReflDataFile(CData):
+class CGenericReflDataFile(CDataFile):
     """Generated CGenericReflDataFile class from CData metadata."""
 
     pass
 
 
-class CImageFile(CData):
+class CImageFile(CDataFile):
     """Generated CImageFile class from CData metadata."""
 
     pass
 
 
-class CImageFileList(CData):
+class CImageFileList(CList):
     """Generated CImageFileList class from CData metadata."""
 
     pass
 
 
-class CImosflmXmlDataFile(CData):
+class CImosflmXmlDataFile(CDataFile):
     """An iMosflm data file"""
 
     pass
@@ -308,13 +308,13 @@ class CImportUnmerged(CData):
         return errors
 
 
-class CImportUnmergedList(CData):
+class CImportUnmergedList(CList):
     """Generated CImportUnmergedList class from CData metadata."""
 
     pass
 
 
-class CMapDataFile(CData):
+class CMapDataFile(CDataFile):
     """A CCP4 Map file"""
 
     pass
@@ -338,13 +338,13 @@ class CMergeMiniMtz(CData):
         return errors
 
 
-class CMergeMiniMtzList(CData):
+class CMergeMiniMtzList(CList):
     """Generated CMergeMiniMtzList class from CData metadata."""
 
     pass
 
 
-class CMiniMtzDataFileList(CData):
+class CMiniMtzDataFileList(CList):
     """Generated CMiniMtzDataFileList class from CData metadata."""
 
     pass
@@ -416,13 +416,13 @@ class CMtzColumnGroup(CData):
     },
     gui_label="CMtzData",
 )
-class CMtzData(CData):
+class CMtzData(CDataFileContent):
     """Generated CMtzData class from CData metadata."""
 
     pass
 
 
-class CMtzDataFile(CData):
+class CMtzDataFile(CDataFile):
     """An MTZ experimental data file"""
 
     pass
@@ -441,13 +441,13 @@ class CMtzDataset(CData):
     """Generated CMtzDataset class from CData metadata."""
 
 
-class CPhaserRFileDataFile(CData):
+class CPhaserRFileDataFile(CDataFile):
     """Generated CPhaserRFileDataFile class from CData metadata."""
 
     pass
 
 
-class CPhaserSolDataFile(CData):
+class CPhaserSolDataFile(CDataFile):
     """Generated CPhaserSolDataFile class from CData metadata."""
 
     pass
@@ -470,7 +470,7 @@ class CProgramColumnGroup0(CData):
     """Generated CProgramColumnGroup0 class from CData metadata."""
 
 
-class CRefmacKeywordFile(CData):
+class CRefmacKeywordFile(CDataFile):
     """Generated CRefmacKeywordFile class from CData metadata."""
 
     pass
@@ -531,25 +531,25 @@ class CRunBatchRange(CData):
         return errors
 
 
-class CRunBatchRangeList(CData):
+class CRunBatchRangeList(CList):
     """Generated CRunBatchRangeList class from CData metadata."""
 
     pass
 
 
-class CShelxFADataFile(CData):
+class CShelxFADataFile(CDataFile):
     """Generated CShelxFADataFile class from CData metadata."""
 
     pass
 
 
-class CShelxLabel(CData):
+class CShelxLabel(CString):
     """Generated CShelxLabel class from CData metadata."""
 
     pass
 
 
-class CSpaceGroup(CData):
+class CSpaceGroup(CString):
     """A string holding the space group"""
 
     pass
@@ -625,7 +625,7 @@ class CSpaceGroupCell(CData):
     },
     gui_label="CUnmergedDataContent",
 )
-class CUnmergedDataContent(CData):
+class CUnmergedDataContent(CDataFileContent):
     """Generated CUnmergedDataContent class from CData metadata."""
 
     def validate(self) -> List[str]:
@@ -635,19 +635,19 @@ class CUnmergedDataContent(CData):
         return errors
 
 
-class CUnmergedDataFile(CData):
+class CUnmergedDataFile(CDataFile):
     """Handle MTZ, XDS and scalepack files. Allow wildcard filename"""
 
     pass
 
 
-class CUnmergedDataFileList(CData):
+class CUnmergedDataFileList(CList):
     """Generated CUnmergedDataFileList class from CData metadata."""
 
     pass
 
 
-class CWavelength(CData):
+class CWavelength(CFloat):
     """Wavelength in Angstrom"""
 
     pass
@@ -671,7 +671,7 @@ class CXia2ImageSelection(CData):
         return errors
 
 
-class CXia2ImageSelectionList(CData):
+class CXia2ImageSelectionList(CList):
     """Generated CXia2ImageSelectionList class from CData metadata."""
 
     pass

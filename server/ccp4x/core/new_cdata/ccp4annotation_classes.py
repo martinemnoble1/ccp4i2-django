@@ -1,7 +1,7 @@
 """Generated classes from CCP4Annotation.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CData
+from .base_classes import CData, CInt, CList, CString
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
@@ -33,13 +33,13 @@ class CAnnotation(CData):
         return errors
 
 
-class CAnnotationList(CData):
+class CAnnotationList(CList):
     """A list of annotation"""
 
     pass
 
 
-class CAuthor(CData):
+class CAuthor(CString):
     """Placeholder for bibliographic author"""
 
     pass
@@ -131,7 +131,7 @@ class CFont(CData):
         return errors
 
 
-class CHostName(CData):
+class CHostName(CString):
     """Computer name"""
 
     pass
@@ -147,7 +147,7 @@ class CMetaDataTag(CData):
     """This class will extend list of enumerators if new value for string is entered"""
 
 
-class CMetaDataTagList(CData):
+class CMetaDataTagList(CList):
     """Generated CMetaDataTagList class from CData metadata."""
 
     pass
@@ -199,7 +199,7 @@ class CServerGroup(CData):
         return errors
 
 
-class CTime(CData):
+class CTime(CInt):
     """The time. Uses Python time module"""
 
     pass
@@ -220,7 +220,7 @@ class CUserAddress(CData):
     """User id and platform node"""
 
 
-class CUserId(CData):
+class CUserId(CString):
     """A user ID"""
 
     pass

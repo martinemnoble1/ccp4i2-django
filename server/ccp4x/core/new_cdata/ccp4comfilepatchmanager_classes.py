@@ -1,8 +1,8 @@
 """Generated classes from CCP4ComFilePatchManager.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CData, CDataFile, CContainer
+from .base_classes import CContainer
 
-class CPatchDefinition(CData):
+class CPatchDefinition(CContainer):
     """Generated CPatchDefinition class from CData metadata."""
     pass

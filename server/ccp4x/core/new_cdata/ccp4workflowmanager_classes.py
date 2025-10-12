@@ -1,7 +1,7 @@
 """Generated classes from CCP4WorkflowManager.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CData
+from .base_classes import CContainer, CData, CList
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
@@ -18,11 +18,11 @@ class CWorkflowDataFlow(CData):
     """Generated CWorkflowDataFlow class from CData metadata."""
 
 
-class CWorkflowDataFlowList(CData):
+class CWorkflowDataFlowList(CList):
     """Generated CWorkflowDataFlowList class from CData metadata."""
     pass
 
-class CWorkflowDefinition(CData):
+class CWorkflowDefinition(CContainer):
     """Generated CWorkflowDefinition class from CData metadata."""
     pass
 

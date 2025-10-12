@@ -1,7 +1,7 @@
 """Generated classes from CCP4ImportedJobManager.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CData
+from .base_classes import CContainer, CData, CList
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
@@ -24,10 +24,10 @@ class CImportedJobData(CData):
         # TODO: Implement validation logic based on qualifiers
         return errors
 
-class CImportedJobDataList(CData):
+class CImportedJobDataList(CList):
     """Generated CImportedJobDataList class from CData metadata."""
     pass
 
-class CImportedJobDefinition(CData):
+class CImportedJobDefinition(CContainer):
     """Generated CImportedJobDefinition class from CData metadata."""
     pass

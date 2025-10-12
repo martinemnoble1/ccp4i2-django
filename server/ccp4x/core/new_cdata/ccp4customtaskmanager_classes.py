@@ -1,7 +1,7 @@
 """Generated classes from CCP4CustomTaskManager.py"""
 
 from typing import List, Any, Optional
-from .base_classes import CData
+from .base_classes import CContainer, CData, CList, CString
 from .class_metadata import cdata_class, attribute, AttributeType
 
 
@@ -22,15 +22,15 @@ class CCustomComFile(CData):
         # TODO: Implement validation logic based on qualifiers
         return errors
 
-class CCustomComFileList(CData):
+class CCustomComFileList(CList):
     """Generated CCustomComFileList class from CData metadata."""
     pass
 
-class CCustomTaskDefinition(CData):
+class CCustomTaskDefinition(CContainer):
     """Generated CCustomTaskDefinition class from CData metadata."""
     pass
 
-class CCustomTaskFileFunction(CData):
+class CCustomTaskFileFunction(CString):
     """Generated CCustomTaskFileFunction class from CData metadata."""
     pass
 
@@ -60,6 +60,6 @@ class CCustomTaskParam(CData):
         # TODO: Implement validation logic based on qualifiers
         return errors
 
-class CCustomTaskParamList(CData):
+class CCustomTaskParamList(CList):
     """Generated CCustomTaskParamList class from CData metadata."""
     pass
