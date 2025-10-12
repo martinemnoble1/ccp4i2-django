@@ -7,10 +7,10 @@ from .class_metadata import cdata_class, attribute, AttributeType
 
 @cdata_class(
     attributes={
-        "value": attribute(AttributeType.FLOAT, tooltip="value attribute"),
-        "annotation": attribute(AttributeType.STRING, tooltip="annotation attribute"),
-    },
-    gui_label="CPerformanceIndicator",
+            "value": attribute(AttributeType.FLOAT, tooltip="value attribute"),
+            "annotation": attribute(AttributeType.STRING, tooltip="annotation attribute"),
+        },
+    gui_label="CPerformanceIndicator"
 )
 class CPerformanceIndicator(CData):
     """Generated CPerformanceIndicator class from CData metadata."""

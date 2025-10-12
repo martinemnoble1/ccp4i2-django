@@ -14,6 +14,15 @@ from .class_metadata import cdata_class, attribute, AttributeType
     },
     gui_label="CImportedJobData",
 )
+@cdata_class(
+    attributes={
+            "name": attribute(AttributeType.STRING, tooltip="name attribute"),
+            "dataType": attribute(AttributeType.STRING, tooltip="dataType attribute"),
+            "label": attribute(AttributeType.STRING, tooltip="label attribute"),
+            "fileName": attribute(AttributeType.FILE, tooltip="fileName attribute"),
+        },
+    gui_label="CImportedJobData"
+)
 class CImportedJobData(CData):
     """Generated CImportedJobData class from CData metadata."""
 
@@ -33,6 +42,9 @@ class CImportedJobDataList(CList):
     """Generated CImportedJobDataList class from CData metadata."""
     pass
 
+@cdata_class(
+    gui_label="CImportedJobDefinition"
+)
 class CImportedJobDefinition(CContainer):
     """Generated CImportedJobDefinition class from CData metadata."""
     pass

@@ -22,10 +22,16 @@ class CCustomComFile(CData):
         # TODO: Implement validation logic based on qualifiers
         return errors
 
+@cdata_class(
+    gui_label="CCustomComFileList"
+)
 class CCustomComFileList(CList):
     """Generated CCustomComFileList class from CData metadata."""
     pass
 
+@cdata_class(
+    gui_label="CCustomTaskDefinition"
+)
 class CCustomTaskDefinition(CContainer):
     """Generated CCustomTaskDefinition class from CData metadata."""
     pass
@@ -55,6 +61,21 @@ class CCustomTaskFileFunction(CString):
     },
     gui_label="CCustomTaskParam",
 )
+@cdata_class(
+    attributes={
+            "name": attribute(AttributeType.STRING, tooltip="name attribute"),
+            "dataType": attribute(AttributeType.STRING, tooltip="dataType attribute"),
+            "label": attribute(AttributeType.STRING, tooltip="label attribute"),
+            "obligatory": attribute(AttributeType.BOOL, tooltip="obligatory attribute"),
+            "saveDataToDb": attribute(AttributeType.BOOL, tooltip="saveDataToDb attribute"),
+            "function": attribute(AttributeType.STRING, tooltip="function attribute"),
+            "mergeTo": attribute(AttributeType.STRING, tooltip="mergeTo attribute"),
+            "splitColumns": attribute(AttributeType.STRING, tooltip="splitColumns attribute"),
+            "requiredContentType": attribute(AttributeType.STRING, tooltip="requiredContentType attribute"),
+            "outputFilePath": attribute(AttributeType.STRING, tooltip="outputFilePath attribute"),
+        },
+    gui_label="CCustomTaskParam"
+)
 class CCustomTaskParam(CData):
     """Generated CCustomTaskParam class from CData metadata."""
 
@@ -65,6 +86,9 @@ class CCustomTaskParam(CData):
         # TODO: Implement validation logic based on qualifiers
         return errors
 
+@cdata_class(
+    gui_label="CCustomTaskParamList"
+)
 class CCustomTaskParamList(CList):
     """Generated CCustomTaskParamList class from CData metadata."""
     pass

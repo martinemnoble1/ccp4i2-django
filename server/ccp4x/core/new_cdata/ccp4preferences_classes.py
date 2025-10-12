@@ -3,6 +3,9 @@
 from typing import List, Any, Optional
 from .base_classes import CContainer
 
+@cdata_class(
+    gui_label="CPreferences"
+)
 class CPreferences(CContainer):
     """Generated CPreferences class from CData metadata."""
     pass

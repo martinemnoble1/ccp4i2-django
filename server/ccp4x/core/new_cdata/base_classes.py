@@ -20,6 +20,9 @@ class ValueState(Enum):
     EXPLICITLY_SET = auto()  # Value has been explicitly assigned
 
 
+@cdata_class(
+    gui_label="CData"
+)
 class CData(HierarchicalObject):
     """Base class for all CCP4i2 data objects with hierarchical relationships."""
 
@@ -363,6 +366,33 @@ attributes={
             "requiredContentFlag": None,
         }
 )
+@cdata_class(
+    attributes={
+            "project": attribute(AttributeType.STRING, tooltip="project attribute"),
+            "baseName": attribute(AttributeType.STRING, tooltip="baseName attribute"),
+            "relPath": attribute(AttributeType.STRING, tooltip="relPath attribute"),
+            "annotation": attribute(AttributeType.STRING, tooltip="annotation attribute"),
+            "dbFileId": attribute(AttributeType.STRING, tooltip="dbFileId attribute"),
+            "subType": attribute(AttributeType.INT, tooltip="subType attribute"),
+            "contentFlag": attribute(AttributeType.INT, tooltip="contentFlag attribute"),
+        },
+    qualifiers={
+            "allowUndefined": True,
+            "mustExist": False,
+            "fromPreviousJob": False,
+            "jobCombo": True,
+            "mimeTypeName": "",
+            "mimeTypeDescription": "",
+            "fileLabel": None,
+            "fileExtensions": [],
+            "fileContentClassName": None,
+            "isDirectory": False,
+            "saveToDb": True,
+            "requiredSubType": None,
+            "requiredContentFlag": None,
+        },
+    gui_label="CDataFile"
+)
 class CDataFile(CData):
     """Base class for file-related CData classes.
 
@@ -396,6 +426,9 @@ class CDataFile(CData):
         # TODO: Implement file saving logic
 
 
+@cdata_class(
+    gui_label="CContainer"
+)
 class CContainer(CData):
     """Base class for container CData classes."""
 

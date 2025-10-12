@@ -17,6 +17,9 @@ class CBaseData(CData):
     pass
 
 
+@cdata_class(
+    gui_label="CCollection"
+)
 class CCollection(CData):
     """Generated CCollection class from CData metadata."""
 
@@ -35,12 +38,18 @@ class CI2DataType(CString):
     pass
 
 
+@cdata_class(
+    gui_label="CJobStatus"
+)
 class CJobStatus(CInt):
     """Generated CJobStatus class from CData metadata."""
 
     pass
 
 
+@cdata_class(
+    gui_label="CJobTitle"
+)
 class CJobTitle(CString):
     """Generated CJobTitle class from CData metadata."""
 
@@ -62,6 +71,16 @@ class COneWord(CString):
         "listCompare": "NotImplemented",
         "nameRoot": "NotImplemented",
     }
+)
+@cdata_class(
+    qualifiers={
+            "default": "NotImplemented",
+            "listMinLength": 0,
+            "listMaxLength": 250,
+            "listCompare": "NotImplemented",
+            "nameRoot": "NotImplemented",
+        },
+    gui_label="COutputFileList"
 )
 class COutputFileList(CList):
     """A list with all items of one CData sub-class"""
@@ -89,6 +108,16 @@ class CPatchSelection(CData):
         "102": "End of range greater than start",
     }
 )
+@cdata_class(
+    qualifiers={
+            "compare": "NotImplemented",
+        },
+    error_codes={
+            "101": "End of range less than start",
+            "102": "End of range greater than start",
+        },
+    gui_label="CRange"
+)
 class CRange(CData):
     """Base class for CIntRange and CFloatRange"""
 
@@ -107,6 +136,9 @@ class CRangeSelection(CString):
     pass
 
 
+@cdata_class(
+    gui_label="CUUID"
+)
 class CUUID(CString):
     """Generated CUUID class from CData metadata."""
 
