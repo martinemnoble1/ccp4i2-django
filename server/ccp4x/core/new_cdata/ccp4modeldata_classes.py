@@ -399,23 +399,19 @@ class CMol2DataFile(CDataFile):
 
 @cdata_class(
     attributes={
-        "identifier": attribute(AttributeType.STRING, tooltip="identifier attribute"),
-        "formula": attribute(AttributeType.STRING, tooltip="formula attribute"),
-        "dictionaryName": attribute(
-            AttributeType.STRING, tooltip="dictionaryName attribute"
+        "identifier": attribute(
+            AttributeType.STRING, tooltip="The name you use for the monomer"
         ),
-        "smiles": attribute(AttributeType.STRING, tooltip="smiles attribute"),
-    },
-    gui_label="CMonomer",
-)
-@cdata_class(
-    attributes={
-        "identifier": attribute(AttributeType.STRING, tooltip="identifier attribute"),
-        "formula": attribute(AttributeType.STRING, tooltip="formula attribute"),
-        "dictionaryName": attribute(
-            AttributeType.STRING, tooltip="dictionaryName attribute"
+        "formula": attribute(
+            AttributeType.STRING, tooltip="The formula for the monomer"
         ),
-        "smiles": attribute(AttributeType.STRING, tooltip="smiles attribute"),
+        "dictionaryName": attribute(
+            AttributeType.STRING,
+            tooltip="The REFMAC dictionary name if not the same as the name",
+        ),
+        "smiles": attribute(
+            AttributeType.STRING, tooltip="The smiles string for the monomer"
+        ),
     },
     gui_label="CMonomer",
 )
@@ -661,6 +657,12 @@ class CSequenceAlignment(CData):
             AttributeType.STRING, tooltip="expressionSystem attribute"
         ),
     },
+    error_codes={
+        "401": "No uniprot id available",
+        "402": "No uniprot xml file available to read",
+        "403": "No project id provided to determine uniprot xml filename",
+        "404": "Reading uniprot xml file failed",
+    },
     gui_label="CSequenceMeta",
 )
 class CSequenceMeta(CData):
@@ -675,6 +677,18 @@ class CSequenceString(CString):
     pass
 
 
+@cdata_class(
+    qualifiers={
+        "fileLabel": "tls",
+        "mimeTypeName": "application/refmac-TLS",
+        "mimeTypeDescription": "Refmac TLS file",
+        "guiLabel": "TLS coefficients",
+        "toolTip": "Definition of model domains for TLS refinement",
+        "fileExtensions": ["tls"],
+        "fileContentClassName": None,
+        "helpFile": "model_data#tls_file",
+    }
+)
 class CTLSDataFile(CDataFile):
     """A refmac TLS file"""
 

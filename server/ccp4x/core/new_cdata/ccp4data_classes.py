@@ -65,6 +65,12 @@ class CRange(CData):
     pass
 
 
+@cdata_class(
+    error_codes={
+        "201": "Range selection contains invalid character",
+        "202": "Range selection contains bad syntax",
+    }
+)
 class CRangeSelection(CString):
     """Generated CRangeSelection class from CData metadata."""
 

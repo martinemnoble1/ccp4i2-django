@@ -131,6 +131,12 @@ class CFont(CData):
         return errors
 
 
+@cdata_class(
+    qualifiers={
+        "label": "Machine name",
+        "toolTip": "Hostname as mycomputer.myplace.ac.uk",
+    }
+)
 class CHostName(CString):
     """Computer name"""
 
