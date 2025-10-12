@@ -365,21 +365,24 @@ def apply_metadata_to_instance(instance):
     Args:
         instance: The instance to apply metadata to
     """
-    metadata = get_class_metadata_by_type(instance.__class__)
-    if not metadata:
-        return
+    # Collect attributes from all ancestor classes with metadata
+    merged_attributes = {}
+    for cls in instance.__class__.__mro__:
+        if cls is object:
+            continue
+        metadata = getattr(cls, "_metadata", None)
+        if metadata:
+            # Parent attributes are added first, child overrides
+            merged_attributes.update(metadata.attributes)
 
-    # Create attributes from metadata
-    for attr_name, attr_def in metadata.attributes.items():
+    # Create attributes from merged metadata
+    for attr_name, attr_def in merged_attributes.items():
         if not hasattr(instance, attr_name):
-            # Create and attach the attribute
             attr_obj = MetadataAttributeFactory.create_attribute(
                 attr_name, attr_def, instance
             )
-            # Use __dict__ to avoid triggering __setattr__ state tracking
             instance.__dict__[attr_name] = attr_obj
 
-            # Initialize as NOT_SET
             if hasattr(instance, "_value_states"):
                 from .base_classes import ValueState
 

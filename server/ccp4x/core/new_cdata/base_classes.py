@@ -489,6 +489,64 @@ class CContainer(CData):
 
 
 class CString(CData):
+    def __hash__(self):
+        return hash(self.value)
+
+    def __str__(self):
+        return str(self.value)
+
+    def __repr__(self):
+        return repr(self.value)
+
+    def __eq__(self, other):
+        if isinstance(other, CString):
+            return self.value == other.value
+        return self.value == other
+
+    def __ne__(self, other):
+        if isinstance(other, CString):
+            return self.value != other.value
+        return self.value != other
+
+    def __lt__(self, other):
+        if isinstance(other, CString):
+            return self.value < other.value
+        return self.value < other
+
+    def __le__(self, other):
+        if isinstance(other, CString):
+            return self.value <= other.value
+        return self.value <= other
+
+    def __gt__(self, other):
+        if isinstance(other, CString):
+            return self.value > other.value
+        return self.value > other
+
+    def __ge__(self, other):
+        if isinstance(other, CString):
+            return self.value >= other.value
+        return self.value >= other
+
+    def __add__(self, other):
+        if isinstance(other, CString):
+            return CString(self.value + other.value)
+        return CString(self.value + str(other))
+
+    def __radd__(self, other):
+        if isinstance(other, CString):
+            return CString(other.value + self.value)
+        return CString(str(other) + self.value)
+
+    def __getitem__(self, key):
+        return str(self.value)[key]
+
+    def __contains__(self, item):
+        return item in str(self.value)
+
+    def __len__(self):
+        return len(str(self.value))
+
     """A string value type for testing smart assignment."""
 
     def __init__(self, value: str = "", parent=None, name=None, **kwargs):
