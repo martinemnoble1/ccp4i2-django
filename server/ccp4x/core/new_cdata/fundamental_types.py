@@ -1,10 +1,13 @@
 """Fundamental CCP4i2 data types that form the base of the type system."""
 
 from typing import List, Any, Optional, Union
-from .base_classes import CData, CString, ValueState
+from .base_classes import CData, ValueState
 
 
 class CInt(CData):
+    def __hash__(self):
+        return hash(self.value)
+
     """Integer value type."""
 
     def __init__(self, value: int = None, parent=None, name=None, **kwargs):
@@ -47,8 +50,189 @@ class CInt(CData):
     def _is_value_type(self) -> bool:
         return True
 
+    # Arithmetic operators
+    def __add__(self, other):
+        if isinstance(other, CInt):
+            return CInt(self.value + other.value)
+        elif isinstance(other, CFloat):
+            return CFloat(self.value + other.value)
+        elif isinstance(other, int):
+            return CInt(self.value + other)
+        elif isinstance(other, float):
+            return CFloat(self.value + other)
+        return int(self.value) + other
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def __sub__(self, other):
+        if isinstance(other, CInt):
+            return CInt(self.value - other.value)
+        elif isinstance(other, CFloat):
+            return CFloat(self.value - other.value)
+        elif isinstance(other, int):
+            return CInt(self.value - other)
+        elif isinstance(other, float):
+            return CFloat(self.value - other)
+        return int(self.value) - other
+
+    def __rsub__(self, other):
+        if isinstance(other, CInt):
+            return CInt(other.value - self.value)
+        elif isinstance(other, CFloat):
+            return CFloat(other.value - self.value)
+        elif isinstance(other, int):
+            return CInt(other - self.value)
+        elif isinstance(other, float):
+            return CFloat(other - self.value)
+        return other - int(self.value)
+
+    def __mul__(self, other):
+        if isinstance(other, CInt):
+            return CInt(self.value * other.value)
+        elif isinstance(other, CFloat):
+            return CFloat(self.value * other.value)
+        elif isinstance(other, int):
+            return CInt(self.value * other)
+        elif isinstance(other, float):
+            return CFloat(self.value * other)
+        return int(self.value) * other
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
+    def __truediv__(self, other):
+        if isinstance(other, (CInt, int)):
+            return CFloat(
+                self.value / (other.value if isinstance(other, CInt) else other)
+            )
+        elif isinstance(other, (CFloat, float)):
+            return CFloat(
+                self.value / (other.value if isinstance(other, CFloat) else other)
+            )
+        return int(self.value) / other
+
+    def __rtruediv__(self, other):
+        if isinstance(other, (CInt, int)):
+            return CFloat(
+                (other.value if isinstance(other, CInt) else other) / self.value
+            )
+        elif isinstance(other, (CFloat, float)):
+            return CFloat(
+                (other.value if isinstance(other, CFloat) else other) / self.value
+            )
+        return other / int(self.value)
+
+    def __floordiv__(self, other):
+        if isinstance(other, CInt):
+            return CInt(self.value // other.value)
+        elif isinstance(other, int):
+            return CInt(self.value // other)
+        elif isinstance(other, CFloat):
+            return CFloat(self.value // other.value)
+        elif isinstance(other, float):
+            return CFloat(self.value // other)
+        return int(self.value) // other
+
+    def __rfloordiv__(self, other):
+        if isinstance(other, CInt):
+            return CInt(other.value // self.value)
+        elif isinstance(other, int):
+            return CInt(other // self.value)
+        elif isinstance(other, CFloat):
+            return CFloat(other.value // self.value)
+        elif isinstance(other, float):
+            return CFloat(other // self.value)
+        return other // int(self.value)
+
+    def __mod__(self, other):
+        if isinstance(other, CInt):
+            return CInt(self.value % other.value)
+        elif isinstance(other, int):
+            return CInt(self.value % other)
+        elif isinstance(other, CFloat):
+            return CFloat(self.value % other.value)
+        elif isinstance(other, float):
+            return CFloat(self.value % other)
+        return int(self.value) % other
+
+    def __rmod__(self, other):
+        if isinstance(other, CInt):
+            return CInt(other.value % self.value)
+        elif isinstance(other, int):
+            return CInt(other % self.value)
+        elif isinstance(other, CFloat):
+            return CFloat(other.value % self.value)
+        elif isinstance(other, float):
+            return CFloat(other % self.value)
+        return other % int(self.value)
+
+    def __pow__(self, other):
+        if isinstance(other, CInt):
+            return CInt(self.value**other.value)
+        elif isinstance(other, int):
+            return CInt(self.value**other)
+        elif isinstance(other, CFloat):
+            return CFloat(self.value**other.value)
+        elif isinstance(other, float):
+            return CFloat(self.value**other)
+        return int(self.value) ** other
+
+    def __rpow__(self, other):
+        if isinstance(other, CInt):
+            return CInt(other.value**self.value)
+        elif isinstance(other, int):
+            return CInt(other**self.value)
+        elif isinstance(other, CFloat):
+            return CFloat(other.value**self.value)
+        elif isinstance(other, float):
+            return CFloat(other**self.value)
+        return other ** int(self.value)
+
+    # Comparison operators
+    def __eq__(self, other):
+        if isinstance(other, CInt):
+            return self.value == other.value
+        elif isinstance(other, CFloat):
+            return float(self.value) == other.value
+        return int(self.value) == other
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __lt__(self, other):
+        if isinstance(other, CInt):
+            return self.value < other.value
+        elif isinstance(other, CFloat):
+            return float(self.value) < other.value
+        return int(self.value) < other
+
+    def __le__(self, other):
+        if isinstance(other, CInt):
+            return self.value <= other.value
+        elif isinstance(other, CFloat):
+            return float(self.value) <= other.value
+        return int(self.value) <= other
+
+    def __gt__(self, other):
+        if isinstance(other, CInt):
+            return self.value > other.value
+        elif isinstance(other, CFloat):
+            return float(self.value) > other.value
+        return int(self.value) > other
+
+    def __ge__(self, other):
+        if isinstance(other, CInt):
+            return self.value >= other.value
+        elif isinstance(other, CFloat):
+            return float(self.value) >= other.value
+        return int(self.value) >= other
+
 
 class CFloat(CData):
+    def __hash__(self):
+        return hash(self.value)
+
     """Float value type."""
 
     def __init__(self, value: float = None, parent=None, name=None, **kwargs):
@@ -90,6 +274,184 @@ class CFloat(CData):
 
     def _is_value_type(self) -> bool:
         return True
+
+    # Arithmetic operators
+    def __add__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(self.value + other.value)
+        elif isinstance(other, CInt):
+            return CFloat(self.value + other.value)
+        elif isinstance(other, float):
+            return CFloat(self.value + other)
+        elif isinstance(other, int):
+            return CFloat(self.value + other)
+        return float(self.value) + other
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def __sub__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(self.value - other.value)
+        elif isinstance(other, CInt):
+            return CFloat(self.value - other.value)
+        elif isinstance(other, float):
+            return CFloat(self.value - other)
+        elif isinstance(other, int):
+            return CFloat(self.value - other)
+        return float(self.value) - other
+
+    def __rsub__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(other.value - self.value)
+        elif isinstance(other, CInt):
+            return CFloat(other.value - self.value)
+        elif isinstance(other, float):
+            return CFloat(other - self.value)
+        elif isinstance(other, int):
+            return CFloat(other - self.value)
+        return other - float(self.value)
+
+    def __mul__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(self.value * other.value)
+        elif isinstance(other, CInt):
+            return CFloat(self.value * other.value)
+        elif isinstance(other, float):
+            return CFloat(self.value * other)
+        elif isinstance(other, int):
+            return CFloat(self.value * other)
+        return float(self.value) * other
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
+    def __truediv__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(self.value / other.value)
+        elif isinstance(other, CInt):
+            return CFloat(self.value / other.value)
+        elif isinstance(other, float):
+            return CFloat(self.value / other)
+        elif isinstance(other, int):
+            return CFloat(self.value / other)
+        return float(self.value) / other
+
+    def __rtruediv__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(other.value / self.value)
+        elif isinstance(other, CInt):
+            return CFloat(other.value / self.value)
+        elif isinstance(other, float):
+            return CFloat(other / self.value)
+        elif isinstance(other, int):
+            return CFloat(other / self.value)
+        return other / float(self.value)
+
+    def __floordiv__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(self.value // other.value)
+        elif isinstance(other, CInt):
+            return CFloat(self.value // other.value)
+        elif isinstance(other, float):
+            return CFloat(self.value // other)
+        elif isinstance(other, int):
+            return CFloat(self.value // other)
+        return float(self.value) // other
+
+    def __rfloordiv__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(other.value // self.value)
+        elif isinstance(other, CInt):
+            return CFloat(other.value // self.value)
+        elif isinstance(other, float):
+            return CFloat(other // self.value)
+        elif isinstance(other, int):
+            return CFloat(other // self.value)
+        return other // float(self.value)
+
+    def __mod__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(self.value % other.value)
+        elif isinstance(other, CInt):
+            return CFloat(self.value % other.value)
+        elif isinstance(other, float):
+            return CFloat(self.value % other)
+        elif isinstance(other, int):
+            return CFloat(self.value % other)
+        return float(self.value) % other
+
+    def __rmod__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(other.value % self.value)
+        elif isinstance(other, CInt):
+            return CFloat(other.value % self.value)
+        elif isinstance(other, float):
+            return CFloat(other % self.value)
+        elif isinstance(other, int):
+            return CFloat(other % self.value)
+        return other % float(self.value)
+
+    def __pow__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(self.value**other.value)
+        elif isinstance(other, CInt):
+            return CFloat(self.value**other.value)
+        elif isinstance(other, float):
+            return CFloat(self.value**other)
+        elif isinstance(other, int):
+            return CFloat(self.value**other)
+        return float(self.value) ** other
+
+    def __rpow__(self, other):
+        if isinstance(other, CFloat):
+            return CFloat(other.value**self.value)
+        elif isinstance(other, CInt):
+            return CFloat(other.value**self.value)
+        elif isinstance(other, float):
+            return CFloat(other**self.value)
+        elif isinstance(other, int):
+            return CFloat(other**self.value)
+        return other ** float(self.value)
+
+    # Comparison operators
+    def __eq__(self, other):
+        if isinstance(other, CFloat):
+            return self.value == other.value
+        elif isinstance(other, CInt):
+            return self.value == float(other.value)
+        return float(self.value) == other
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __lt__(self, other):
+        if isinstance(other, CFloat):
+            return self.value < other.value
+        elif isinstance(other, CInt):
+            return self.value < float(other.value)
+        return float(self.value) < other
+
+    def __le__(self, other):
+        if isinstance(other, CFloat):
+            return self.value <= other.value
+        elif isinstance(other, CInt):
+            return self.value <= float(other.value)
+        return float(self.value) <= other
+
+    def __gt__(self, other):
+        if isinstance(other, CFloat):
+            return self.value > other.value
+        elif isinstance(other, CInt):
+            return self.value > float(other.value)
+        return float(self.value) > other
+
+    def __ge__(self, other):
+        if isinstance(other, CFloat):
+            return self.value >= other.value
+        elif isinstance(other, CInt):
+            return self.value >= float(other.value)
+        return float(self.value) >= other
 
 
 class CBoolean(CData):
@@ -134,6 +496,28 @@ class CBoolean(CData):
 
     def _is_value_type(self) -> bool:
         return True
+
+        # Boolean and comparison operators
+        def __eq__(self, other):
+            return bool(self.value) == other
+
+        def __ne__(self, other):
+            return bool(self.value) != other
+
+        def __and__(self, other):
+            return bool(self.value) and other
+
+        def __rand__(self, other):
+            return other and bool(self.value)
+
+        def __or__(self, other):
+            return bool(self.value) or other
+
+        def __ror__(self, other):
+            return other or bool(self.value)
+
+        def __invert__(self):
+            return not bool(self.value)
 
 
 class CRange(CData):
@@ -183,7 +567,86 @@ class CFloatRange(CRange):
         return errors
 
 
-# CString is imported at the top of the file
+# Extend CString to behave like str
+class CString(CData):
+    def __hash__(self):
+        return hash(self.value)
+    def __init__(self, value: str = None, parent=None, name=None, **kwargs):
+        super().__init__(parent=parent, name=name, **kwargs)
+        if value is None:
+            super().__setattr__("value", "")
+            if hasattr(self, "_value_states"):
+                self._value_states["value"] = ValueState.NOT_SET
+        else:
+            self.value = value
+
+    def __str__(self):
+        return str(self.value)
+
+    def __repr__(self):
+        return repr(self.value)
+
+    def __eq__(self, other):
+        if isinstance(other, CString):
+            return self.value == other.value
+        return self.value == other
+
+    def __ne__(self, other):
+        if isinstance(other, CString):
+            return self.value != other.value
+        return self.value != other
+
+    def __lt__(self, other):
+        if isinstance(other, CString):
+            return self.value < other.value
+        return self.value < other
+
+    def __le__(self, other):
+        if isinstance(other, CString):
+            return self.value <= other.value
+        return self.value <= other
+
+    def __gt__(self, other):
+        if isinstance(other, CString):
+            return self.value > other.value
+        return self.value > other
+
+    def __ge__(self, other):
+        if isinstance(other, CString):
+            return self.value >= other.value
+        return self.value >= other
+
+    def __add__(self, other):
+        if isinstance(other, CString):
+            return CString(self.value + other.value)
+        return CString(self.value + str(other))
+
+    def __radd__(self, other):
+        if isinstance(other, CString):
+            return CString(other.value + self.value)
+        return CString(str(other) + self.value)
+
+    def __getitem__(self, key):
+        return str(self.value)[key]
+
+    def __contains__(self, item):
+        return item in str(self.value)
+
+    def __len__(self):
+        return len(str(self.value))
+
+    def set(self, value: str):
+        self.value = value
+        return self
+
+    def isSet(self, field_name: str = None) -> bool:
+        if field_name is None:
+            field_name = "value"
+        return super().isSet(field_name)
+
+    def _is_value_type(self) -> bool:
+        return True
+
 
 # Type aliases for commonly used types
 CCellLength = CFloat

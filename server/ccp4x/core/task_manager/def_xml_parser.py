@@ -292,6 +292,12 @@ class DefXmlParser:
         if class_name == "CList":
             return self._create_list_object(qualifiers, content)
 
+        # Always construct CString for className 'CString'
+        if class_name == "CString":
+            obj = CString()
+            self._apply_qualifiers(obj, qualifiers, class_name)
+            return obj
+
         # Get class from registry
         cls = self.class_registry.get(class_name)
         if cls is None:
