@@ -217,6 +217,41 @@ class CData(HierarchicalObject):
                 self._value_states[name] = ValueState.EXPLICITLY_SET
             return  # Don't replace the object, just update it
 
+        elif (
+            existing_attr is not None
+            and isinstance(existing_attr, CData)
+            and existing_attr._is_value_type()
+        ):
+            # Primitive value assignment to existing CData value type
+            # e.g., ctrl.NCYCLES = 25 where ctrl.NCYCLES is a CInt
+            if isinstance(value, (int, float, str, bool)):
+                # Check type compatibility
+                type_compatible = False
+                if hasattr(existing_attr, "value"):
+                    # Check if the primitive type matches what the CData type expects
+                    from .fundamental_types import CInt, CFloat, CBoolean
+
+                    if isinstance(existing_attr, CInt) and isinstance(value, int):
+                        type_compatible = True
+                    elif isinstance(existing_attr, CFloat) and isinstance(
+                        value, (int, float)
+                    ):
+                        type_compatible = True
+                    elif isinstance(existing_attr, CBoolean) and isinstance(
+                        value, bool
+                    ):
+                        type_compatible = True
+                    elif isinstance(existing_attr, CString) and isinstance(value, str):
+                        type_compatible = True
+
+                if type_compatible:
+                    # Update the value attribute of the existing CData object
+                    existing_attr.value = value
+                    # Mark as explicitly set
+                    if hasattr(self, "_value_states"):
+                        self._value_states[name] = ValueState.EXPLICITLY_SET
+                    return  # Don't replace the object, just update its value
+
         # For new attributes or non-smart assignment, handle hierarchy and set normally
         self._setup_hierarchy_for_value(name, value)
         super().__setattr__(name, value)
@@ -336,6 +371,11 @@ class CString(CData):
 
     def __str__(self):
         return str(self.value)
+
+    def set(self, value: str):
+        """Set the value directly using .set() method."""
+        self.value = value
+        return self
 
     def _is_value_type(self) -> bool:
         return True

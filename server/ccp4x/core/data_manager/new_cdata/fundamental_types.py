@@ -18,6 +18,11 @@ class CInt(CData):
     def __int__(self):
         return int(self.value)
 
+    def set(self, value: int):
+        """Set the value directly using .set() method."""
+        self.value = value
+        return self
+
     def _is_value_type(self) -> bool:
         return True
 
@@ -36,6 +41,11 @@ class CFloat(CData):
     def __float__(self):
         return float(self.value)
 
+    def set(self, value: float):
+        """Set the value directly using .set() method."""
+        self.value = value
+        return self
+
     def _is_value_type(self) -> bool:
         return True
 
@@ -53,6 +63,11 @@ class CBoolean(CData):
 
     def __bool__(self):
         return bool(self.value)
+
+    def set(self, value: bool):
+        """Set the value directly using .set() method."""
+        self.value = value
+        return self
 
     def _is_value_type(self) -> bool:
         return True

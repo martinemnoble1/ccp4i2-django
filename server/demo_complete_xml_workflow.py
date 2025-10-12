@@ -221,16 +221,16 @@ def demonstrate_complete_workflow():
         # STEP 2: Simulate user modifications
         print("\n🔧 Step 2: Simulating user modifications")
 
-        # Modify some parameters
-        ctrl.ADD_WATERS.value = True
-        ctrl.NCYCLES.value = 25
-        ctrl.WEIGHT.value = 0.15
-        ctrl.B_REFINEMENT_MODE.value = "aniso"
-        ctrl.OCCUPANCY_REFINEMENT.value = False
+        # Modify some parameters using new smart setter patterns
+        ctrl.ADD_WATERS = True  # Direct assignment pattern
+        ctrl.NCYCLES = 25  # Direct assignment pattern
+        ctrl.WEIGHT.set(0.15)  # Method call pattern
+        ctrl.B_REFINEMENT_MODE = "aniso"  # Direct assignment pattern
+        ctrl.OCCUPANCY_REFINEMENT.set(False)  # Method call pattern
 
-        # Also modify some other containers
-        task.metalCoordPipeline.RUN_METALCOORD.value = True
-        task.metalCoordPipeline.LINKS.value = "KEEP"
+        # Also modify some other containers (mix both patterns)
+        task.metalCoordPipeline.RUN_METALCOORD = True  # Direct assignment
+        task.metalCoordPipeline.LINKS.set("KEEP")  # Method call
 
         print("✅ Modified parameters:")
         for param_name in params_to_check:
