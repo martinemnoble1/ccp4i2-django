@@ -29,15 +29,6 @@ class CDataReflFile(CDataFile):
 
 @cdata_class(
     attributes={
-        "exeName": attribute(AttributeType.STRING, tooltip="exeName attribute"),
-        "exePath": attribute(
-            AttributeType.CUSTOM, custom_class="CDataFile", tooltip="exePath attribute"
-        ),
-    },
-    gui_label="CExePath",
-)
-@cdata_class(
-    attributes={
             "exeName": attribute(AttributeType.STRING, tooltip="exeName attribute"),
             "exePath": attribute(AttributeType.FILE, tooltip="exePath attribute"),
         },
@@ -112,58 +103,6 @@ class CFilePath(CString):
     pass
 
 
-@cdata_class(
-attributes={
-        "function": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CFileFunction",
-            tooltip="function attribute",
-        ),
-        "userId": attribute(
-            AttributeType.CUSTOM, custom_class="CUserId", tooltip="userId attribute"
-        ),
-        "hostName": attribute(
-            AttributeType.CUSTOM, custom_class="CHostName", tooltip="hostName attribute"
-        ),
-        "creationTime": attribute(
-            AttributeType.CUSTOM, custom_class="CTime", tooltip="creationTime attribute"
-        ),
-        "ccp4iVersion": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CVersion",
-            tooltip="ccp4iVersion attribute",
-        ),
-        "pluginName": attribute(AttributeType.STRING, tooltip="pluginName attribute"),
-        "pluginVersion": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CVersion",
-            tooltip="pluginVersion attribute",
-        ),
-        "pluginTitle": attribute(AttributeType.STRING, tooltip="pluginTitle attribute"),
-        "projectName": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CProjectName",
-            tooltip="projectName attribute",
-        ),
-        "projectId": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CProjectId",
-            tooltip="projectId attribute",
-        ),
-        "jobId": attribute(AttributeType.UUID, tooltip="jobId attribute"),
-        "jobNumber": attribute(AttributeType.STRING, tooltip="jobNumber attribute"),
-        "comment": attribute(AttributeType.STRING, tooltip="comment attribute"),
-        "OS": attribute(AttributeType.STRING, tooltip="OS attribute"),
-    },
-    gui_label="CI2XmlHeader",
-    error_codes={
-            "101": "Attempting to read header from non-existant Xml file",
-            "102": "Error loading file to read header",
-            "103": "Error finding <ccp4i2_header> in file",
-            "104": "Error interpreting header from file",
-            "105": "File does not have <ccp4i2> root node",
-        }
-)
 @cdata_class(
     attributes={
             "function": attribute(AttributeType.STRING, tooltip="function attribute"),
@@ -285,15 +224,6 @@ class CSceneDataFile(CDataFile):
     pass
 
 
-@cdata_class(
-    attributes={
-        "name": attribute(AttributeType.STRING, tooltip="name attribute"),
-        "path": attribute(
-            AttributeType.CUSTOM, custom_class="CDataFile", tooltip="path attribute"
-        ),
-    },
-    gui_label="CSearchPath",
-)
 @cdata_class(
     attributes={
             "name": attribute(AttributeType.STRING, tooltip="name attribute"),

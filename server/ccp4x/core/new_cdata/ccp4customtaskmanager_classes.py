@@ -48,21 +48,6 @@ class CCustomTaskFileFunction(CString):
 
 @cdata_class(
     attributes={
-        "name": attribute(AttributeType.CUSTOM, custom_class="COneWord", tooltip="name attribute"),
-        "dataType": attribute(AttributeType.CUSTOM, custom_class="CI2DataType", default="CPdbDataFile", tooltip="dataType attribute"),
-        "label": attribute(AttributeType.STRING, tooltip="label attribute"),
-        "obligatory": attribute(AttributeType.BOOLEAN, default=True, tooltip="obligatory attribute"),
-        "saveDataToDb": attribute(AttributeType.BOOLEAN, default=False, tooltip="saveDataToDb attribute"),
-        "function": attribute(AttributeType.CUSTOM, custom_class="CCustomTaskFileFunction", default="input", tooltip="function attribute"),
-        "mergeTo": attribute(AttributeType.STRING, tooltip="mergeTo attribute"),
-        "splitColumns": attribute(AttributeType.STRING, tooltip="splitColumns attribute"),
-        "requiredContentType": attribute(AttributeType.CUSTOM, custom_class="CList", tooltip="requiredContentType attribute"),
-        "outputFilePath": attribute(AttributeType.STRING, tooltip="outputFilePath attribute"),
-    },
-    gui_label="CCustomTaskParam",
-)
-@cdata_class(
-    attributes={
             "name": attribute(AttributeType.STRING, tooltip="name attribute"),
             "dataType": attribute(AttributeType.STRING, tooltip="dataType attribute"),
             "label": attribute(AttributeType.STRING, tooltip="label attribute"),

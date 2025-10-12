@@ -65,15 +65,6 @@ class COneWord(CString):
 
 @cdata_class(
     qualifiers={
-        "default": "NotImplemented",
-        "listMinLength": 0,
-        "listMaxLength": 250,
-        "listCompare": "NotImplemented",
-        "nameRoot": "NotImplemented",
-    }
-)
-@cdata_class(
-    qualifiers={
             "default": "NotImplemented",
             "listMinLength": 0,
             "listMaxLength": 250,
@@ -99,15 +90,6 @@ class CPatchSelection(CData):
     """Generated CPatchSelection class from CData metadata."""
 
 
-@cdata_class(
-    qualifiers={
-        "compare": "NotImplemented",
-    },
-    error_codes={
-        "101": "End of range less than start",
-        "102": "End of range greater than start",
-    }
-)
 @cdata_class(
     qualifiers={
             "compare": "NotImplemented",

@@ -64,7 +64,6 @@ def analyze_missing_metadata():
 
             # Find this class and its decorator
             class_pattern = (
-                rf"(@cdata_class\s*\([^@]*?\))?\s*class\s+{class_name}\s*\([^)]+\):"
             )
             match = re.search(class_pattern, content, re.DOTALL)
             if match:
@@ -92,7 +91,6 @@ def analyze_missing_metadata():
 
             # Find this class and its decorator
             class_pattern = (
-                rf"(@cdata_class\s*\([^@]*?\))?\s*class\s+{class_name}\s*\([^)]+\):"
             )
             match = re.search(class_pattern, content, re.DOTALL)
             if match:
@@ -115,7 +113,6 @@ def analyze_missing_metadata():
                 content = f.read()
 
             class_pattern = (
-                rf"(@cdata_class\s*\([^@]*?\))?\s*class\s+{class_name}\s*\([^)]+\):"
             )
             match = re.search(class_pattern, content, re.DOTALL)
 

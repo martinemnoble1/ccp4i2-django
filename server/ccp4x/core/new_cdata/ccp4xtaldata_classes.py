@@ -16,18 +16,6 @@ class CAltSpaceGroupList(CList):
 
 @cdata_class(
     attributes={
-        "moleculeType": attribute(
-            AttributeType.STRING, default="PROTEIN", tooltip="Molecule type"
-        ),
-        "seqFile": attribute(AttributeType.STRING, tooltip="seqFile attribute"),
-        "numberOfCopies": attribute(
-            AttributeType.INT, default=1, tooltip="Number of copies of sequence"
-        ),
-    },
-    gui_label="CAsuComponent",
-)
-@cdata_class(
-    attributes={
             "moleculeType": attribute(AttributeType.STRING, tooltip="Molecule type"),
             "seqFile": attribute(AttributeType.STRING, tooltip="seqFile attribute"),
             "numberOfCopies": attribute(AttributeType.INT, tooltip="Number of copies of sequence"),
@@ -58,45 +46,6 @@ class CAsuComponentList(CList):
     pass
 
 
-@cdata_class(
-attributes={
-        "a": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CCellLength",
-            tooltip="Cell length a in A",
-        ),
-        "b": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CCellLength",
-            tooltip="Cell length b in A",
-        ),
-        "c": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CCellLength",
-            tooltip="Cell length c in A",
-        ),
-        "alpha": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CCellAngle",
-            tooltip="Cell angle alpha in degrees",
-        ),
-        "beta": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CCellAngle",
-            tooltip="Cell angle beta in degrees",
-        ),
-        "gamma": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CCellAngle",
-            tooltip="Cell angle gamma in degrees",
-        ),
-    },
-    gui_label="CCell",
-    qualifiers={
-            "toolTip": "Cell lengths and angles",
-            "helpFile": "crystal_data#cell",
-        }
-)
 @cdata_class(
     attributes={
             "a": attribute(AttributeType.STRING, tooltip="Cell length a in A"),
@@ -155,22 +104,6 @@ class CCellLength(CFloat):
 
 @cdata_class(
     attributes={
-        "columnGroupType": attribute(
-            AttributeType.CUSTOM,
-            custom_class="COneWord",
-            tooltip="columnGroupType attribute",
-        ),
-        "contentFlag": attribute(AttributeType.INT, tooltip="contentFlag attribute"),
-        "dataset": attribute(AttributeType.STRING, tooltip="dataset attribute"),
-        "columnList": attribute(
-            AttributeType.CUSTOM, custom_class="CList", tooltip="columnList attribute"
-        ),
-        "selected": attribute(AttributeType.BOOLEAN, tooltip="selected attribute"),
-    },
-    gui_label="CColumnGroup",
-)
-@cdata_class(
-    attributes={
             "columnGroupType": attribute(AttributeType.STRING, tooltip="columnGroupType attribute"),
             "contentFlag": attribute(AttributeType.INT, tooltip="contentFlag attribute"),
             "dataset": attribute(AttributeType.STRING, tooltip="dataset attribute"),
@@ -189,22 +122,6 @@ class CColumnGroup(CData):
         return errors
 
 
-@cdata_class(
-attributes={
-        "columnName": attribute(AttributeType.STRING, tooltip="columnName attribute"),
-        "defaultList": attribute(AttributeType.STRING, tooltip="defaultList attribute"),
-        "columnType": attribute(AttributeType.STRING, tooltip="columnType attribute"),
-        "partnerTo": attribute(AttributeType.STRING, tooltip="partnerTo attribute"),
-        "partnerOffset": attribute(
-            AttributeType.STRING, tooltip="partnerOffset attribute"
-        ),
-    },
-    gui_label="CColumnGroupItem",
-    error_codes={
-            "1": "Attempting to change immutable object",
-            "2": "Attempting to access unknown attribute",
-        }
-)
 @cdata_class(
     attributes={
             "columnName": attribute(AttributeType.STRING, tooltip="columnName attribute"),
@@ -270,35 +187,6 @@ class CCrystalName(CString):
     pass
 
 
-@cdata_class(
-    attributes={
-        "selected": attribute(AttributeType.BOOLEAN, tooltip="selected attribute"),
-        "obsDataFile": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CObsDataFile",
-            tooltip="obsDataFile attribute",
-        ),
-        "crystalName": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CCrystalName",
-            tooltip="crystalName attribute",
-        ),
-        "datasetName": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CDatasetName",
-            tooltip="datasetName attribute",
-        ),
-        "formFactors": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CFormFactor",
-            tooltip="formFactors attribute",
-        ),
-        "formFactorSource": attribute(
-            AttributeType.STRING, default="no", tooltip="formFactorSource attribute"
-        ),
-    },
-    gui_label="CDataset",
-)
 @cdata_class(
     attributes={
             "selected": attribute(AttributeType.BOOL, tooltip="selected attribute"),
@@ -395,19 +283,6 @@ class CExperimentalDataType(CString):
 
 
 @cdata_class(
-    attributes={
-        "Fp": attribute(
-            AttributeType.FLOAT,
-            tooltip="Form factor F' for element at given wavelength",
-        ),
-        "Fpp": attribute(
-            AttributeType.FLOAT,
-            tooltip="Form factor F'' for element at given wavelength",
-        ),
-    },
-    gui_label="CFormFactor",
-)
-@cdata_class(
     gui_label="CFormFactor"
 )
 class CFormFactor(CData):
@@ -476,35 +351,6 @@ class CImosflmXmlDataFile(CDataFile):
 
 
 @cdata_class(
-attributes={
-        "file": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CUnmergedDataFile",
-            tooltip="file attribute",
-        ),
-        "cell": attribute(
-            AttributeType.CUSTOM, custom_class="CCell", tooltip="cell attribute"
-        ),
-        "wavelength": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CWavelength",
-            tooltip="wavelength attribute",
-        ),
-        "crystalName": attribute(AttributeType.STRING, tooltip="crystalName attribute"),
-        "dataset": attribute(AttributeType.STRING, tooltip="dataset attribute"),
-        "excludeSelection": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CRangeSelection",
-            tooltip="excludeSelection attribute",
-        ),
-    },
-    gui_label="CImportUnmerged",
-    qualifiers={
-            "toolTip": "Imported data file, cell parameters and crystal/dataset identifiers",
-            "helpFile": "import_merged#file_formats",
-        }
-)
-@cdata_class(
     attributes={
             "file": attribute(AttributeType.STRING, tooltip="file attribute"),
             "cell": attribute(AttributeType.STRING, tooltip="cell attribute"),
@@ -560,18 +406,6 @@ class CMapDataFile(CDataFile):
 
 
 @cdata_class(
-attributes={
-        "fileName": attribute(AttributeType.STRING, tooltip="fileName attribute"),
-        "columnTag": attribute(AttributeType.STRING, tooltip="columnTag attribute"),
-        "columnNames": attribute(AttributeType.STRING, tooltip="columnNames attribute"),
-    },
-    gui_label="CMergeMiniMtz",
-    error_codes={
-            "201": "Selected file is not a suitable 'mini' MTZ containing experimental data object",
-            "202": "Output column name list does not have correct number of names",
-        }
-)
-@cdata_class(
     attributes={
             "fileName": attribute(AttributeType.STRING, tooltip="fileName attribute"),
             "columnTag": attribute(AttributeType.STRING, tooltip="columnTag attribute"),
@@ -617,15 +451,6 @@ class CMiniMtzDataFileList(CList):
 
 @cdata_class(
     attributes={
-        "columnLabel": attribute(AttributeType.STRING, tooltip="columnLabel attribute"),
-        "columnType": attribute(AttributeType.STRING, tooltip="columnType attribute"),
-        "dataset": attribute(AttributeType.STRING, tooltip="dataset attribute"),
-        "groupIndex": attribute(AttributeType.INT, tooltip="groupIndex attribute"),
-    },
-    gui_label="CMtzColumn",
-)
-@cdata_class(
-    attributes={
             "columnLabel": attribute(AttributeType.STRING, tooltip="columnLabel attribute"),
             "columnType": attribute(AttributeType.STRING, tooltip="columnType attribute"),
             "dataset": attribute(AttributeType.STRING, tooltip="dataset attribute"),
@@ -656,42 +481,6 @@ class CMtzColumnGroup(CData):
 
 @cdata_class(
     attributes={
-        "cell": attribute(
-            AttributeType.CUSTOM, custom_class="CCell", tooltip="cell attribute"
-        ),
-        "spaceGroup": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CSpaceGroup",
-            tooltip="spaceGroup attribute",
-        ),
-        "resolutionRange": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CResolutionRange",
-            tooltip="resolutionRange attribute",
-        ),
-        "listOfColumns": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CList",
-            tooltip="listOfColumns attribute",
-        ),
-        "datasets": attribute(
-            AttributeType.CUSTOM, custom_class="CList", tooltip="datasets attribute"
-        ),
-        "crystalNames": attribute(
-            AttributeType.CUSTOM, custom_class="CList", tooltip="crystalNames attribute"
-        ),
-        "wavelengths": attribute(
-            AttributeType.CUSTOM, custom_class="CList", tooltip="wavelengths attribute"
-        ),
-        "datasetCells": attribute(
-            AttributeType.CUSTOM, custom_class="CList", tooltip="datasetCells attribute"
-        ),
-        "merged": attribute(AttributeType.BOOLEAN, tooltip="merged attribute"),
-    },
-    gui_label="CMtzData",
-)
-@cdata_class(
-    attributes={
             "cell": attribute(AttributeType.STRING, tooltip="cell attribute"),
             "spaceGroup": attribute(AttributeType.STRING, tooltip="spaceGroup attribute"),
             "resolutionRange": attribute(AttributeType.STRING, tooltip="resolutionRange attribute"),
@@ -719,15 +508,6 @@ class CMtzDataFile(CDataFile):
     pass
 
 
-@cdata_class(
-    attributes={
-        "name": attribute(AttributeType.STRING, tooltip="name attribute"),
-        "columnGroups": attribute(
-            AttributeType.STRING, tooltip="columnGroups attribute"
-        ),
-    },
-    gui_label="CMtzDataset",
-)
 @cdata_class(
     attributes={
             "name": attribute(AttributeType.STRING, tooltip="name attribute"),
@@ -802,18 +582,6 @@ class CProgramColumnGroup(CData):
 
 
 @cdata_class(
-attributes={
-        "columnGroup": attribute(AttributeType.STRING, tooltip="columnGroup attribute"),
-        "datasetName": attribute(AttributeType.STRING, tooltip="datasetName attribute"),
-    },
-    gui_label="CProgramColumnGroup0",
-    qualifiers={
-            "mustExist": False,
-            "mtzFileKey": "",
-            "groupTypes": [],
-        }
-)
-@cdata_class(
     attributes={
             "columnGroup": attribute(AttributeType.STRING, tooltip="columnGroup attribute"),
             "datasetName": attribute(AttributeType.STRING, tooltip="datasetName attribute"),
@@ -848,19 +616,6 @@ class CRefmacKeywordFile(CDataFile):
 
 
 @cdata_class(
-attributes={
-        "h": attribute(AttributeType.STRING, default="h", tooltip="h attribute"),
-        "k": attribute(AttributeType.STRING, default="k", tooltip="k attribute"),
-        "l": attribute(AttributeType.STRING, default="l", tooltip="l attribute"),
-    },
-    gui_label="CReindexOperator",
-    error_codes={
-            "201": "Operator has bad syntax (needs three comma-separated fields)",
-            "202": "Operator contains invalid characters",
-            "203": "Operator is not set",
-        }
-)
-@cdata_class(
     attributes={
             "h": attribute(AttributeType.STRING, tooltip="h attribute"),
             "k": attribute(AttributeType.STRING, tooltip="k attribute"),
@@ -884,16 +639,6 @@ class CReindexOperator(CData):
 
 
 @cdata_class(
-attributes={
-        "low": attribute(AttributeType.FLOAT, tooltip="low attribute"),
-        "high": attribute(AttributeType.FLOAT, tooltip="high attribute"),
-    },
-    gui_label="CResolutionRange",
-    error_codes={
-            "201": "High/low resolution wrong way round?",
-        }
-)
-@cdata_class(
     attributes={
             "low": attribute(AttributeType.FLOAT, tooltip="low attribute"),
             "high": attribute(AttributeType.FLOAT, tooltip="high attribute"),
@@ -913,23 +658,6 @@ class CResolutionRange(CData):
         return errors
 
 
-@cdata_class(
-attributes={
-        "runNumber": attribute(AttributeType.INT, tooltip="runNumber attribute"),
-        "batchRange0": attribute(AttributeType.INT, tooltip="batchRange0 attribute"),
-        "batchRange1": attribute(AttributeType.INT, tooltip="batchRange1 attribute"),
-        "resolution": attribute(AttributeType.FLOAT, tooltip="resolution attribute"),
-        "fileNumber": attribute(AttributeType.INT, tooltip="fileNumber attribute"),
-    },
-    gui_label="CRunBatchRange",
-    qualifiers={
-            "toolTip": "Specify range of reflections to treat as one run",
-        },
-    error_codes={
-            "101": "End of batch range less than start",
-            "102": "All items must be set",
-        }
-)
 @cdata_class(
     attributes={
             "runNumber": attribute(AttributeType.INT, tooltip="runNumber attribute"),
@@ -1019,32 +747,6 @@ class CSpaceGroup(CString):
 
 
 @cdata_class(
-attributes={
-        "spaceGroup": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CSpaceGroup",
-            tooltip="spaceGroup attribute",
-        ),
-        "cell": attribute(
-            AttributeType.CUSTOM, custom_class="CCell", tooltip="cell attribute"
-        ),
-    },
-    gui_label="CSpaceGroupCell",
-    qualifiers={
-            "toolTip": "Space group and cell length and angles",
-            "helpFile": "crystal_data#cell_space_group",
-        },
-    error_codes={
-            "101": "Cell lengths should NOT be identical",
-            "102": "Cell angles should NOT be identical",
-            "103": "Cell angle should be 90",
-            "104": "Cell angle should NOT be 90",
-            "105": "Cell lengths should be identical",
-            "106": "Cell angle should be 120",
-            "107": "Cell angle should be identical",
-        }
-)
-@cdata_class(
     attributes={
             "spaceGroup": attribute(AttributeType.STRING, tooltip="spaceGroup attribute"),
             "cell": attribute(AttributeType.STRING, tooltip="cell attribute"),
@@ -1074,53 +776,6 @@ class CSpaceGroupCell(CData):
         return errors
 
 
-@cdata_class(
-    attributes={
-        "format": attribute(
-            AttributeType.STRING, default="unk", tooltip="format attribute"
-        ),
-        "merged": attribute(
-            AttributeType.STRING, default="unk", tooltip="merged attribute"
-        ),
-        "crystalName": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CCrystalName",
-            tooltip="crystalName attribute",
-        ),
-        "datasetName": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CDatasetName",
-            tooltip="datasetName attribute",
-        ),
-        "cell": attribute(
-            AttributeType.CUSTOM, custom_class="CCell", tooltip="cell attribute"
-        ),
-        "spaceGroup": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CSpaceGroup",
-            tooltip="spaceGroup attribute",
-        ),
-        "batchs": attribute(AttributeType.STRING, tooltip="batchs attribute"),
-        "lowRes": attribute(AttributeType.FLOAT, tooltip="lowRes attribute"),
-        "highRes": attribute(AttributeType.FLOAT, tooltip="highRes attribute"),
-        "knowncell": attribute(AttributeType.BOOLEAN, tooltip="knowncell attribute"),
-        "knownwavelength": attribute(
-            AttributeType.BOOLEAN, tooltip="knownwavelength attribute"
-        ),
-        "numberLattices": attribute(
-            AttributeType.INT, tooltip="numberLattices attribute"
-        ),
-        "wavelength": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CWavelength",
-            tooltip="wavelength attribute",
-        ),
-        "numberofdatasets": attribute(
-            AttributeType.INT, tooltip="numberofdatasets attribute"
-        ),
-    },
-    gui_label="CUnmergedDataContent",
-)
 @cdata_class(
     attributes={
             "format": attribute(AttributeType.STRING, tooltip="format attribute"),
@@ -1190,17 +845,6 @@ class CWavelength(CFloat):
     pass
 
 
-@cdata_class(
-attributes={
-        "imageFile": attribute(AttributeType.STRING, tooltip="imageFile attribute"),
-        "imageStart": attribute(AttributeType.INT, tooltip="imageStart attribute"),
-        "imageEnd": attribute(AttributeType.INT, tooltip="imageEnd attribute"),
-    },
-    gui_label="CXia2ImageSelection",
-    qualifiers={
-            "toolTip": "select an image file and an optional range of files to define a dataset",
-        }
-)
 @cdata_class(
     attributes={
             "imageFile": attribute(AttributeType.STRING, tooltip="imageFile attribute"),

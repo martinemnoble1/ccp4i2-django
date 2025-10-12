@@ -8,28 +8,6 @@ from .class_metadata import cdata_class, attribute, AttributeType
 @cdata_class(
     attributes={
         "text": attribute(AttributeType.STRING, tooltip="text attribute"),
-        "time": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CTime",
-            default=None,
-            tooltip="time attribute",
-        ),
-        "author": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CUserId",
-            default=None,
-            tooltip="author attribute",
-        ),
-    },
-    gui_label="CAnnotation",
-    qualifiers={
-        "label": "Annotation",
-        "toolTip": "Enter your comments",
-    },
-)
-@cdata_class(
-    attributes={
-        "text": attribute(AttributeType.STRING, tooltip="text attribute"),
         "time": attribute(AttributeType.STRING, tooltip="time attribute"),
         "author": attribute(AttributeType.STRING, tooltip="author attribute"),
     },
@@ -67,22 +45,6 @@ class CAuthor(CString):
     attributes={
         "pmid": attribute(AttributeType.INT, tooltip="pmid attribute"),
         "title": attribute(AttributeType.STRING, tooltip="title attribute"),
-        "authorList": attribute(
-            AttributeType.CUSTOM, custom_class="CList", tooltip="authorList attribute"
-        ),
-        "source": attribute(AttributeType.STRING, tooltip="source attribute"),
-        "url": attribute(AttributeType.STRING, tooltip="url attribute"),
-        "selected": attribute(AttributeType.BOOLEAN, tooltip="selected attribute"),
-    },
-    gui_label="CBibReference",
-    error_codes={
-        "101": "Failed to load Medline data",
-    },
-)
-@cdata_class(
-    attributes={
-        "pmid": attribute(AttributeType.INT, tooltip="pmid attribute"),
-        "title": attribute(AttributeType.STRING, tooltip="title attribute"),
         "authorList": attribute(AttributeType.STRING, tooltip="authorList attribute"),
         "source": attribute(AttributeType.STRING, tooltip="source attribute"),
         "url": attribute(AttributeType.STRING, tooltip="url attribute"),
@@ -97,22 +59,6 @@ class CBibReference(CData):
     """Bibliographic reference"""
 
 
-@cdata_class(
-    attributes={
-        "taskName": attribute(AttributeType.STRING, tooltip="taskName attribute"),
-        "version": attribute(AttributeType.STRING, tooltip="version attribute"),
-        "title": attribute(AttributeType.STRING, tooltip="title attribute"),
-        "references": attribute(
-            AttributeType.CUSTOM, custom_class="CList", tooltip="references attribute"
-        ),
-    },
-    gui_label="CBibReferenceGroup",
-    error_codes={
-        "100": "Failed attempting to load MedLine file - file not found",
-        "101": "Failed attempting to find references file",
-        "102": "Error copying file",
-    },
-)
 @cdata_class(
     attributes={
         "taskName": attribute(AttributeType.STRING, tooltip="taskName attribute"),
@@ -134,25 +80,6 @@ class CBibReferenceGroup(CData):
 @cdata_class(
     attributes={
         "year": attribute(AttributeType.INT, tooltip="year attribute"),
-        "month": attribute(
-            AttributeType.STRING, default="January", tooltip="month attribute"
-        ),
-        "day": attribute(AttributeType.INT, default=1, tooltip="day attribute"),
-        "yearRange": attribute(
-            AttributeType.INT, default=0, tooltip="yearRange attribute"
-        ),
-        "monthRange": attribute(
-            AttributeType.INT, default=0, tooltip="monthRange attribute"
-        ),
-        "dayRange": attribute(
-            AttributeType.INT, default=0, tooltip="dayRange attribute"
-        ),
-    },
-    gui_label="CDateRange",
-)
-@cdata_class(
-    attributes={
-        "year": attribute(AttributeType.INT, tooltip="year attribute"),
         "month": attribute(AttributeType.STRING, tooltip="month attribute"),
         "day": attribute(AttributeType.INT, tooltip="day attribute"),
         "yearRange": attribute(AttributeType.INT, tooltip="yearRange attribute"),
@@ -171,21 +98,6 @@ class CDateRange(CData):
         return errors
 
 
-@cdata_class(
-    attributes={
-        "family": attribute(
-            AttributeType.STRING, default="Helvetica", tooltip="family attribute"
-        ),
-        "style": attribute(
-            AttributeType.INT, default="StyleNormal", tooltip="style attribute"
-        ),
-        "pointSize": attribute(
-            AttributeType.INT, default=12, tooltip="pointSize attribute"
-        ),
-        "weight": attribute(AttributeType.INT, default=50, tooltip="weight attribute"),
-    },
-    gui_label="CFont",
-)
 @cdata_class(
     attributes={
         "family": attribute(AttributeType.STRING, tooltip="family attribute"),
@@ -221,16 +133,6 @@ class CHostName(CString):
     attributes={
         "tag": attribute(AttributeType.STRING, tooltip="tag attribute"),
     },
-    gui_label="CMetaDataTag",
-    qualifiers={
-        "enumeratorsFunction": None,
-        "addEnumeratorFunction": None,
-    },
-)
-@cdata_class(
-    attributes={
-        "tag": attribute(AttributeType.STRING, tooltip="tag attribute"),
-    },
     qualifiers={
         "enumeratorsFunction": None,
         "addEnumeratorFunction": None,
@@ -253,42 +155,6 @@ class CMetaDataTagList(CList):
     pass
 
 
-@cdata_class(
-    attributes={
-        "name": attribute(AttributeType.STRING, tooltip="name attribute"),
-        "mechanism": attribute(
-            AttributeType.STRING, default="ssh", tooltip="mechanism attribute"
-        ),
-        "serverList": attribute(
-            AttributeType.CUSTOM, custom_class="CList", tooltip="serverList attribute"
-        ),
-        "userExtensible": attribute(
-            AttributeType.BOOLEAN, default=False, tooltip="userExtensible attribute"
-        ),
-        "customCodeFile": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CDataFile",
-            tooltip="customCodeFile attribute",
-        ),
-        "queueOptionsFile": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CDataFile",
-            tooltip="queueOptionsFile attribute",
-        ),
-        "ccp4Dir": attribute(AttributeType.STRING, tooltip="ccp4Dir attribute"),
-        "tempDir": attribute(AttributeType.STRING, tooltip="tempDir attribute"),
-        "sge_root": attribute(AttributeType.STRING, tooltip="sge_root attribute"),
-        "keyFilename": attribute(AttributeType.STRING, tooltip="keyFilename attribute"),
-        "validate": attribute(
-            AttributeType.STRING, default="password", tooltip="validate attribute"
-        ),
-        "timeout": attribute(AttributeType.FLOAT, tooltip="timeout attribute"),
-        "maxTries": attribute(
-            AttributeType.INT, default=2, tooltip="maxTries attribute"
-        ),
-    },
-    gui_label="CServerGroup",
-)
 @cdata_class(
     attributes={
         "name": attribute(AttributeType.STRING, tooltip="name attribute"),
@@ -338,30 +204,10 @@ class CTime(CInt):
     pass
 
 
-@cdata_class(
-    attributes={
-        "platformNode": attribute(
-            AttributeType.STRING, tooltip="platformNode attribute"
-        ),
-        "userId": attribute(AttributeType.STRING, tooltip="userId attribute"),
-    },
-    qualifiers={
-        "label": "User id and current machine",
-        "toolTip": "User id as me@myplace.ac.uk and machine name",
-    },
-    gui_label="CUserAddress",
-)
 class CUserAddress(CData):
     """User id and platform node"""
 
 
-@cdata_class(
-    qualifiers={
-        "label": "User id",
-        "toolTip": "User id as me@myplace.ac.uk",
-    },
-    gui_label="CUserId",
-)
 class CUserId(CString):
     """A user ID"""
 

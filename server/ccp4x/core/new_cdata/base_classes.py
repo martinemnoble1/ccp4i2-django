@@ -335,38 +335,6 @@ class CData(HierarchicalObject):
 
 
 @cdata_class(
-attributes={
-        "project": attribute(AttributeType.PROJECT_ID, tooltip="Project identifier"),
-        "baseName": attribute(AttributeType.FILEPATH, tooltip="Base filename"),
-        "relPath": attribute(AttributeType.FILEPATH, tooltip="Relative path to file"),
-        "annotation": attribute(
-            AttributeType.STRING, default="", tooltip="File annotation"
-        ),
-        "dbFileId": attribute(AttributeType.UUID, tooltip="Database file identifier"),
-        "subType": attribute(AttributeType.INT, default=None, tooltip="File subtype"),
-        "contentFlag": attribute(
-            AttributeType.INT, default=None, min_value=0, tooltip="Content flag"
-        ),
-    },
-    mime_type="application/octet-stream",
-    gui_label="Data File",
-    qualifiers={
-            "allowUndefined": True,
-            "mustExist": False,
-            "fromPreviousJob": False,
-            "jobCombo": True,
-            "mimeTypeName": "",
-            "mimeTypeDescription": "",
-            "fileLabel": None,
-            "fileExtensions": [],
-            "fileContentClassName": None,
-            "isDirectory": False,
-            "saveToDb": True,
-            "requiredSubType": None,
-            "requiredContentFlag": None,
-        }
-)
-@cdata_class(
     attributes={
             "project": attribute(AttributeType.STRING, tooltip="project attribute"),
             "baseName": attribute(AttributeType.STRING, tooltip="baseName attribute"),

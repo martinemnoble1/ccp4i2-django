@@ -7,20 +7,6 @@ from .class_metadata import cdata_class, attribute, AttributeType
 
 @cdata_class(
     attributes={
-        "seqList": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CAsuContentSeqList",
-            tooltip="seqList attribute",
-        )
-    },
-    gui_label="CAsuContent",
-    error_codes={
-        "101": "Failed reading file - is it correct file type?",
-        "102": "Failed reading file - it is not AU contents file",
-    },
-)
-@cdata_class(
-    attributes={
             "seqList": attribute(AttributeType.STRING, tooltip="seqList attribute"),
         },
     error_codes={
@@ -33,27 +19,6 @@ class CAsuContent(CDataFileContent):
     """Generated CAsuContent class from CData metadata."""
 
 
-@cdata_class(
-    attributes={
-        "sequence": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CSequenceString",
-            tooltip="sequence attribute",
-        ),
-        "nCopies": attribute(
-            AttributeType.INT, default=1, min_value=0, tooltip="nCopies attribute"
-        ),
-        "polymerType": attribute(
-            AttributeType.STRING, default="PROTEIN", tooltip="polymerType attribute"
-        ),
-        "name": attribute(AttributeType.STRING, tooltip="name attribute"),
-        "description": attribute(AttributeType.STRING, tooltip="description attribute"),
-        "source": attribute(
-            AttributeType.CUSTOM, custom_class="CDataFile", tooltip="source attribute"
-        ),
-    },
-    gui_label="CAsuContentSeq",
-)
 @cdata_class(
     attributes={
             "sequence": attribute(AttributeType.STRING, tooltip="sequence attribute"),
@@ -95,17 +60,6 @@ class CAsuContentSeqList(CList):
 
 @cdata_class(
     attributes={
-        "groupId": attribute(AttributeType.INT, tooltip="groupId attribute"),
-        "chainId": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="chainId attribute"
-        ),
-        "firstRes": attribute(AttributeType.INT, tooltip="firstRes attribute"),
-        "lastRes": attribute(AttributeType.INT, tooltip="lastRes attribute"),
-    },
-    gui_label="CAtomRefmacSelection",
-)
-@cdata_class(
-    attributes={
             "groupId": attribute(AttributeType.INT, tooltip="groupId attribute"),
             "chainId": attribute(AttributeType.STRING, tooltip="chainId attribute"),
             "firstRes": attribute(AttributeType.INT, tooltip="firstRes attribute"),
@@ -140,19 +94,6 @@ class CAtomRefmacSelectionList(CList):
 
 @cdata_class(
     attributes={
-        "groupId": attribute(AttributeType.INT, tooltip="groupId attribute"),
-        "chainIds": attribute(AttributeType.STRING, tooltip="chainIds attribute"),
-        "firstRes": attribute(AttributeType.INT, tooltip="firstRes attribute"),
-        "lastRes": attribute(AttributeType.INT, tooltip="lastRes attribute"),
-        "atoms": attribute(AttributeType.STRING, tooltip="atoms attribute"),
-        "alt": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="alt attribute"
-        ),
-    },
-    gui_label="CAtomRefmacSelectionOccupancy",
-)
-@cdata_class(
-    attributes={
             "groupId": attribute(AttributeType.INT, tooltip="groupId attribute"),
             "chainIds": attribute(AttributeType.STRING, tooltip="chainIds attribute"),
             "firstRes": attribute(AttributeType.INT, tooltip="firstRes attribute"),
@@ -179,17 +120,6 @@ class CAtomSelection(CData):
     pass
 
 
-@cdata_class(
-    attributes={
-        "queryId": attribute(AttributeType.STRING, tooltip="queryId attribute"),
-        "alignmentList": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CList",
-            tooltip="alignmentList attribute",
-        ),
-    },
-    gui_label="CBlastData",
-)
 @cdata_class(
     attributes={
             "queryId": attribute(AttributeType.STRING, tooltip="queryId attribute"),
@@ -222,16 +152,6 @@ class CBlastDataFile(CDataFile):
 
 @cdata_class(
     attributes={
-        "hitId": attribute(AttributeType.STRING, tooltip="hitId attribute"),
-        "querySequence": attribute(
-            AttributeType.STRING, tooltip="querySequence attribute"
-        ),
-        "hitSequence": attribute(AttributeType.STRING, tooltip="hitSequence attribute"),
-    },
-    gui_label="CBlastItem",
-)
-@cdata_class(
-    attributes={
             "hitId": attribute(AttributeType.STRING, tooltip="hitId attribute"),
             "querySequence": attribute(AttributeType.STRING, tooltip="querySequence attribute"),
             "hitSequence": attribute(AttributeType.STRING, tooltip="hitSequence attribute"),
@@ -242,32 +162,6 @@ class CBlastItem(CData):
     """Generated CBlastItem class from CData metadata."""
 
 
-@cdata_class(
-    attributes={
-        "id": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="id attribute"
-        ),
-        "three_letter_code": attribute(
-            AttributeType.CUSTOM,
-            custom_class="COneWord",
-            tooltip="three_letter_code attribute",
-        ),
-        "name": attribute(AttributeType.STRING, tooltip="name attribute"),
-        "group": attribute(AttributeType.STRING, tooltip="group attribute"),
-        "number_atoms_all": attribute(
-            AttributeType.INT, tooltip="number_atoms_all attribute"
-        ),
-        "number_atoms_nh": attribute(
-            AttributeType.INT, tooltip="number_atoms_nh attribute"
-        ),
-        "desc_level": attribute(AttributeType.INT, tooltip="desc_level attribute"),
-    },
-    gui_label="CChemComp",
-    error_codes={
-        "201": "Error reading monomer id and name",
-        "202": "Error writing monomer id and name",
-    },
-)
 @cdata_class(
     attributes={
             "id": attribute(AttributeType.STRING, tooltip="id attribute"),
@@ -302,25 +196,6 @@ class CDictData(CData):
 
 @cdata_class(
     qualifiers={
-        "fileLabel": "dictionary",
-        "mimeTypeName": "application/refmac-dictionary",
-        "mimeTypeDescription": "Geometry file",
-        "guiLabel": "Geometry dictionary",
-        "toolTip": "Idealised geometry of ligands for refinement",
-        "fileExtensions": ["cif"],
-        "fileContentClassName": "CDictData",
-        "helpFile": "model_data#ligand_geometry",
-    },
-    error_codes={
-        "201": "Error attempting to merge geometry files - no libcheck script",
-        "202": "Error attempting to merge geometry files - failed creating working directory",
-        "203": "Error attempting to merge geometry files - setting libcheck parameters",
-        "204": "Error attempting to merge geometry files - running libcheck",
-        "205": "Error attempting to merge geometry files - failed to run libcheck",
-    },
-)
-@cdata_class(
-    qualifiers={
             "fileLabel": "dictionary",
             "mimeTypeName": "application/refmac-dictionary",
             "mimeTypeDescription": "Geometry file",
@@ -345,25 +220,6 @@ class CDictDataFile(CDataFile):
     pass
 
 
-@cdata_class(
-    attributes={
-        "label": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="label attribute"
-        ),
-        "number": attribute(
-            AttributeType.INT, default=1, min_value=0, tooltip="number attribute"
-        ),
-        "use": attribute(AttributeType.BOOLEAN, default=True, tooltip="use attribute"),
-        "pdbItemList": attribute(
-            AttributeType.CUSTOM, custom_class="CList", tooltip="pdbItemList attribute"
-        ),
-    },
-    gui_label="CEnsemble",
-    qualifiers={
-        "guiLabel": "Ensemble",
-        "allowUndefined": False,
-    },
-)
 @cdata_class(
     attributes={
             "label": attribute(AttributeType.STRING, tooltip="label attribute"),
@@ -404,20 +260,6 @@ class CEnsembleList(CList):
     pass
 
 
-@cdata_class(
-    attributes={
-        "alignmentList": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CList",
-            tooltip="alignmentList attribute",
-        )
-    },
-    gui_label="CHhpredData",
-    error_codes={
-        "201": "Failed to read HHPred file",
-        "202": "Failed to load iotbx software to read HHPred file",
-    },
-)
 @cdata_class(
     attributes={
             "alignmentList": attribute(AttributeType.STRING, tooltip="alignmentList attribute"),
@@ -501,24 +343,6 @@ class CMol2DataFile(CDataFile):
     pass
 
 
-@cdata_class(
-    attributes={
-        "identifier": attribute(
-            AttributeType.STRING, tooltip="The name you use for the monomer"
-        ),
-        "formula": attribute(
-            AttributeType.STRING, tooltip="The formula for the monomer"
-        ),
-        "dictionaryName": attribute(
-            AttributeType.STRING,
-            tooltip="The REFMAC dictionary name if not the same as the name",
-        ),
-        "smiles": attribute(
-            AttributeType.STRING, tooltip="The smiles string for the monomer"
-        ),
-    },
-    gui_label="CMonomer",
-)
 @cdata_class(
     attributes={
             "identifier": attribute(AttributeType.STRING, tooltip="The name you use for the monomer"),
@@ -607,36 +431,6 @@ class CPdbDataFileList(CList):
 
 @cdata_class(
     attributes={
-        "structure": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CPdbDataFile",
-            tooltip="structure attribute",
-        ),
-        "identity_to_target": attribute(
-            AttributeType.FLOAT,
-            min_value=0.0,
-            max_value=1.0,
-            tooltip="identity_to_target attribute",
-        ),
-        "rms_to_target": attribute(
-            AttributeType.FLOAT,
-            min_value=0.0,
-            max_value=100.0,
-            tooltip="rms_to_target attribute",
-        ),
-    },
-    gui_label="CPdbEnsembleItem",
-    qualifiers={
-        "guiLabel": "Structure in ensemble",
-        "toolTip": "Homologous model and its similarity to the target structure",
-        "allowUndefined": False,
-    },
-    error_codes={
-        "101": "No sequence identity or structure RMS to target set",
-    },
-)
-@cdata_class(
-    attributes={
             "structure": attribute(AttributeType.STRING, tooltip="structure attribute"),
             "identity_to_target": attribute(AttributeType.FLOAT, tooltip="identity_to_target attribute"),
             "rms_to_target": attribute(AttributeType.FLOAT, tooltip="rms_to_target attribute"),
@@ -661,26 +455,6 @@ class CPdbEnsembleItem(CData):
         return errors
 
 
-@cdata_class(
-    attributes={
-        "chainId": attribute(
-            AttributeType.CUSTOM,
-            custom_class="COneWord",
-            default="",
-            tooltip="chainId attribute",
-        ),
-        "firstRes": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="firstRes attribute"
-        ),
-        "lastRes": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="lastRes attribute"
-        ),
-    },
-    gui_label="CResidueRange",
-    qualifiers={
-        "pdbFileKey": None,
-    },
-)
 @cdata_class(
     attributes={
             "chainId": attribute(AttributeType.STRING, tooltip="chainId attribute"),
@@ -772,22 +546,6 @@ class CSeqDataFileList(CList):
 
 @cdata_class(
     attributes={
-        "identifier": attribute(AttributeType.STRING, tooltip="identifier attribute"),
-        "referenceDb": attribute(
-            AttributeType.STRING, default="unk", tooltip="referenceDb attribute"
-        ),
-        "reference": attribute(AttributeType.STRING, tooltip="reference attribute"),
-        "name": attribute(AttributeType.STRING, tooltip="name attribute"),
-        "description": attribute(AttributeType.STRING, tooltip="description attribute"),
-        "sequence": attribute(AttributeType.STRING, tooltip="sequence attribute"),
-        "moleculeType": attribute(
-            AttributeType.STRING, default="PROTEIN", tooltip="moleculeType attribute"
-        ),
-    },
-    gui_label="CSequence",
-)
-@cdata_class(
-    attributes={
             "identifier": attribute(AttributeType.STRING, tooltip="Description of sequence"),
             "referenceDb": attribute(AttributeType.STRING, tooltip="referenceDb attribute"),
             "reference": attribute(AttributeType.STRING, tooltip="Optional reference for sequence"),
@@ -811,15 +569,6 @@ class CSequence(CData):
         return errors
 
 
-@cdata_class(
-    attributes={
-        "identifier": attribute(AttributeType.STRING, tooltip="identifier attribute"),
-        "moleculeType": attribute(
-            AttributeType.STRING, default="PROTEIN", tooltip="moleculeType attribute"
-        ),
-    },
-    gui_label="CSequenceAlignment",
-)
 @cdata_class(
     attributes={
             "identifier": attribute(AttributeType.STRING, tooltip="Optional convenient name for sequence alignment"),
@@ -846,22 +595,6 @@ class CSequenceAlignment(CData):
         return errors
 
 
-@cdata_class(
-    attributes={
-        "uniprotId": attribute(AttributeType.STRING, tooltip="uniprotId attribute"),
-        "organism": attribute(AttributeType.STRING, tooltip="organism attribute"),
-        "expressionSystem": attribute(
-            AttributeType.STRING, tooltip="expressionSystem attribute"
-        ),
-    },
-    error_codes={
-        "401": "No uniprot id available",
-        "402": "No uniprot xml file available to read",
-        "403": "No project id provided to determine uniprot xml filename",
-        "404": "Reading uniprot xml file failed",
-    },
-    gui_label="CSequenceMeta",
-)
 @cdata_class(
     attributes={
             "uniprotId": attribute(AttributeType.STRING, tooltip="uniprotId attribute"),
@@ -891,18 +624,6 @@ class CSequenceString(CString):
     pass
 
 
-@cdata_class(
-    qualifiers={
-        "fileLabel": "tls",
-        "mimeTypeName": "application/refmac-TLS",
-        "mimeTypeDescription": "Refmac TLS file",
-        "guiLabel": "TLS coefficients",
-        "toolTip": "Definition of model domains for TLS refinement",
-        "fileExtensions": ["tls"],
-        "fileContentClassName": None,
-        "helpFile": "model_data#tls_file",
-    }
-)
 @cdata_class(
     qualifiers={
             "fileLabel": "tls",

@@ -33,17 +33,6 @@ class CRefmacRestraintsDataFile(CDataFile):
 
 @cdata_class(
     attributes={
-        "rigid_group_id": attribute(
-            AttributeType.STRING, tooltip="rigid_group_id attribute"
-        ),
-        "segmentList": attribute(
-            AttributeType.CUSTOM, custom_class="CList", tooltip="segmentList attribute"
-        ),
-    },
-    gui_label="CRefmacRigidGroupItem",
-)
-@cdata_class(
-    attributes={
             "rigid_group_id": attribute(AttributeType.STRING, tooltip="rigid_group_id attribute"),
             "segmentList": attribute(AttributeType.STRING, tooltip="segmentList attribute"),
         },
@@ -68,17 +57,6 @@ class CRefmacRigidGroupList(CList):
     pass
 
 
-@cdata_class(
-attributes={
-        "chain_id": attribute(AttributeType.STRING, tooltip="chain_id attribute"),
-        "residue_1": attribute(AttributeType.STRING, tooltip="residue_1 attribute"),
-        "residue_2": attribute(AttributeType.STRING, tooltip="residue_2 attribute"),
-    },
-    gui_label="CRefmacRigidGroupSegment",
-    error_codes={
-            "101": "No sequence identity or structure RMS to target set",
-        }
-)
 @cdata_class(
     attributes={
             "chain_id": attribute(AttributeType.STRING, tooltip="chain_id attribute"),
