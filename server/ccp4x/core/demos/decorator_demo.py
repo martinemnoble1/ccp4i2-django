@@ -9,9 +9,10 @@ import sys
 import os
 import asyncio
 
-sys.path.insert(0, os.path.dirname(__file__))
+# Add the server directory to Python path (4 levels up from this demo file)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
 
-from signal_system import (
+from ..base_object.signal_system import (
     Signal,
     Slot,
     SignalDecorator,
@@ -19,7 +20,7 @@ from signal_system import (
     get_slots,
     get_signals,
 )
-from hierarchy_system import HierarchicalObject
+from ..base_object.hierarchy_system import HierarchicalObject
 
 
 class ModernDataModel(HierarchicalObject):

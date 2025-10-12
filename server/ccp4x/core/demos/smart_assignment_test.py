@@ -8,7 +8,7 @@ This demonstrates the three assignment patterns:
 3. CData = dict: Update object attributes from dictionary
 """
 
-from ccp4x.core.data_manager.new_cdata.base_classes import CData, CString
+from ccp4x.core.new_cdata.base_classes import CData, CString
 
 
 def test_smart_assignment():

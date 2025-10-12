@@ -10,8 +10,8 @@ This demonstrates the crucial difference between:
 This distinction is critical for task execution behavior.
 """
 
-from ccp4x.core.data_manager.new_cdata.base_classes import CData, CString, ValueState
-from ccp4x.core.data_manager.new_cdata.fundamental_types import CInt, CFloat, CBoolean
+from ccp4x.core.new_cdata.base_classes import CData, CString, ValueState
+from ccp4x.core.new_cdata.fundamental_types import CInt, CFloat, CBoolean
 
 
 def test_set_state_tracking():

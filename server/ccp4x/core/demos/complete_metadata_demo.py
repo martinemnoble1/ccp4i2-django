@@ -6,10 +6,11 @@ Shows how to capture all the rich CCP4i2 qualifier metadata in modern Python cla
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+# Add the server directory to Python path (4 levels up from this demo file)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
-from new_cdata.base_classes import CData
-from new_cdata.metadata_system import MetadataRegistry, ClassMetadata, FieldMetadata
+from ..new_cdata.base_classes import CData
+from ..new_cdata.metadata_system import MetadataRegistry, ClassMetadata, FieldMetadata
 
 
 class CSequenceWithMetadata(CData):

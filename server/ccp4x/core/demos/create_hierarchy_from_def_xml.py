@@ -9,11 +9,12 @@ a complete CData object hierarchy that you can use in your application.
 import sys
 from pathlib import Path
 from typing import Optional
+import os
 
-# Add the server directory to Python path if needed
-sys.path.insert(0, "/Users/nmemn/Developer/ccp4i2-django/server")
+# Add the server directory to Python path (4 levels up from this demo file)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
 
-from ccp4x.core.data_manager.def_xml_parser import parse_def_xml_file
+from ccp4x.core.task_manager.def_xml_parser import parse_def_xml_file
 
 
 def create_task_from_def_xml(xml_file_path: str):

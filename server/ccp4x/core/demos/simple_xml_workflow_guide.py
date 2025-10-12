@@ -6,10 +6,12 @@ This shows the essential code patterns for working with DEF and Params XML files
 """
 
 import sys
+import os
 
-sys.path.insert(0, "/Users/nmemn/Developer/ccp4i2-django/server")
+# Add the server directory to Python path (4 levels up from this demo file)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
 
-from ccp4x.core.data_manager.def_xml_parser import parse_def_xml_file
+from ccp4x.core.task_manager.def_xml_parser import parse_def_xml_file
 from ccp4x.core.data_manager.params_xml_handler import (
     export_task_params,
     import_task_params,

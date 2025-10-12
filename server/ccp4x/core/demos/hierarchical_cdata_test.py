@@ -3,8 +3,13 @@
 Simple test to demonstrate the hierarchical CData system working.
 This shows the "beyond exciting" integration of CData with HierarchicalObject.
 """
+import sys
+import os
 
-from ccp4x.core.data_manager.new_cdata.base_classes import CData
+# Add the server directory to Python path (4 levels up from this demo file)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
+
+from ccp4x.core.new_cdata.base_classes import CData
 
 
 def test_hierarchical_cdata():

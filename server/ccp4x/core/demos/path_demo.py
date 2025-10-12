@@ -12,9 +12,10 @@ dot-separated paths with array indexing, similar to:
 import sys
 import os
 
-sys.path.insert(0, os.path.dirname(__file__))
+# Add the server directory to Python path (4 levels up from this demo file)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
 
-from hierarchy_system import HierarchicalObject, DataContainer
+from ccp4x.core.base_object.hierarchy_system import HierarchicalObject, DataContainer
 
 
 def demonstrate_path_system():

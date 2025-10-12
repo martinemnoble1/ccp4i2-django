@@ -17,7 +17,7 @@ class ValueState(Enum):
 
 # Import HierarchicalObject from the core system
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
-from hierarchy_system import HierarchicalObject
+from ..base_object.hierarchy_system import HierarchicalObject
 
 
 class CData(HierarchicalObject):

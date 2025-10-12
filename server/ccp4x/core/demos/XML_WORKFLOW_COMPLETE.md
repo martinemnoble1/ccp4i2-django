@@ -9,7 +9,7 @@ The complete bidirectional XML workflow system is now fully implemented and test
 ### 1. DEF XML Hierarchy Creation
 
 ```python
-from ccp4x.core.data_manager.def_xml_parser import parse_def_xml_file
+from ccp4x.core.task_manager.def_xml_parser import parse_def_xml_file
 
 # Create complete task hierarchy from .def.xml
 task = parse_def_xml_file("path/to/task.def.xml")

@@ -14,9 +14,9 @@ from pathlib import Path
 import json
 import re
 
-from .new_cdata.base_classes import CData, CContainer
-from .new_cdata.fundamental_types import *
-from .new_cdata.metadata_system import FieldMetadata, ClassMetadata, MetadataRegistry
+from ..new_cdata.base_classes import CData, CContainer
+from ..new_cdata.fundamental_types import *
+from ..new_cdata.metadata_system import FieldMetadata, ClassMetadata, MetadataRegistry
 
 
 class DefXmlParser:
@@ -30,8 +30,8 @@ class DefXmlParser:
         """Build registry of available CData classes."""
         # Import all generated classes
         try:
-            from .new_cdata.base_classes import CContainer
-            from .new_cdata.fundamental_types import (
+            from ..new_cdata.base_classes import CContainer
+            from ..new_cdata.fundamental_types import (
                 CInt,
                 CFloat,
                 CBoolean,
@@ -62,7 +62,7 @@ class DefXmlParser:
             import pkgutil
 
             try:
-                package = importlib.import_module("ccp4x.core.data_manager.new_cdata")
+                package = importlib.import_module("ccp4x.core.new_cdata")
                 for importer, modname, ispkg in pkgutil.iter_modules(
                     package.__path__, package.__name__ + "."
                 ):

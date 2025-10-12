@@ -7,10 +7,15 @@ import json
 import sys
 import os
 
-sys.path.append(os.path.dirname(__file__))
+# Add the server directory to Python path (4 levels up from this demo file)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
 
-from new_cdata.metadata_system import MetadataRegistry, ClassMetadata, FieldMetadata
-from new_cdata.base_classes import CData
+from ccp4x.core.new_cdata.metadata_system import (
+    MetadataRegistry,
+    ClassMetadata,
+    FieldMetadata,
+)
+from ccp4x.core.new_cdata.base_classes import CData
 
 
 def extract_metadata_from_ccp4i2_data():

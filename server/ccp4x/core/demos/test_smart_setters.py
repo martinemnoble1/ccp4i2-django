@@ -10,11 +10,13 @@ Both patterns must preserve the CData object identity and properly track set sta
 """
 
 import sys
+import os
 
-sys.path.insert(0, "/Users/nmemn/Developer/ccp4i2-django/server")
+# Add the server directory to Python path (4 levels up from this demo file)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
 
-from ccp4x.core.data_manager.new_cdata.base_classes import CData, CString, ValueState
-from ccp4x.core.data_manager.new_cdata.fundamental_types import CInt, CFloat, CBoolean
+from ccp4x.core.new_cdata.base_classes import CData, CString, ValueState
+from ccp4x.core.new_cdata.fundamental_types import CInt, CFloat, CBoolean
 
 
 def test_smart_setters():

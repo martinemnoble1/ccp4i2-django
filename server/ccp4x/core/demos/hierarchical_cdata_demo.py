@@ -6,10 +6,15 @@ Shows how CData objects automatically form parent/child relationships.
 import sys
 import os
 
-sys.path.append(os.path.dirname(__file__))
+# Add the server directory to Python path (4 levels up from this demo file)
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
 
-from new_cdata.base_classes import CData, CDataFile, CContainer
-from new_cdata.metadata_system import MetadataRegistry, ClassMetadata, FieldMetadata
+from ccp4x.core.new_cdata.base_classes import CData, CDataFile, CContainer
+from ccp4x.core.new_cdata.metadata_system import (
+    MetadataRegistry,
+    ClassMetadata,
+    FieldMetadata,
+)
 
 
 class CProject(CDataFile):
@@ -81,9 +86,9 @@ def demonstrate_hierarchical_cdata():
     )
 
     print(f"\\n🧬 Created sequences:")
-    print(f"   {seq1.get_name()}: {seq1}")
+    print(f"   {seq1.name}: {seq1}")
     print(f"   Object path: {seq1.object_path()}")
-    print(f"   {seq2.get_name()}: {seq2}")
+    print(f"   {seq2.name}: {seq2}")
     print(f"   Object path: {seq2.object_path()}")
 
     # Add sequences to project using assignment (should auto-register)
