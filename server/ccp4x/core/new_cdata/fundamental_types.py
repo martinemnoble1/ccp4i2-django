@@ -1,7 +1,7 @@
 """Fundamental CCP4i2 data types that form the base of the type system."""
 
 from typing import List, Any, Optional, Union
-from .base_classes import CData, ValueState
+from .base_classes import CData, ValueState, CString
 
 
 class CInt(CData):
@@ -567,86 +567,7 @@ class CFloatRange(CRange):
         return errors
 
 
-# Extend CString to behave like str
-class CString(CData):
-    def __hash__(self):
-        return hash(self.value)
-
-    def __init__(self, value: str = None, parent=None, name=None, **kwargs):
-        super().__init__(parent=parent, name=name, **kwargs)
-        if value is None:
-            super().__setattr__("value", "")
-            if hasattr(self, "_value_states"):
-                self._value_states["value"] = ValueState.NOT_SET
-        else:
-            self.value = value
-
-    def __str__(self):
-        return str(self.value)
-
-    def __repr__(self):
-        return repr(self.value)
-
-    def __eq__(self, other):
-        if isinstance(other, CString):
-            return self.value == other.value
-        return self.value == other
-
-    def __ne__(self, other):
-        if isinstance(other, CString):
-            return self.value != other.value
-        return self.value != other
-
-    def __lt__(self, other):
-        if isinstance(other, CString):
-            return self.value < other.value
-        return self.value < other
-
-    def __le__(self, other):
-        if isinstance(other, CString):
-            return self.value <= other.value
-        return self.value <= other
-
-    def __gt__(self, other):
-        if isinstance(other, CString):
-            return self.value > other.value
-        return self.value > other
-
-    def __ge__(self, other):
-        if isinstance(other, CString):
-            return self.value >= other.value
-        return self.value >= other
-
-    def __add__(self, other):
-        if isinstance(other, CString):
-            return CString(self.value + other.value)
-        return CString(self.value + str(other))
-
-    def __radd__(self, other):
-        if isinstance(other, CString):
-            return CString(other.value + self.value)
-        return CString(str(other) + self.value)
-
-    def __getitem__(self, key):
-        return str(self.value)[key]
-
-    def __contains__(self, item):
-        return item in str(self.value)
-
-    def __len__(self):
-        return len(str(self.value))
-
-    def set(self, value: str):
-        self.value = value
-        return self
-
-    def isSet(self, field_name: str = None) -> bool:
-        if field_name is None:
-            field_name = "value"
-        return super().isSet(field_name)
-
-    def _is_value_type(self) -> bool:
-        return True
+# CString is now imported from base_classes.py
 
 
 # Type aliases for commonly used types

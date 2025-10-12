@@ -36,7 +36,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 
 from ccp4x.core.task_manager.def_xml_parser import parse_def_xml_file
 from ccp4x.core.new_cdata.base_classes import CData, CContainer, ValueState
-from ccp4x.core.new_cdata.fundamental_types import CString, CInt, CFloat, CBoolean
+from ccp4x.core.new_cdata.base_classes import CString
+from ccp4x.core.new_cdata.fundamental_types import CInt, CFloat, CBoolean
 from ccp4x.core.new_cdata.ccp4modeldata_classes import CPdbDataFile
 
 # Sample DEF XML for comprehensive testing
