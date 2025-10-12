@@ -6,12 +6,12 @@ import tempfile
 from pathlib import Path
 
 # Add the server directory to the Python path
-sys.path.insert(0, '/Users/nmemn/Developer/ccp4i2-django/server')
+sys.path.insert(0, "/Users/nmemn/Developer/ccp4i2-django/server")
 
 from ccp4x.core.data_manager.def_xml_parser import parse_def_xml_file
 
 # Full XML from the user's request
-FULL_SERVALCAT_XML = '''<?xml version="1.0" encoding="UTF-8"?>
+FULL_SERVALCAT_XML = """<?xml version="1.0" encoding="UTF-8"?>
 <ns0:ccp4i2 xmlns:ns0="http://www.ccp4.ac.uk/ccp4ns">
   <ccp4i2_header>
     <function>DEF</function>
@@ -166,93 +166,109 @@ FULL_SERVALCAT_XML = '''<?xml version="1.0" encoding="UTF-8"?>
       </qualifiers>
     </content>
   </container>
-</ns0:ccp4i2>'''
+</ns0:ccp4i2>"""
 
 
 def demonstrate_full_parser():
     """Demonstrate parsing the full servalcat_pipe task definition."""
     print("🎯 Full DEF XML Parser Demonstration")
     print("=" * 50)
-    
+
     # Create temporary file with full XML
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.def.xml', delete=False) as f:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".def.xml", delete=False) as f:
         f.write(FULL_SERVALCAT_XML)
         temp_path = f.name
-    
+
     try:
         # Parse the full XML
         task = parse_def_xml_file(temp_path)
-        
+
         print(f"📋 Task: {task.name}")
         print(f"   Type: {type(task).__name__}")
-        
+
         # Explore the structure
         print("\n🏗️ Task Structure:")
-        
+
         def explore_container(container, indent="  "):
             """Recursively explore container structure."""
             for attr_name in sorted(dir(container)):
-                if (not attr_name.startswith('_') and 
-                    not callable(getattr(container, attr_name)) and
-                    attr_name not in ['child_added', 'child_removed', 'destroyed', 'object_info', 'parent_changed', 'state']):
-                    
+                if (
+                    not attr_name.startswith("_")
+                    and not callable(getattr(container, attr_name))
+                    and attr_name
+                    not in [
+                        "child_added",
+                        "child_removed",
+                        "destroyed",
+                        "object_info",
+                        "parent_changed",
+                        "state",
+                    ]
+                ):
+
                     attr = getattr(container, attr_name)
-                    if hasattr(attr, 'name'):
+                    if hasattr(attr, "name"):
                         print(f"{indent}{attr_name}: {type(attr).__name__}")
-                        
+
                         # Show key properties for data types
-                        if hasattr(attr, 'value'):
-                            state = attr.getValueState('value') if hasattr(attr, 'getValueState') else 'unknown'
+                        if hasattr(attr, "value"):
+                            state = (
+                                attr.getValueState("value")
+                                if hasattr(attr, "getValueState")
+                                else "unknown"
+                            )
                             print(f"{indent}  └─ value: {attr.value} (state: {state})")
-                            
+
                         # Show metadata if available
-                        if hasattr(attr, '_metadata'):
+                        if hasattr(attr, "_metadata"):
                             meta = attr._metadata
-                            if hasattr(meta, 'help_text') and meta.help_text:
+                            if hasattr(meta, "help_text") and meta.help_text:
                                 print(f"{indent}  └─ tooltip: {meta.help_text[:60]}...")
-                            if hasattr(meta, 'enumerators') and meta.enumerators:
-                                print(f"{indent}  └─ options: {', '.join(meta.enumerators)}")
-                        
+                            if hasattr(meta, "enumerators") and meta.enumerators:
+                                print(
+                                    f"{indent}  └─ options: {', '.join(meta.enumerators)}"
+                                )
+
                         # Recursively explore containers
-                        if type(attr).__name__ == 'CContainer':
+                        if type(attr).__name__ == "CContainer":
                             explore_container(attr, indent + "    ")
-        
+
         explore_container(task)
-        
+
         # Demonstrate smart assignment
         print("\n🔄 Smart Assignment Demonstration:")
-        if hasattr(task, 'controlParameters'):
+        if hasattr(task, "controlParameters"):
             ctrl = task.controlParameters
-            
-            if hasattr(ctrl, 'NCYCLES'):
+
+            if hasattr(ctrl, "NCYCLES"):
                 ncycles = ctrl.NCYCLES
                 print(f"  Original NCYCLES: {ncycles.value}")
-                
+
                 # Change value
                 ncycles.value = 25
                 print(f"  After direct assignment: {ncycles.value}")
-                
+
                 # Test smart assignment from another CInt
                 other_cycles = ctrl.NCYCLES.__class__(15)
                 ncycles = other_cycles  # This should copy the value
                 print(f"  After smart assignment: {ctrl.NCYCLES.value}")
-        
+
         # Demonstrate path-based access
         print("\n🗂️ Path-Based Access:")
-        
+
         # Try different paths
         paths_to_test = [
-            'controlParameters.DATA_METHOD',
-            'controlParameters.NCYCLES', 
-            'inputData.XYZIN',
-            'outputData.XYZOUT',
-            'metalCoordPipeline.RUN_METALCOORD'
+            "controlParameters.DATA_METHOD",
+            "controlParameters.NCYCLES",
+            "inputData.XYZIN",
+            "outputData.XYZOUT",
+            "metalCoordPipeline.RUN_METALCOORD",
         ]
-        
+
         for path in paths_to_test:
             try:
                 obj = task.find_by_path(path)
-                if obj and hasattr(obj, 'value'):
+                if obj and hasattr(obj, "value"):
                     print(f"  {path}: {obj.value} ({type(obj).__name__})")
                 elif obj:
                     print(f"  {path}: <{type(obj).__name__}>")
@@ -260,45 +276,57 @@ def demonstrate_full_parser():
                     print(f"  {path}: <not found>")
             except Exception as e:
                 print(f"  {path}: <error: {e}>")
-        
+
         # Show the power of the system
         print("\n⚡ System Capabilities Demonstrated:")
         print("  ✅ Complete XML parsing into typed Python objects")
         print("  ✅ Hierarchical parent/child relationships")
-        print("  ✅ Smart assignment with value/reference semantics") 
+        print("  ✅ Smart assignment with value/reference semantics")
         print("  ✅ Set state tracking (NOT_SET vs EXPLICITLY_SET vs DEFAULT)")
         print("  ✅ Path-based object access with dot notation")
         print("  ✅ Rich metadata preservation from qualifiers")
         print("  ✅ Type safety with validation constraints")
         print("  ✅ Automatic default value handling")
-        
+
         # Show some statistics
         total_params = 0
+
         def count_params(container):
             nonlocal total_params
             for attr_name in dir(container):
-                if (not attr_name.startswith('_') and 
-                    not callable(getattr(container, attr_name)) and
-                    attr_name not in ['child_added', 'child_removed', 'destroyed', 'object_info', 'parent_changed', 'state']):
-                    
+                if (
+                    not attr_name.startswith("_")
+                    and not callable(getattr(container, attr_name))
+                    and attr_name
+                    not in [
+                        "child_added",
+                        "child_removed",
+                        "destroyed",
+                        "object_info",
+                        "parent_changed",
+                        "state",
+                    ]
+                ):
+
                     attr = getattr(container, attr_name)
-                    if hasattr(attr, 'name'):
+                    if hasattr(attr, "name"):
                         total_params += 1
-                        if type(attr).__name__ == 'CContainer':
+                        if type(attr).__name__ == "CContainer":
                             count_params(attr)
-        
+
         count_params(task)
         print(f"\n📊 Total parameters parsed: {total_params}")
         print("🎉 Full DEF XML parsing demonstration completed successfully!")
-        
+
         return True
-        
+
     except Exception as e:
         print(f"❌ Demonstration failed: {e}")
         import traceback
+
         traceback.print_exc()
         return False
-        
+
     finally:
         # Clean up
         Path(temp_path).unlink(missing_ok=True)
