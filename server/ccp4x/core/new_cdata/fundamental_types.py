@@ -571,6 +571,7 @@ class CFloatRange(CRange):
 class CString(CData):
     def __hash__(self):
         return hash(self.value)
+
     def __init__(self, value: str = None, parent=None, name=None, **kwargs):
         super().__init__(parent=parent, name=name, **kwargs)
         if value is None:

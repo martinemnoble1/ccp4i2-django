@@ -25,9 +25,12 @@ import tempfile
 import os
 from pathlib import Path
 from typing import Any, Dict, List
+from xml.etree import ElementTree as ET
 
 # Add the server directory to the Python path
 import sys
+
+from ccp4x.core.data_manager.params_xml_handler import ParamsXmlHandler
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 
@@ -129,6 +132,55 @@ SAMPLE_DEF_XML = """<?xml version="1.0" encoding="UTF-8"?>
     </content>
   </container>
 </ns0:ccp4i2>"""
+
+# Sample servalcat params XML (shortened for testing)
+SAMPLE_PARAMS_XML = """<?xml version='1.0' encoding='utf-8'?>
+<ccp4:ccp4i2 xmlns:ccp4="http://www.ccp4.ac.uk/ccp4ns">
+  <ccp4i2_header>
+    <function>PARAMS</function>
+    <userId>test_user</userId>
+    <hostName>test-host</hostName>
+    <creationTime>19:47 08/Oct/25</creationTime>
+    <ccp4iVersion>alpha_rev_90011</ccp4iVersion>
+    <pluginName>servalcat_pipe</pluginName>
+  </ccp4i2_header>
+  <ccp4i2_body>
+    <inputData>
+      <XYZIN>
+        <project>2f376b1b2b734890bc7d700758dc9581</project>
+        <baseName>model_from_refinement_mmcif_format_1.cif</baseName>
+        <relPath>CCP4_IMPORTED_FILES</relPath>
+        <annotation>Imported from Model_from_refinement_mmCIF_format.cif</annotation>
+        <dbFileId>7278fed0208146c88336b6da8cbb275f</dbFileId>
+        <subType>0</subType>
+        <contentFlag>1</contentFlag>
+      </XYZIN>
+    </inputData>
+    <outputData>
+      <XYZOUT>
+        <project>2f376b1b-2b73-4890-bc7d-700758dc9581</project>
+        <baseName>XYZOUT.pdb</baseName>
+        <relPath>CCP4_JOBS/job_16</relPath>
+        <annotation>Model from refinement (PDB format)</annotation>
+        <dbFileId>2e545c8c-8866-489f-8fd9-1a7d29ddc926</dbFileId>
+        <subType>1</subType>
+        <contentFlag>1</contentFlag>
+      </XYZOUT>
+    </outputData>
+    <controlParameters>
+      <DATA_METHOD>xtal</DATA_METHOD>
+      <ADD_WATERS>True</ADD_WATERS>
+      <NCYCLES>25</NCYCLES>
+      <WEIGHT>0.15</WEIGHT>
+      <B_REFINEMENT_MODE>aniso</B_REFINEMENT_MODE>
+      <OCCUPANCY_REFINEMENT>False</OCCUPANCY_REFINEMENT>
+    </controlParameters>
+    <metalCoordPipeline>
+      <RUN_METALCOORD>True</RUN_METALCOORD>
+      <LINKS>KEEP</LINKS>
+    </metalCoordPipeline>
+  </ccp4i2_body>
+</ccp4:ccp4i2>"""
 
 
 class TestCDataIntegrity:
@@ -435,3 +487,21 @@ class TestCDataIntegrity:
 
         # Test modifying a parameter
         assert ctrl.NCYCLES * 10 == 100
+        assert type(ctrl.NCYCLES * CInt(100)) == CInt
+
+    def test_params_overlay(self, parsed_task):
+        params_handler = ParamsXmlHandler()
+        param_tree = ET.fromstring(SAMPLE_PARAMS_XML)
+        # Find the body element
+        body = param_tree.find(".//ccp4i2_body")
+        if body is None:
+            print("❌ No ccp4i2_body found in params XML")
+            return False
+
+        # Import all parameter values
+        params_handler._import_container_values(body, parsed_task)
+
+        ctrl = parsed_task.controlParameters
+        assert ctrl.NCYCLES.value == 25
+        inp = parsed_task.inputData
+        assert inp.XYZIN.baseName == "model_from_refinement_mmcif_format_1.cif"

@@ -336,7 +336,6 @@ class ParamsXmlHandler:
                 attr_name = child.tag
                 if child.text is not None:
                     value = child.text.strip()
-
                     # Set attribute if it exists
                     if hasattr(param, attr_name):
                         # Convert to appropriate type if needed
