@@ -40,25 +40,6 @@ class CAsuContent(CDataFileContent):
     },
     gui_label="CAsuContentSeq",
 )
-@cdata_class(
-    attributes={
-        "sequence": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CSequenceString",
-            tooltip="sequence attribute",
-        ),
-        "nCopies": attribute(AttributeType.INT, default=1, tooltip="nCopies attribute"),
-        "polymerType": attribute(
-            AttributeType.STRING, default="PROTEIN", tooltip="polymerType attribute"
-        ),
-        "name": attribute(AttributeType.STRING, tooltip="name attribute"),
-        "description": attribute(AttributeType.STRING, tooltip="description attribute"),
-        "source": attribute(
-            AttributeType.CUSTOM, custom_class="CDataFile", tooltip="source attribute"
-        ),
-    },
-    gui_label="CAsuContentSeq",
-)
 class CAsuContentSeq(CData):
     """Generated CAsuContentSeq class from CData metadata."""
 
@@ -77,17 +58,6 @@ class CAsuContentSeqList(CList):
     pass
 
 
-@cdata_class(
-    attributes={
-        "groupId": attribute(AttributeType.INT, tooltip="groupId attribute"),
-        "chainId": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="chainId attribute"
-        ),
-        "firstRes": attribute(AttributeType.INT, tooltip="firstRes attribute"),
-        "lastRes": attribute(AttributeType.INT, tooltip="lastRes attribute"),
-    },
-    gui_label="CAtomRefmacSelection",
-)
 @cdata_class(
     attributes={
         "groupId": attribute(AttributeType.INT, tooltip="groupId attribute"),
@@ -134,19 +104,6 @@ class CAtomRefmacSelectionList(CList):
     },
     gui_label="CAtomRefmacSelectionOccupancy",
 )
-@cdata_class(
-    attributes={
-        "groupId": attribute(AttributeType.INT, tooltip="groupId attribute"),
-        "chainIds": attribute(AttributeType.STRING, tooltip="chainIds attribute"),
-        "firstRes": attribute(AttributeType.INT, tooltip="firstRes attribute"),
-        "lastRes": attribute(AttributeType.INT, tooltip="lastRes attribute"),
-        "atoms": attribute(AttributeType.STRING, tooltip="atoms attribute"),
-        "alt": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="alt attribute"
-        ),
-    },
-    gui_label="CAtomRefmacSelectionOccupancy",
-)
 class CAtomRefmacSelectionOccupancy(CData):
     """A residue range selection for occupancy groups"""
 
@@ -161,17 +118,6 @@ class CAtomSelection(CData):
     pass
 
 
-@cdata_class(
-    attributes={
-        "queryId": attribute(AttributeType.STRING, tooltip="queryId attribute"),
-        "alignmentList": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CList",
-            tooltip="alignmentList attribute",
-        ),
-    },
-    gui_label="CBlastData",
-)
 @cdata_class(
     attributes={
         "queryId": attribute(AttributeType.STRING, tooltip="queryId attribute"),
@@ -203,42 +149,10 @@ class CBlastDataFile(CDataFile):
     },
     gui_label="CBlastItem",
 )
-@cdata_class(
-    attributes={
-        "hitId": attribute(AttributeType.STRING, tooltip="hitId attribute"),
-        "querySequence": attribute(
-            AttributeType.STRING, tooltip="querySequence attribute"
-        ),
-        "hitSequence": attribute(AttributeType.STRING, tooltip="hitSequence attribute"),
-    },
-    gui_label="CBlastItem",
-)
 class CBlastItem(CData):
     """Generated CBlastItem class from CData metadata."""
 
 
-@cdata_class(
-    attributes={
-        "id": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="id attribute"
-        ),
-        "three_letter_code": attribute(
-            AttributeType.CUSTOM,
-            custom_class="COneWord",
-            tooltip="three_letter_code attribute",
-        ),
-        "name": attribute(AttributeType.STRING, tooltip="name attribute"),
-        "group": attribute(AttributeType.STRING, tooltip="group attribute"),
-        "number_atoms_all": attribute(
-            AttributeType.INT, tooltip="number_atoms_all attribute"
-        ),
-        "number_atoms_nh": attribute(
-            AttributeType.INT, tooltip="number_atoms_nh attribute"
-        ),
-        "desc_level": attribute(AttributeType.INT, tooltip="desc_level attribute"),
-    },
-    gui_label="CChemComp",
-)
 @cdata_class(
     attributes={
         "id": attribute(
@@ -312,19 +226,6 @@ class CDictDataFile(CDataFile):
         "number": attribute(
             AttributeType.INT, default=1, min_value=0, tooltip="number attribute"
         ),
-        "use": attribute(AttributeType.BOOLEAN, default=True, tooltip="use attribute"),
-        "pdbItemList": attribute(
-            AttributeType.CUSTOM, custom_class="CList", tooltip="pdbItemList attribute"
-        ),
-    },
-    gui_label="CEnsemble",
-)
-@cdata_class(
-    attributes={
-        "label": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="label attribute"
-        ),
-        "number": attribute(AttributeType.INT, default=1, tooltip="number attribute"),
         "use": attribute(AttributeType.BOOLEAN, default=True, tooltip="use attribute"),
         "pdbItemList": attribute(
             AttributeType.CUSTOM, custom_class="CList", tooltip="pdbItemList attribute"
@@ -482,22 +383,6 @@ class CPdbDataFileList(CList):
     },
     gui_label="CPdbEnsembleItem",
 )
-@cdata_class(
-    attributes={
-        "structure": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CPdbDataFile",
-            tooltip="structure attribute",
-        ),
-        "identity_to_target": attribute(
-            AttributeType.FLOAT, tooltip="identity_to_target attribute"
-        ),
-        "rms_to_target": attribute(
-            AttributeType.FLOAT, tooltip="rms_to_target attribute"
-        ),
-    },
-    gui_label="CPdbEnsembleItem",
-)
 class CPdbEnsembleItem(CData):
     """Generated CPdbEnsembleItem class from CData metadata."""
 
@@ -508,23 +393,6 @@ class CPdbEnsembleItem(CData):
         return errors
 
 
-@cdata_class(
-    attributes={
-        "chainId": attribute(
-            AttributeType.CUSTOM,
-            custom_class="COneWord",
-            default="",
-            tooltip="chainId attribute",
-        ),
-        "firstRes": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="firstRes attribute"
-        ),
-        "lastRes": attribute(
-            AttributeType.CUSTOM, custom_class="COneWord", tooltip="lastRes attribute"
-        ),
-    },
-    gui_label="CResidueRange",
-)
 @cdata_class(
     attributes={
         "chainId": attribute(
@@ -576,22 +444,6 @@ class CSeqDataFileList(CList):
     pass
 
 
-@cdata_class(
-    attributes={
-        "identifier": attribute(AttributeType.STRING, tooltip="identifier attribute"),
-        "referenceDb": attribute(
-            AttributeType.STRING, default="unk", tooltip="referenceDb attribute"
-        ),
-        "reference": attribute(AttributeType.STRING, tooltip="reference attribute"),
-        "name": attribute(AttributeType.STRING, tooltip="name attribute"),
-        "description": attribute(AttributeType.STRING, tooltip="description attribute"),
-        "sequence": attribute(AttributeType.STRING, tooltip="sequence attribute"),
-        "moleculeType": attribute(
-            AttributeType.STRING, default="PROTEIN", tooltip="moleculeType attribute"
-        ),
-    },
-    gui_label="CSequence",
-)
 @cdata_class(
     attributes={
         "identifier": attribute(AttributeType.STRING, tooltip="identifier attribute"),

@@ -26,14 +26,6 @@ class CAngle(CFloat):
     gui_label="CEulerRotation",
 )
 
-@cdata_class(
-    attributes={
-        "alpha": attribute(AttributeType.CUSTOM, custom_class="CAngle", tooltip="alpha attribute"),
-        "beta": attribute(AttributeType.CUSTOM, custom_class="CAngle", tooltip="beta attribute"),
-        "gamma": attribute(AttributeType.CUSTOM, custom_class="CAngle", tooltip="gamma attribute"),
-    },
-    gui_label="CEulerRotation",
-)
 class CEulerRotation(CData):
     """Generated CEulerRotation class from CData metadata."""
 
@@ -60,13 +52,6 @@ class CMatrix33(CData):
     gui_label="CTransformation",
 )
 
-@cdata_class(
-    attributes={
-        "translation": attribute(AttributeType.CUSTOM, custom_class="CXyz", tooltip="translation attribute"),
-        "rotation": attribute(AttributeType.CUSTOM, custom_class="CEulerRotation", tooltip="rotation attribute"),
-    },
-    gui_label="CTransformation",
-)
 class CTransformation(CData):
     """Generated CTransformation class from CData metadata."""
 
@@ -99,17 +84,6 @@ class CXyz(CData):
     gui_label="CXyzBox",
 )
 
-@cdata_class(
-    attributes={
-        "xMin": attribute(AttributeType.FLOAT, tooltip="xMin attribute"),
-        "yMin": attribute(AttributeType.FLOAT, tooltip="yMin attribute"),
-        "zMin": attribute(AttributeType.FLOAT, tooltip="zMin attribute"),
-        "xMax": attribute(AttributeType.FLOAT, tooltip="xMax attribute"),
-        "yMax": attribute(AttributeType.FLOAT, tooltip="yMax attribute"),
-        "zMax": attribute(AttributeType.FLOAT, tooltip="zMax attribute"),
-    },
-    gui_label="CXyzBox",
-)
 class CXyzBox(CData):
     """Generated CXyzBox class from CData metadata."""
 

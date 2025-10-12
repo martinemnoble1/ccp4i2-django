@@ -115,47 +115,6 @@ class CFilePath(CString):
     },
     gui_label="CI2XmlHeader",
 )
-@cdata_class(
-    attributes={
-        "function": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CFileFunction",
-            tooltip="function attribute",
-        ),
-        "userId": attribute(
-            AttributeType.CUSTOM, custom_class="CUserId", tooltip="userId attribute"
-        ),
-        "hostName": attribute(
-            AttributeType.CUSTOM, custom_class="CHostName", tooltip="hostName attribute"
-        ),
-        "creationTime": attribute(
-            AttributeType.CUSTOM, custom_class="CTime", tooltip="creationTime attribute"
-        ),
-        "ccp4iVersion": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CVersion",
-            tooltip="ccp4iVersion attribute",
-        ),
-        "pluginName": attribute(AttributeType.STRING, tooltip="pluginName attribute"),
-        "pluginVersion": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CVersion",
-            tooltip="pluginVersion attribute",
-        ),
-        "pluginTitle": attribute(AttributeType.STRING, tooltip="pluginTitle attribute"),
-        "projectName": attribute(
-            AttributeType.CUSTOM,
-            custom_class="CProjectName",
-            tooltip="projectName attribute",
-        ),
-        "projectId": attribute(AttributeType.PROJECT_ID, tooltip="projectId attribute"),
-        "jobId": attribute(AttributeType.UUID, tooltip="jobId attribute"),
-        "jobNumber": attribute(AttributeType.STRING, tooltip="jobNumber attribute"),
-        "comment": attribute(AttributeType.STRING, tooltip="comment attribute"),
-        "OS": attribute(AttributeType.STRING, tooltip="OS attribute"),
-    },
-    gui_label="CI2XmlHeader",
-)
 class CI2XmlHeader(CData):
     """Container for header info from XML file"""
 
