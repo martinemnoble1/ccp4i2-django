@@ -7,6 +7,7 @@ The complete bidirectional XML workflow system is now fully implemented and test
 ## What We Built
 
 ### 1. DEF XML Hierarchy Creation
+
 ```python
 from ccp4x.core.data_manager.def_xml_parser import parse_def_xml_file
 
@@ -15,6 +16,7 @@ task = parse_def_xml_file("path/to/task.def.xml")
 ```
 
 ### 2. Params XML Export/Import System
+
 ```python
 from ccp4x.core.data_manager.params_xml_handler import export_task_params, import_task_params
 
@@ -28,12 +30,14 @@ import_task_params(fresh_task, "job_123.params.xml")
 ## Files Created
 
 1. **`params_xml_handler.py`** - Complete bidirectional params XML system
+
    - `ParamsXmlHandler` class with export/import methods
    - State-aware parameter detection (only exports explicitly set values)
    - Proper XML formatting with namespaces
    - Support for file objects and structured data
 
 2. **`create_hierarchy_from_def_xml.py`** - Clean usage examples
+
    - Simple patterns for DEF XML loading
    - Error handling and exploration utilities
    - Comprehensive demonstration code
@@ -46,15 +50,15 @@ import_task_params(fresh_task, "job_123.params.xml")
 ## Test Results ✅
 
 ```
-🌟 Complete workflow successful! 
+🌟 Complete workflow successful!
 ✅ Loaded task: servalcat_pipe
-✅ Exported params with 8 parameters 
+✅ Exported params with 8 parameters
 ✅ Imported 8 parameters successfully
 ✅ Round-trip verification: All values correct
 
 Test Results:
 • ADD_WATERS: True ✓
-• NCYCLES: 25 ✓  
+• NCYCLES: 25 ✓
 • B_REFINEMENT_MODE: aniso ✓
 • RUN_METALCOORD: True ✓
 • LINKS: KEEP ✓
@@ -71,13 +75,15 @@ Test Results:
 ## Usage Patterns
 
 ### Scenario 1: New Task
+
 ```python
 task = parse_def_xml_file("task.def.xml")
 # User configures parameters...
 export_task_params(task, "job.params.xml")
 ```
 
-### Scenario 2: Resume Task  
+### Scenario 2: Resume Task
+
 ```python
 task = parse_def_xml_file("task.def.xml")
 import_task_params(task, "job.params.xml")
@@ -85,6 +91,7 @@ import_task_params(task, "job.params.xml")
 ```
 
 ### Scenario 3: Modify Existing
+
 ```python
 task = parse_def_xml_file("task.def.xml")
 import_task_params(task, "old_job.params.xml")
@@ -94,18 +101,18 @@ export_task_params(task, "updated_job.params.xml")
 
 ## API Summary
 
-| Function | Purpose | Returns |
-|----------|---------|---------|
-| `parse_def_xml_file(path)` | Load task definition | Task hierarchy |
-| `export_task_params(task, path, user_id)` | Save user params | Success boolean |
-| `import_task_params(task, path)` | Load user params | Success boolean |
+| Function                                  | Purpose              | Returns         |
+| ----------------------------------------- | -------------------- | --------------- |
+| `parse_def_xml_file(path)`                | Load task definition | Task hierarchy  |
+| `export_task_params(task, path, user_id)` | Save user params     | Success boolean |
+| `import_task_params(task, path)`          | Load user params     | Success boolean |
 
 ## Integration
 
 The system is ready for integration into the CCP4i2 Django backend:
 
 1. **Task Creation**: Use DEF XML parser to create task templates
-2. **User Configuration**: Track parameter modifications with state management  
+2. **User Configuration**: Track parameter modifications with state management
 3. **Persistence**: Export/import user settings via params XML files
 4. **Job Management**: Perfect round-trip workflow for task lifecycle
 
