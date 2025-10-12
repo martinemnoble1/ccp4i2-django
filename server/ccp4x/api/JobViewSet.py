@@ -30,9 +30,7 @@ Version: Compatible with CCP4i2 and Django 4.2+
 import logging
 import datetime
 import json
-import pathlib
 import os
-import platform
 from xml.etree import ElementTree as ET
 from pytz import timezone
 from django.http import Http404
