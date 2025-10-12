@@ -1,0 +1,11 @@
+{
+  "scan_info": {
+    "root_directory": "/Users/nmemn/Developer/ccp4i2/core/CCP4Data.py",
+    "scan_timestamp": null,
+    "files_scanned": 0,
+    "files_imported": 0,
+    "classes_found": 0,
+    "import_errors": 0
+  },
+  "classes": {}
+}

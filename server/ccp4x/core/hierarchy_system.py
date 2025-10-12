@@ -275,38 +275,40 @@ class HierarchicalObject(ABC):
     def find_by_path(self, path: str) -> Optional["HierarchicalObject"]:
         """
         Find an object by dot-separated path with array indexing support.
-        
+
         Supports:
         - Simple paths: "child.grandchild"
         - Array indexing: "children[0].property"
         - Mixed: "database.tables[2].columns[0]"
-        
+
         Args:
             path: Dot-separated path string (e.g., "child.grandchild[0]")
-            
+
         Returns:
             Found object or None
         """
         if not path:
             return self
-            
-        return self._resolve_path_segment(path.split('.'), 0)
-    
-    def _resolve_path_segment(self, segments: List[str], index: int) -> Optional["HierarchicalObject"]:
+
+        return self._resolve_path_segment(path.split("."), 0)
+
+    def _resolve_path_segment(
+        self, segments: List[str], index: int
+    ) -> Optional["HierarchicalObject"]:
         """Recursively resolve path segments with array indexing."""
         if index >= len(segments):
             return self
-            
+
         segment = segments[index]
-        
+
         # Handle array indexing: "name[index]"
-        if '[' in segment and segment.endswith(']'):
-            name_part, bracket_part = segment.split('[', 1)
+        if "[" in segment and segment.endswith("]"):
+            name_part, bracket_part = segment.split("[", 1)
             array_index = bracket_part[:-1]  # Remove closing ']'
-            
+
             try:
                 idx = int(array_index)
-                
+
                 # Find child by name
                 target_child = None
                 if name_part:  # "child[0]"
@@ -315,12 +317,12 @@ class HierarchicalObject(ABC):
                     children = self.children()
                     if 0 <= idx < len(children):
                         target_child = children[idx]
-                
+
                 if target_child is None:
                     return None
-                    
+
                 # Handle array indexing on the found child
-                if hasattr(target_child, '_indexed_children'):
+                if hasattr(target_child, "_indexed_children"):
                     # Custom array-like access
                     indexed_items = target_child._indexed_children()
                     if 0 <= idx < len(indexed_items):
@@ -331,47 +333,47 @@ class HierarchicalObject(ABC):
                     next_obj = target_child
                 else:
                     return None
-                    
+
             except (ValueError, IndexError):
                 return None
-                
+
         else:
             # Simple name lookup
             next_obj = self.find_child(segment)
-            
+
         if next_obj is None:
             return None
-            
+
         # Continue with next segment
         return next_obj._resolve_path_segment(segments, index + 1)
 
     def set_by_path(self, path: str, value: Any) -> bool:
         """
         Set a property or child object by path.
-        
+
         Args:
             path: Dot-separated path (e.g., "child.property" or "database.tables[0].name")
             value: Value to set
-            
+
         Returns:
             True if successful
         """
         if not path:
             return False
-            
-        parts = path.split('.')
+
+        parts = path.split(".")
         if len(parts) == 1:
             # Setting property on this object
             self.set_property(parts[0], value)
             return True
-            
+
         # Navigate to parent of target
-        parent_path = '.'.join(parts[:-1])
+        parent_path = ".".join(parts[:-1])
         target_parent = self.find_by_path(parent_path)
-        
+
         if target_parent is None:
             return False
-            
+
         property_name = parts[-1]
         target_parent.set_property(property_name, value)
         return True
@@ -379,70 +381,72 @@ class HierarchicalObject(ABC):
     def get_by_path(self, path: str, default: Any = None) -> Any:
         """
         Get a property or object by path.
-        
+
         Args:
             path: Dot-separated path
             default: Default value if path not found
-            
+
         Returns:
             Found value/object or default
         """
         if not path:
             return self
-            
+
         # Check if it's a property path (ends with property name)
-        parts = path.split('.')
-        
+        parts = path.split(".")
+
         # Try to find object first
         obj = self.find_by_path(path)
         if obj is not None:
             return obj
-            
+
         # If not found as object, try as property path
         if len(parts) > 1:
-            parent_path = '.'.join(parts[:-1])
+            parent_path = ".".join(parts[:-1])
             parent_obj = self.find_by_path(parent_path)
             if parent_obj is not None:
                 property_name = parts[-1]
                 return parent_obj.get_property(property_name, default)
-                
+
         return default
 
     def list_paths(self, max_depth: int = 3) -> List[str]:
         """
         Get all available paths from this object.
-        
+
         Args:
             max_depth: Maximum depth to traverse
-            
+
         Returns:
             List of dot-separated paths
         """
         paths = []
         self._collect_paths(paths, "", max_depth)
         return sorted(paths)
-    
+
     def _collect_paths(self, paths: List[str], current_path: str, max_depth: int):
         """Recursively collect all paths."""
         if max_depth <= 0:
             return
-            
+
         # Add current object path
         if current_path:
             paths.append(current_path)
-            
+
         # Add property paths
         for prop_name in self.property_names():
             prop_path = f"{current_path}.{prop_name}" if current_path else prop_name
             paths.append(prop_path)
-            
+
         # Add child paths
         children = self.children()
         for i, child in enumerate(children):
             # Regular child path
-            child_path = f"{current_path}.{child._name}" if current_path else child._name
+            child_path = (
+                f"{current_path}.{child._name}" if current_path else child._name
+            )
             child._collect_paths(paths, child_path, max_depth - 1)
-            
+
             # Array index path
             array_path = f"{current_path}[{i}]" if current_path else f"[{i}]"
             child._collect_paths(paths, array_path, max_depth - 1)
@@ -706,46 +710,46 @@ if __name__ == "__main__":
 
     # Test path-based access
     print("\n=== Path-Based Access Examples ===")
-    
+
     # Set up a more complex hierarchy for path testing
     app = DataContainer(name="Application")
     db = DataContainer(parent=app, name="Database")
     tables = DataContainer(parent=db, name="Tables")
-    
+
     # Create some tables
     users_table = DataContainer(parent=tables, name="Users")
     jobs_table = DataContainer(parent=tables, name="Jobs")
-    
+
     # Set properties
     users_table.set_property("row_count", 150)
     jobs_table.set_property("row_count", 45)
-    
+
     # Test path access
     print(f"App path: '{app.object_path()}'")
     print(f"Users table path: '{users_table.object_path()}'")
-    
+
     # Find by path
     found_table = app.find_by_path("Database.Tables.Users")
     print(f"Found by path: {found_table.name if found_table else 'None'}")
-    
+
     # Array indexing
     first_table = app.find_by_path("Database.Tables[0]")
     print(f"First table: {first_table.name if first_table else 'None'}")
-    
+
     # Property access via path
     row_count = app.get_by_path("Database.Tables.Users.row_count")
     print(f"Users row count: {row_count}")
-    
+
     # Set via path
     app.set_by_path("Database.Tables.Users.description", "User accounts table")
     desc = app.get_by_path("Database.Tables.Users.description")
     print(f"Users description: {desc}")
-    
+
     # List all paths
     print("\nAll available paths (max depth 3):")
     for path in app.list_paths(max_depth=2):
         print(f"  {path}")
-    
+
     # Test cleanup
     print("\nDestroying root...")
     app.destroy()
