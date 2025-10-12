@@ -227,7 +227,9 @@ def test_def_xml_parser():
                     f"  After unSet: {ncycles.value} (state: {ncycles.getValueState('value')})"
                 )
             except AttributeError:
-                print(f"  After unSet: <unset> (state: {ncycles.getValueState('value')})")
+                print(
+                    f"  After unSet: <unset> (state: {ncycles.getValueState('value')})"
+                )
 
         print("\n🎉 DEF XML Parser test completed successfully!")
         return True
