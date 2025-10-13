@@ -326,7 +326,7 @@ export const CListElement: React.FC<CListElementProps> = ({
   const renderListActions = () => (
     <Stack direction="row" alignItems="center">
       <MyExpandMore
-        sx={{ color: "primary.contrastText" }}
+        sx={{ color: "primary.text" }}
         expand={expanded}
         onClick={handleExpandToggle}
         aria-expanded={expanded}
@@ -339,7 +339,7 @@ export const CListElement: React.FC<CListElementProps> = ({
         disabled={!isEditable}
         onClick={handleAddItem}
         size="small"
-        sx={{ color: "primary.contrastText" }}
+        sx={{ color: "primary.text" }}
         aria-label="Add new item to list"
       >
         <Add />
@@ -433,13 +433,13 @@ export const CListElement: React.FC<CListElementProps> = ({
     <Card sx={cardSx}>
       <CardHeader
         sx={{
-          backgroundColor: "grey.100", // Very light grey background
+          backgroundColor: "background.paper", // Very light grey background
           color: "text.primary", // Black text (uses theme's primary text color)
           "& .MuiCardHeader-title": {
             color: "text.primary", // Ensure title is black
           },
           "&:hover": {
-            backgroundColor: "grey.200", // Slightly darker on hover
+            backgroundColor: "background.paper", // Slightly darker on hover
           },
         }}
         title={
