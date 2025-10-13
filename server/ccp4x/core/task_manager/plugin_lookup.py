@@ -8,7 +8,8 @@ from typing import Dict, Any, Type
 
 from ccp4i2.googlecode import diff_match_patch_py3
 
-sys.path.append(str(pathlib.Path(diff_match_patch_py3.__file__).parent.parent))
+CCP4I2_ROOT = str(pathlib.Path(diff_match_patch_py3.__file__).parent.parent)
+sys.path.append(CCP4I2_ROOT)
 from core import CCP4PluginScript
 from ccp4i2.core.CCP4PluginScript import CPluginScript
 
@@ -85,11 +86,25 @@ def import_module_from_file(module_name: str, fpath: str):
 def extract_plugin_classes(mod, module_name: str) -> Dict[str, Any]:
     """Return a dict of {task_name: plugin_metadata} for all plugin classes in a module."""
     plugins = {}
+    # Get the directory of this script for relative path calculation
+    script_dir = os.path.dirname(os.path.abspath(__file__))
     for name, obj in inspect.getmembers(mod, inspect.isclass):
         if obj.__name__ == "CPluginScript":
             continue
         if is_plugin_script_subclass(obj):
             entry = {"module": module_name, "class": name}
+            # If the class has a __module__ attribute, try to get its file path
+            mod_file = getattr(obj, "__module__", None)
+            if mod_file:
+                try:
+                    # Try to get the file path of the module
+                    mod_obj = sys.modules.get(mod_file)
+                    if mod_obj and hasattr(mod_obj, "__file__"):
+                        abs_path = os.path.abspath(mod_obj.__file__)
+                        rel_path = os.path.relpath(abs_path, script_dir)
+                        entry["module_file"] = rel_path
+                except Exception:
+                    pass
             for attr in TASKATTRIBUTES:
                 if hasattr(obj, attr):
                     entry[attr] = getattr(obj, attr)
@@ -123,14 +138,10 @@ def build_lookup_from_dir(root_dir: str) -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python build_lookup.py /path/to/plugins")
-        sys.exit(1)
-    root_directory = sys.argv[1]
+    root_directory = CCP4I2_ROOT
     logger.info(f"Building plugin lookup from: {root_directory}")
-    import pprint
-
     result = build_lookup_from_dir(root_directory)
-    pprint.pprint(
-        [result["prosmart_refmac"] if "prosmart_refmac" in result else "nope"]
-    )
+    with open("plugin_lookup.json", "w") as f:
+        import json
+
+        json.dump(result, f, indent=2)

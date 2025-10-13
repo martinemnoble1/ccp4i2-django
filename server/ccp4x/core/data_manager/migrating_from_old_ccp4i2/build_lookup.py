@@ -11,7 +11,7 @@ Similar to task_manager/build_lookup.py but focused on CData classes.
 """
 
 import sys
-import pathlib
+import glob
 import os
 import importlib.util
 import inspect
@@ -107,26 +107,27 @@ def discover_python_files(root_dir: str):
     Yields:
         Tuple of (directory_path, filename, full_path, module_name)
     """
-    for dirpath, dirnames, filenames in os.walk(root_dir):
-        # Skip __pycache__ directories
-        dirnames[:] = [d for d in dirnames if d != "__pycache__"]
 
-        for fname in filenames:
-            if (
-                not fname.endswith(".py")
-                or fname.startswith("__")
-                or fname == "setup.py"
-                or fname == "build_lookup.py"
-            ):
-                continue
+    filenames = glob.glob(os.path.join(root_dir, "*.py"))
 
-            fpath = os.path.join(dirpath, fname)
-            rel_path = os.path.relpath(fpath, root_dir)
+    for fname in filenames:
+        if (
+            not fname.endswith(".py")
+            or fname.startswith("__")
+            or fname == "setup.py"
+            or fname == "build_lookup.py"
+        ):
+            continue
 
-            # Create module name from relative path
-            module_name = "ccp4x.data_scan." + rel_path[:-3].replace(os.sep, ".")
+        dirpath = os.path.dirname(fname)
 
-            yield dirpath, fname, fpath, module_name
+        fpath = os.path.join(dirpath, fname)
+        rel_path = os.path.relpath(fpath, root_dir)
+
+        # Create module name from relative path
+        module_name = "ccp4x.data_scan." + rel_path[:-3].replace(os.sep, ".")
+
+        yield dirpath, fname, fpath, module_name
 
 
 def import_module_from_file(module_name: str, fpath: str):
@@ -228,9 +229,8 @@ def extract_cdata_classes(mod, module_name: str) -> Dict[str, Any]:
                                 if isinstance(
                                     serialized_value, str
                                 ) and serialized_value.startswith("<Unparseable:"):
-                                    class_info[attr] = parse_unparseable_contents(
-                                        serialized_value
-                                    )
+                                    class_info[attr] = serialized_value
+
                                 else:
                                     class_info[attr] = serialized_value
                             else:
@@ -441,15 +441,8 @@ def serialize_attribute(value: Any) -> Any:
     elif isinstance(value, dict):
         return {k: serialize_attribute(v) for k, v in value.items()}
     elif hasattr(value, "__dict__"):
-        # For objects with attributes, serialize their __dict__
-        try:
-            return {
-                "_type": value.__class__.__name__,
-                "_module": getattr(value.__class__, "__module__", "unknown"),
-                **{k: serialize_attribute(v) for k, v in value.__dict__.items()},
-            }
-        except Exception:
-            return str(value)
+
+        return str(value)
     else:
         # Fall back to string representation
         return str(value)
