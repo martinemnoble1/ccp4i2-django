@@ -140,7 +140,7 @@ const TaskInterface: React.FC<CCP4i2TaskInterfaceProps> = (props) => {
               }}
             />
 
-            <CDataFileElement
+            <CCP4i2TaskElement
               {...props}
               itemName="F_SIGF"
               qualifiers={{
