@@ -35,10 +35,19 @@ from ccp4x.core.data_manager.params_xml_handler import ParamsXmlHandler
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 
 from ccp4x.core.task_manager.def_xml_parser import parse_def_xml_file
-from ccp4x.core.new_cdata.base_classes import CData, CContainer, ValueState
-from ccp4x.core.new_cdata.base_classes import CString
-from ccp4x.core.new_cdata.fundamental_types import CInt, CFloat, CBoolean
-from ccp4x.core.new_cdata.ccp4modeldata_classes import CPdbDataFile
+from ccp4x.core.data_manager.migrating_from_old_ccp4i2.OUTPUT_DIRECTORY.base_classes import (
+    CString,
+    CContainer,
+    ValueState,
+)
+from ccp4x.core.data_manager.migrating_from_old_ccp4i2.OUTPUT_DIRECTORY.fundamental_types import (
+    CInt,
+    CFloat,
+    CBoolean,
+)
+from ccp4x.core.data_manager.migrating_from_old_ccp4i2.OUTPUT_DIRECTORY.CCP4ModelData import (
+    CPdbDataFile,
+)
 
 # Sample DEF XML for comprehensive testing
 SAMPLE_DEF_XML = """<?xml version="1.0" encoding="UTF-8"?>

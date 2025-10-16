@@ -19,8 +19,16 @@ import logging
 import json
 import ast
 import re
+import pathlib
 from typing import Dict, Any, List, Optional, Type
 from pathlib import Path
+
+from ccp4i2.googlecode import diff_match_patch_py3
+
+CCP4I2_ROOT = str(pathlib.Path(diff_match_patch_py3.__file__).parent.parent)
+if CCP4I2_ROOT not in sys.path:
+    sys.path.insert(0, CCP4I2_ROOT)
+print(CCP4I2_ROOT)
 
 
 def setup_logger() -> logging.Logger:
@@ -153,6 +161,7 @@ def import_module_from_file(module_name: str, fpath: str):
             "settings",
             "wsgi.py",
             "asgi.py",
+            "CCP4WorkflowManager.py",
         ]
 
         if any(pattern in fpath.lower() for pattern in skip_patterns):
@@ -225,14 +234,7 @@ def extract_cdata_classes(mod, module_name: str) -> Dict[str, Any]:
                             # Handle different types of attribute values
                             if attr_value is not None:
                                 serialized_value = serialize_attribute(attr_value)
-                                # Apply unparseable content parsing to dict-like attributes
-                                if isinstance(
-                                    serialized_value, str
-                                ) and serialized_value.startswith("<Unparseable:"):
-                                    class_info[attr] = serialized_value
-
-                                else:
-                                    class_info[attr] = serialized_value
+                                class_info[attr] = serialized_value
                             else:
                                 class_info[attr] = None
                         except Exception as e:
@@ -351,77 +353,6 @@ def parse_file_for_classes(fpath: str) -> Dict[str, Any]:
     return classes_found
 
 
-def parse_unparseable_contents(contents_str: str) -> Any:
-    """
-    Parse an "Unparseable" CONTENTS string and convert it to proper JSON format.
-
-    Args:
-        contents_str: String in format "<Unparseable: {'key': {'class': ...}, ...}>"
-
-    Returns:
-        Parsed dictionary or original string if parsing fails
-    """
-    if not contents_str or not contents_str.startswith("<Unparseable: "):
-        return contents_str
-
-    try:
-        # Extract the dict part from "<Unparseable: {...}>"
-        start_idx = contents_str.find(": ") + 2
-        end_idx = contents_str.rfind(">")
-        if start_idx < 2 or end_idx == -1:
-            return contents_str
-
-        dict_str = contents_str[start_idx:end_idx]
-
-        # Try to evaluate it as a Python literal
-        try:
-            parsed_dict = ast.literal_eval(dict_str)
-            return parsed_dict
-        except (ValueError, SyntaxError):
-            # If that fails, try some basic string replacements to fix common issues
-            # Replace single quotes with double quotes for JSON compatibility
-            json_str = dict_str.replace("'", '"')
-
-            # Handle Python constants
-            json_str = json_str.replace("True", "true")
-            json_str = json_str.replace("False", "false")
-            json_str = json_str.replace("None", "null")
-
-            # Handle class references - convert them to strings
-            # Pattern: "class": SomeClass.SomeOtherClass -> "class": "SomeClass.SomeOtherClass"
-            json_str = re.sub(
-                r'"class"\s*:\s*([A-Za-z_][A-Za-z0-9_.]*)', r'"class": "\1"', json_str
-            )
-
-            # Handle bare identifiers that should be strings
-            # Pattern: bareword -> "bareword" (but not if it's already in quotes or a number)
-            # Don't quote JSON literals
-            json_str = re.sub(
-                r"\b(?!true|false|null)([A-Za-z_][A-Za-z0-9_]*)\b(?=\s*[,}\]:])",
-                r'"\1"',
-                json_str,
-            )
-
-            # Fix doubled quotes from the previous replacement
-            json_str = re.sub(r'""([A-Za-z0-9_.]+)""', r'"\1"', json_str)
-
-            # Try to parse as JSON
-            try:
-                import json
-
-                parsed_dict = json.loads(json_str)
-                return parsed_dict
-            except json.JSONDecodeError:
-                # If all else fails, return the original string
-                return contents_str
-
-    except Exception as e:
-        logger.debug(f"Failed to parse unparseable contents: {e}")
-        return contents_str
-
-    return contents_str
-
-
 def serialize_attribute(value: Any) -> Any:
     """
     Serialize an attribute value to JSON-compatible format.
@@ -440,8 +371,9 @@ def serialize_attribute(value: Any) -> Any:
         return [serialize_attribute(item) for item in value]
     elif isinstance(value, dict):
         return {k: serialize_attribute(v) for k, v in value.items()}
+    # elif inspect.isclass(type(value)):
+    #    return {"type": "class", "className": value.__class__.__name__}
     elif hasattr(value, "__dict__"):
-
         return str(value)
     else:
         # Fall back to string representation
@@ -488,6 +420,7 @@ def build_lookup_from_dir(root_dir: str) -> Dict[str, Any]:
             if module_name in sys.modules:
                 del sys.modules[module_name]
         else:
+            print("Failed to import module: {module_name} from {fpath}")
             scan_stats["import_errors"] += 1
 
             # Try AST parsing as fallback for files that can't be imported
@@ -581,7 +514,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "directory",
         nargs="?",
-        default=".",
+        default=os.path.join(CCP4I2_ROOT, "core"),
         help="Directory to scan for CData classes (default: current directory)",
     )
     parser.add_argument("--output", "-o", help="Output JSON file path")

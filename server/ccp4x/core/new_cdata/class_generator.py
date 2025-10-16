@@ -432,11 +432,47 @@ class CDataClassGenerator:
                     if class_count > 0:
                         f.write("\n")
 
+                    decorator_code = self.generate_decorator_for_code(class_def)
+                    f.write(decorator_code + "\n")
                     class_code = self.generate_class_code(class_def)
                     f.write(class_code + "\n")
                     class_count += 1
 
             print(f"Generated {len(class_defs)} classes in {output_file}")
+
+    def generate_decorator_for_code(self, class_def: ClassDefinition) -> str:
+        """Generate @cdata_class decorator code for a class."""
+        decorator_lines = [f"@cdata_class("]
+
+        """
+@cdata_class(
+    attributes={
+        "seqList": attribute(AttributeType.STRING, tooltip="seqList attribute"),
+    },
+    error_codes={
+        "101": "Failed reading file - is it correct file type?",
+        "102": "Failed reading file - it is not AU contents file",
+    },
+    gui_label="CAsuContent",
+)       """
+        if class_def.contents and isinstance(class_def.contents, dict):
+            decorator_lines.append("    attributes={")
+            for attribute in class_def.contents.items():
+                attr_name = attribute[0]
+                attr_def = attribute[1]
+                attr_def_str = str(attr_def)
+                decorator_lines.append(f"        {attr_def_str},")
+            decorator_lines.append("    },")
+        if class_def.contents_order:
+            decorator_lines.append(f"    contents_order={class_def.contents_order},")
+
+        if class_def.qualifiers_order:
+            decorator_lines.append(
+                f"    qualifiers_order={class_def.qualifiers_order},"
+            )
+
+        decorator_lines.append(")")
+        return "\n".join(decorator_lines)
 
     def generate_init_file(self):
         """Generate __init__.py file for the package."""
