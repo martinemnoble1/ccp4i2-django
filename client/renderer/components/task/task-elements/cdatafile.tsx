@@ -53,6 +53,7 @@ export interface CCP4i2DataFileElementProps
   infoContent?: ReactNode;
   onChange?: (updatedItem: any) => void;
   hasValidationError?: boolean;
+  forceExpanded?: boolean;
 }
 
 // Main component
@@ -67,6 +68,7 @@ export const CDataFileElement: React.FC<CCP4i2DataFileElementProps> = ({
   disabled: disabledProp,
   qualifiers: propsQualifiers,
   hasValidationError: overrideValidationError,
+  forceExpanded = false,
 }) => {
   const api = useApi();
   const {
@@ -130,7 +132,7 @@ export const CDataFileElement: React.FC<CCP4i2DataFileElementProps> = ({
   const computedValidationError = borderColor === "error.light";
   const hasValidationError = overrideValidationError ?? computedValidationError;
   const hasChildren = React.Children.count(children) > 0;
-  const isExpanded = hasValidationError || isManuallyExpanded;
+  const isExpanded = hasValidationError || isManuallyExpanded || forceExpanded;
 
   const guiLabel =
     qualifiers?.guiLabel || item?._objectPath?.split(".").at(-1) || "";
@@ -373,8 +375,8 @@ export const CDataFileElement: React.FC<CCP4i2DataFileElementProps> = ({
               hasValidationError
                 ? "Options expanded due to validation error"
                 : isExpanded
-                ? "Collapse options"
-                : "Expand options"
+                  ? "Collapse options"
+                  : "Expand options"
             }
           >
             {isExpanded ? (
@@ -395,7 +397,9 @@ export const CDataFileElement: React.FC<CCP4i2DataFileElementProps> = ({
               px: 2,
               pb: 1,
               pt: 0,
-              backgroundColor: hasValidationError ? "error.lighter" : "grey.50",
+              backgroundColor: hasValidationError
+                ? "error.lighter"
+                : "background.paper",
               borderTop: "1px solid",
               borderTopColor: hasValidationError ? "error.light" : "divider",
               borderBottomLeftRadius: "0.4rem",

@@ -19,6 +19,8 @@ export const CPdbDataFileElement: React.FC<CCP4i2TaskElementProps> = (
     return result;
   }, [item]);
 
+  const { value: selectionString } = useTaskItem(selectionItemName);
+
   const fileDigest = {};
   const infoContent = useMemo(
     () => <Typography>{JSON.stringify(fileDigest)}</Typography>,
@@ -38,7 +40,10 @@ export const CPdbDataFileElement: React.FC<CCP4i2TaskElementProps> = (
   }, [item, qualifiers]);
 
   return inferredVisibility ? (
-    <CSimpleDataFileElement {...props}>
+    <CSimpleDataFileElement
+      {...props}
+      forceExpanded={selectionString?.length > 0}
+    >
       {overriddenQualifiers.ifAtomSelection && (
         <CCP4i2TaskElement
           {...props}

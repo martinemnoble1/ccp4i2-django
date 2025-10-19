@@ -7,6 +7,7 @@ import { readFilePromise, useJob, useProject } from "../../../utils";
 
 interface CSimpleDataFileElementProps extends CCP4i2TaskElementProps {
   hasValidationError?: boolean;
+  forceExpanded?: boolean;
 }
 
 export const CSimpleDataFileElement: React.FC<CSimpleDataFileElementProps> = (
