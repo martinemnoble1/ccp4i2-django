@@ -12,6 +12,7 @@ import ModelcraftInterface from "./modelcraft";
 import MolrepSelfrot from "./molrep_selfrot";
 import ProsmartRefmacInterface from "./prosmart_refmac";
 import PhaserSimpleInterface from "./phaser_simple";
+import PhaserRNPPipeline from "./phaser_rnp_pipeline";
 import ServalcatPipeInterface from "./servalcat_pipe";
 import SubstituteLigandInterface from "./SubstituteLigand";
 import ProvideAsuContentsInterface from "./ProvideAsuContents";
@@ -62,6 +63,8 @@ export const TaskContainer = () => {
         return <PhaserPipelineInterface job={job} />;
       case "phaser_simple":
         return <PhaserSimpleInterface job={job} />;
+      case "phaser_rnp_pipeline":
+        return <PhaserRNPPipeline job={job} />;
       case "prosmart_refmac":
         return <ProsmartRefmacInterface job={job} />;
       case "ProvideAsuContents":
