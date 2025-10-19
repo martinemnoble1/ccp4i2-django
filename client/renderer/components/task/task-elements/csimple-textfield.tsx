@@ -29,7 +29,7 @@ interface ProcessedItem {
 
 // Constants
 const DEFAULT_MIN_WIDTH = "15rem";
-const DEBOUNCE_DELAY = 500;
+const DEBOUNCE_DELAY = 1000;
 const INPUT_TYPES = {
   TEXT: "text",
   INT: "int",
