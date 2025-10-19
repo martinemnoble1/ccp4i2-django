@@ -103,6 +103,7 @@ export const CCP4i2TaskElement: React.FC<CCP4i2TaskElementProps> = (props) => {
       case "CCrystalName":
       case "CRangeSelection":
       case "CDatasetName":
+      case "CAtomSelection":
         return (
           <CStringElement key={the_uuid} {...props} qualifiers={qualifiers} />
         );
